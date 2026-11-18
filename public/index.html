@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check Fiber Internet Availability at Your Address | CheckMyFiber</title>
+<meta name="description" content="Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your exact plans by text from a local rep.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A4FC4'/%3E%3Cpath d='M7 21c4-8 14-8 18 0M10 21c3-4.5 9-4.5 12 0' stroke='%23fff' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='22' r='2' fill='%237CF2B0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"CheckMyFiber","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","parentOrganization":{"@type":"Organization","name":"Quota"}}
+</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Public Sans',system-ui,sans-serif;color:#0B1B2B;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#0A4FC4}a:hover{color:#073A91}
+h1,h2,h3{margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.dark{background:#0B1B2B;color:#fff}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:Archivo,sans-serif;font-weight:800;font-size:21px;letter-spacing:-.01em}
+.logo:hover{color:#fff}
+.call{color:#fff;text-decoration:none;font-size:15px;font-weight:600}.call span{color:#7CF2B0}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:44px 0 80px}
+.eyebrow{margin:0 0 14px;font-size:15px;font-weight:600;color:#7CF2B0}
+h1{font-family:Archivo,sans-serif;font-size:54px;line-height:1.03;letter-spacing:-.025em;font-weight:800;margin-bottom:18px}
+.lede{margin:0 0 30px;font-size:19px;line-height:1.55;color:#C9D4E0;max-width:540px}
+label.lbl{display:block;margin-bottom:8px;font-size:14px;font-weight:600}
+.addr{display:flex;gap:8px;background:#fff;padding:7px;border-radius:14px}
+.addr input{flex:1;min-width:0;height:58px;padding:0 16px;border:0;border-radius:9px;font:inherit;font-size:18px;color:#0B1B2B;background:#fff}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #7CF2B0;outline-offset:2px}
+.addr input:focus-visible{outline:2px solid #0A4FC4;outline-offset:0}
+.cta{height:58px;padding:0 26px;border:0;border-radius:9px;background:#C2410C;color:#fff;font:inherit;font-size:18px;font-weight:700;cursor:pointer;white-space:nowrap}
+.cta:hover{background:#9A3412}.cta[disabled]{opacity:.7;cursor:progress}
+.fine{margin:14px 0 0;font-size:14px;line-height:1.5;color:#AEBBC9}
+.err{margin:12px 0 0;font-size:15px;color:#FFB4A1;font-weight:600}
+.card{background:#fff;color:#0B1B2B;border-radius:18px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.kicker{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5D70}
+.good{background:#E7F6EE;border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.good p{margin:0;font-size:18px;font-weight:700;color:#0E5E36}
+.warn{background:#FFF4E5;border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.warn p{margin:0;font-size:18px;font-weight:700;color:#7A3E00}
+.info{background:#E3EDFF;border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.info p{margin:0;font-size:18px;font-weight:700;color:#0A3A8C}
+.prov{display:flex;flex-direction:column;gap:8px;margin:0 0 16px;padding:0;list-style:none}
+.prov li{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid #E3E8EF;border-radius:10px;font-weight:600}
+.prov li span{font-weight:400;font-size:14px;color:#33475B}
+.src{margin:0;font-size:13px;line-height:1.5;color:#4A5D70}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.field label{font-size:14px;font-weight:600}
+.field input{height:52px;padding:0 14px;border:1px solid #C9D2DE;border-radius:10px;font:inherit;font-size:17px;color:#0B1B2B}
+.field input:focus-visible{outline:2px solid #0A4FC4;border-color:#0A4FC4}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.5;color:#4A5D70;margin:4px 0 14px}
+.consent input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:#0A4FC4}
+.full{width:100%}
+.hp{position:absolute;left:-9999px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #E3E8EF;border-radius:16px;overflow:hidden}
+.steps div{padding:26px 28px;border-right:1px solid #E3E8EF}.steps div:last-child{border-right:0}
+.steps .n{margin:0 0 6px;font-size:14px;font-weight:700;color:#0A4FC4}
+.steps p{margin:0;font-size:17px;line-height:1.5}
+.gray{background:#F5F7FA}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+h2{font-family:Archivo,sans-serif;font-size:34px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+.body{margin:0 0 16px;font-size:17px;line-height:1.6;color:#33475B}
+.rep{background:#fff;border-radius:16px;padding:28px}
+.rep q{display:block;font-size:17px;line-height:1.6;color:#1F3347;quotes:'"' '"';margin-top:14px}
+.q{border-top:1px solid #E3E8EF;padding:22px 0}.q:last-child{border-bottom:1px solid #E3E8EF}
+.q h3{font-size:18px;font-weight:700;margin-bottom:6px}.q p{margin:0;font-size:16px;line-height:1.6;color:#33475B}
+footer{background:#F5F7FA;border-top:1px solid #E3E8EF;font-size:14px;line-height:1.6;color:#4A5D70}
+footer p{margin:0 0 8px}
+[hidden]{display:none !important}
+@media (max-width:860px){.hero,.two{grid-template-columns:1fr}.hero{gap:36px;padding-top:24px}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid #E3E8EF}.addr{flex-direction:column}.cta{width:100%}h1{font-size:38px}}
+</style>
+</head>
+<body>
+<section class="dark">
+<div class="wrap">
+<header class="top">
+<a class="logo" href="/"><svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M7 21c4-8 14-8 18 0M10 21c3-4.5 9-4.5 12 0" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="22" r="2" fill="#7CF2B0"/></svg>CheckMyFiber</a>
+<a class="call" id="callLink" href="#" hidden>Call or text <span id="callNum"></span></a>
+</header>
+
+<div class="hero">
+<div>
+<p class="eyebrow" id="eyebrow">Free fiber availability check</p>
+<h1>See which fiber providers serve your address.</h1>
+<p class="lede">Type your address and you'll see right away which fiber networks report coverage on your block. A local rep then confirms your exact plans by text.</p>
+<form id="checkForm" novalidate>
+<label class="lbl" for="addr">Street address with city or ZIP</label>
+<div class="addr">
+<input type="text" id="addr" name="address" autocomplete="street-address" placeholder="e.g. 412 Lakeside Ave, 83814" required>
+<button type="submit" class="cta" id="checkBtn">Check my address</button>
+</div>
+<p class="err" id="checkErr" role="alert" hidden></p>
+</form>
+<p class="fine">Free. No account, no credit check. We only ask for your number if there's something to offer.</p>
+</div>
+
+<div class="card" id="panel" aria-live="polite">
+<div id="example">
+<p class="kicker">Example result</p>
+<p style="margin:0 0 16px;font-size:15px;color:#33475B">412 Lakeside Ave</p>
+<div class="good"><p>2 fiber providers report service here</p></div>
+<ul class="prov"><li>Provider A Fiber<span>up to 2 Gig</span></li><li>Provider B Fiber<span>up to 1 Gig</span></li></ul>
+<p class="src">Source: FCC National Broadband Map. A rep confirms availability before you sign up for anything.</p>
+</div>
+
+<div id="result" hidden>
+<p class="kicker">Your result</p>
+<p id="resAddr" style="margin:0 0 16px;font-size:15px;color:#33475B"></p>
+<div id="resBox"><p id="resHead"></p></div>
+<ul class="prov" id="resList"></ul>
+<p class="body" id="resAsk" style="font-size:16px;margin-bottom:14px"></p>
+<form id="leadForm" novalidate>
+<div class="field"><label for="name">First name</label><input id="name" autocomplete="given-name" required></div>
+<div class="field"><label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+<input class="hp" tabindex="-1" autocomplete="off" name="website" id="website" aria-hidden="true">
+<label class="consent"><input type="checkbox" id="consent"><span>I agree that CheckMyFiber (operated by Quota) may call or text me at this number about internet service, including by automated means. Consent isn't required to buy anything. Msg &amp; data rates may apply. Reply STOP to opt out.</span></label>
+<button type="submit" class="cta full" id="leadBtn">Text me my plans</button>
+<p class="err" id="leadErr" role="alert" hidden style="color:#B3261E"></p>
+</form>
+<p class="src" style="margin-top:12px">Source: FCC National Broadband Map, <span class="asof"></span>. A rep confirms availability before you sign up for anything.</p>
+</div>
+
+<div id="done" hidden style="text-align:center">
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#E7F6EE"/><path d="M20 33l8 8 16-18" stroke="#0E7A45" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h2 style="font-size:28px;margin:14px 0 10px" id="doneHead">You're all set</h2>
+<p class="body">We're confirming your exact address now. Watch for a text from us shortly with your options and prices.</p>
+<div style="background:#F5F7FA;border-radius:14px;padding:16px;text-align:left;font-size:15px;line-height:1.7;color:#1F3347;margin-bottom:16px">
+<strong>What happens next</strong><br>1. We check every fiber provider at your address<br>2. You get a text with your options<br>3. Pick one and we'll schedule the install</div>
+<button type="button" class="cta full" id="shareBtn" style="background:#fff;color:#0A4FC4;border:2px solid #0A4FC4;height:50px;font-size:16px">Know a neighbor? Share this check</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="wrap" style="padding:64px 24px">
+<div class="steps">
+<div><p class="n">Step 1</p><p><strong>Enter your address.</strong> You see what's reported on your block right away.</p></div>
+<div><p class="n">Step 2</p><p><strong>We confirm it.</strong> A local rep checks your exact address with the providers.</p></div>
+<div><p class="n">Step 3</p><p><strong>You choose.</strong> Get your plans by text. If you want one, we schedule the install.</p></div>
+</div>
+</section>
+
+<section class="gray">
+<div class="wrap two" style="padding:72px 24px">
+<div>
+<h2>Fiber is built street by street</h2>
+<p class="body">Two houses on the same road can have different options, and new lines go live every month. That's why we check your exact address instead of guessing from your ZIP code.</p>
+<p class="body">We work with Kinetic, Brightspeed, Verizon Fios, AT&amp;T Fiber, Frontier, Quantum Fiber, Fidium, BluePeak, Ting, Ripple, Wire3, Point Broadband and Clearwave, so you get the options that actually reach your home.</p>
+</div>
+<div class="rep">
+<p style="margin:0;font-size:18px;font-weight:700">A real local team</p>
+<p style="margin:2px 0 0;font-size:15px;color:#4A5D70">Quota · fiber sales</p>
+<q>My team sells fiber door to door. We built this so you can find out what's available without waiting for someone to knock. When you check your address, the text you get back comes from one of us.</q>
+</div>
+</div>
+</section>
+
+<section class="wrap" style="padding:72px 24px 40px;max-width:820px">
+<h2>Common questions</h2>
+<div class="q"><h3>How accurate is the check?</h3><p>The instant result uses the coverage each provider reports to the FCC. It's a reliable starting point but can be a few months behind new construction, so a rep confirms your exact address before you commit to anything.</p></div>
+<div class="q"><h3>Who are you?</h3><p>CheckMyFiber is run by Quota, an independent sales team that sells fiber for several providers. We're not an internet provider ourselves.</p></div>
+<div class="q"><h3>What if nothing shows up?</h3><p>New lines often aren't on the map yet. Leave your number and we'll check by hand, and we'll text you if fiber reaches your street later.</p></div>
+<div class="q"><h3>Will I get spam calls?</h3><p>No. We never sell your number. You'll hear from us about your address, and you can reply STOP anytime.</p></div>
+</section>
+
+<section class="wrap" style="padding:40px 24px 80px;max-width:820px">
+<div class="dark" style="border-radius:18px;padding:36px">
+<h2 style="font-size:28px">Check your address</h2>
+<a href="#addr" class="cta" style="display:inline-flex;align-items:center;text-decoration:none" onclick="setTimeout(()=>document.getElementById('addr').focus(),300)">Check my address</a>
+</div>
+</section>
+
+<footer>
+<div class="wrap" style="padding:32px 24px">
+<p style="color:#0B1B2B;font-weight:700">CheckMyFiber · Operated by Quota</p>
+<p>CheckMyFiber is an independent sales company, not an internet service provider. Coverage shown is based on FCC National Broadband Map data and is confirmed by a rep before any order. Availability, pricing and plans are set by each provider. Provider names are trademarks of their respective owners.</p>
+<p><a href="/privacy">Privacy policy</a> · <a href="/terms">Terms</a></p>
+</div>
+</footer>
+
+<script>
+const PHONE = ''; // e.g. '(208) 555-0100' — shows "Call or text" in the header when set
+const ASOF = 'June 2026 data';
+if (PHONE) { const a = document.getElementById('callLink'); a.hidden = false; a.href = 'tel:' + PHONE.replace(/\D/g, ''); document.getElementById('callNum').textContent = PHONE; }
+document.querySelectorAll('.asof').forEach(e => e.textContent = ASOF);
+const qs = new URLSearchParams(location.search);
+const source = qs.get('src') || qs.get('utm_source') || (document.referrer ? new URL(document.referrer).hostname : 'direct');
+const $ = id => document.getElementById(id);
+const fmt = d => d >= 1000 ? (Math.round(d / 100) / 10) + ' Gig' : d + ' Mbps';
+let last = null;
+
+$('checkForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const address = $('addr').value.trim();
+  const err = $('checkErr'); err.hidden = true;
+  if (address.length < 5) { err.textContent = 'Enter your street address with your city or ZIP.'; err.hidden = false; return; }
+  $('checkBtn').disabled = true; $('checkBtn').textContent = 'Checking…';
+  try {
+    const r = await fetch('/api/check', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ address }) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error);
+    if (!d.found) { err.textContent = "We couldn't find that address. Add your city and ZIP, like \"412 Lakeside Ave, Mesa AZ 85201\"."; err.hidden = false; return; }
+    last = { address, ...d };
+    showResult(d);
+  } catch (x) { err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
+  finally { $('checkBtn').disabled = false; $('checkBtn').textContent = 'Check my address'; }
+});
+
+function showResult(d) {
+  $('example').hidden = true; $('done').hidden = true; $('result').hidden = false;
+  $('resAddr').textContent = d.matched;
+  const n = d.providers.length, box = $('resBox'), list = $('resList');
+  list.innerHTML = '';
+  d.providers.forEach(p => { const li = document.createElement('li'); li.textContent = p.name; const s = document.createElement('span'); s.textContent = 'up to ' + fmt(p.down); li.appendChild(s); list.appendChild(li); });
+  list.hidden = !n;
+  if (d.level === 'exact') {
+    box.className = 'good'; $('resHead').textContent = n === 1 ? 'Good news! 1 fiber provider reports service here' : `Good news! ${n} fiber providers report service here`;
+    $('resAsk').textContent = 'Where should we text your exact plans and prices?';
+    last.status = 'Likely available';
+  } else if (d.level === 'nearby') {
+    box.className = 'warn'; $('resHead').textContent = 'Fiber is reported right around your address';
+    $('resAsk').textContent = "It's very close, so we'll confirm your exact home. Where should we text you?";
+    last.status = 'Nearby - confirm';
+  } else {
+    box.className = 'info'; $('resHead').textContent = "We'll check your address by hand";
+    $('resAsk').textContent = "New lines often aren't on the map yet. Leave your number and we'll check every provider we work with.";
+    last.status = 'Needs manual check';
+  }
+  $('leadBtn').textContent = n ? 'Text me my plans' : 'Check my address by hand';
+  $('panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  $('name').focus({ preventScroll: true });
+}
+
+$('leadForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const err = $('leadErr'); err.hidden = true;
+  const body = { name: $('name').value, phone: $('phone').value, consent: $('consent').checked, website: $('website').value,
+    address: last.address, matched: last.matched, zip: last.zip, state: last.state, status: last.status,
+    providers: last.providers.map(p => p.name + ' (' + fmt(p.down) + ')').join(', '), source, page: location.pathname };
+  if (!body.name.trim() || body.phone.replace(/\D/g, '').length < 10) { err.textContent = 'Please add your first name and a 10-digit mobile number.'; err.hidden = false; return; }
+  if (!body.consent) { err.textContent = 'Please check the box so we can text you your options.'; err.hidden = false; return; }
+  $('leadBtn').disabled = true;
+  try {
+    const r = await fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error);
+    $('result').hidden = true; $('done').hidden = false;
+    $('doneHead').textContent = "You're all set, " + body.name.trim().split(' ')[0];
+  } catch (x) { err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
+  finally { $('leadBtn').disabled = false; }
+});
+
+$('shareBtn').addEventListener('click', async () => {
+  const url = location.origin + '/?src=referral';
+  const text = 'Check if fiber internet is available at your address:';
+  if (navigator.share) { try { await navigator.share({ title: 'CheckMyFiber', text, url }); } catch {} }
+  else { await navigator.clipboard.writeText(url); $('shareBtn').textContent = 'Link copied!'; }
+});
+</script>
+</body>
+</html>
