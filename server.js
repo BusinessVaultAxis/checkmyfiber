@@ -85,8 +85,9 @@ app.post('/api/lead', async (req, res) => {
   if (b.website) return res.json({ ok: true }); // honeypot
   try {
     if (!SHEET_WEBHOOK) throw new Error('SHEET_WEBHOOK not set');
-    const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'follow', signal: AbortSignal.timeout(15000) });
-    if (!r.ok) throw new Error('sheet ' + r.status);
+    const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
+    // Apps Script runs doPost, then answers 302 to its output page
+    if (!(r.ok || r.status === 302)) throw new Error('sheet ' + r.status);
     res.json({ ok: true });
   } catch (e) {
     console.error('LEAD NOT SAVED', e.message, JSON.stringify({ ...lead, secret: undefined }));
