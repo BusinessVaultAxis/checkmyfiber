@@ -1,0 +1,11 @@
+body{margin:0;font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:#1F3347;background:#fff;line-height:1.65}
+header{background:#0B1B2B;padding:18px 24px}
+.logo{color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.02em}
+.logo b{color:#7CF2B0}
+main{max-width:760px;margin:0 auto;padding:40px 24px 56px}
+h1{font-size:36px;line-height:1.1;margin:0 0 6px;color:#0B1B2B}
+h2{font-size:20px;margin:30px 0 8px;color:#0B1B2B}
+.updated{color:#4A5D70;font-size:14px;margin:0 0 24px}
+ul{padding-left:20px}
+a{color:#0A4FC4}
+footer{border-top:1px solid #E3E8EF;padding:24px;text-align:center;font-size:14px}

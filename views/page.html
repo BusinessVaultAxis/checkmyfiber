@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Is Fiber Available at My Address? Free Check | CheckMyFiber</title>
-<meta name="description" content="Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your options by text.">
+<title>{{TITLE}}</title>
+<link rel="canonical" href="{{CANON}}">
+{{ROBOTS}}
+<meta name="description" content="{{DESC}}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A4FC4'/%3E%3Cpath d='M5 17.5h3.5l4.5 5L25 9.5' stroke='%23fff' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='9.5' r='2.4' fill='%237CF2B0'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+{{SCHEMA}}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"CheckMyFiber","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","parentOrganization":{"@type":"Organization","name":"Quota"}}
 </script>
@@ -24,6 +27,15 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .logo b{color:#7CF2B0;font-weight:800}
 .logo:hover{color:#fff}
 .call{color:#fff;text-decoration:none;font-size:15px;font-weight:600}.call span{color:#7CF2B0}
+.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;display:flex;align-items:center;justify-content:center;height:56px;border-radius:12px;background:#C2410C;color:#fff;font-weight:700;font-size:17px;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.sticky:hover{color:#fff;background:#9A3412}
+@media (min-width:861px){.sticky{display:none !important}}
+.city{max-width:900px;margin:0 auto;padding:56px 24px 8px}
+.city table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:16px}
+.city th,.city td{text-align:left;padding:12px 10px;border-bottom:1px solid #E3E8EF}
+.city th{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#4A5D70}
+.links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0 0;padding:0;list-style:none}
+.states{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin:4px 0 14px}
 .disc{background:#081320;color:#AEBBC9;font-size:12.5px;text-align:center;padding:7px 16px;line-height:1.4}
 .hero{max-width:760px;margin:0 auto;text-align:center;padding:40px 0 36px}
 .hero .lede{margin-left:auto;margin-right:auto}
@@ -101,8 +113,8 @@ footer p{margin:0 0 8px}
 </header>
 
 <div class="hero">
-<h1>Is fiber available at your address?</h1>
-<p class="lede">Check every fiber provider we sell in about 5 seconds. Free, and we'll text you your exact options.</p>
+<h1>{{H1}}</h1>
+<p class="lede">{{LEDE}}</p>
 <form id="checkForm" novalidate>
 <label class="lbl" for="addr">Street address with city or ZIP</label>
 <div class="addr" style="position:relative">
@@ -149,6 +161,7 @@ footer p{margin:0 0 8px}
 </div>
 </section>
 
+{{CITY}}
 <section class="wrap" style="padding:64px 24px">
 <div class="steps">
 <div><p class="n">Step 1</p><p><strong>Enter your address.</strong> You see what's reported on your block right away.</p></div>
@@ -187,10 +200,12 @@ footer p{margin:0 0 8px}
 </div>
 </section>
 
+<a href="#addr" class="sticky" id="sticky" hidden>Check my address</a>
 <footer>
 <div class="wrap" style="padding:32px 24px">
 <p style="color:#0B1B2B;font-weight:700">CheckMyFiber · Operated by Quota</p>
 <p>CheckMyFiber is an independent sales company, not an internet service provider. Coverage shown is based on FCC National Broadband Map data and is confirmed by our team before any order. Availability, pricing and plans are set by each provider. Provider names are trademarks of their respective owners.</p>
+{{STATES}}
 <p><a href="/privacy">Privacy policy</a> · <a href="/terms">Terms</a></p>
 </div>
 </footer>
@@ -297,8 +312,13 @@ $('leadForm').addEventListener('submit', async e => {
   finally { $('leadBtn').disabled = false; }
 });
 
+// sticky CTA on mobile once the form scrolls away
+const stick = $('sticky');
+new IntersectionObserver(([e]) => { stick.hidden = e.isIntersecting || !$('panel').hidden; }).observe($('checkForm'));
+stick.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => addrIn.focus(), 400); });
+
 $('shareBtn').addEventListener('click', async () => {
-  const url = location.origin + '/?src=referral';
+  const url = location.origin + location.pathname + '?src=referral';
   const text = 'Check if fiber internet is available at your address:';
   if (navigator.share) { try { await navigator.share({ title: 'CheckMyFiber', text, url }); } catch {} }
   else { await navigator.clipboard.writeText(url); $('shareBtn').textContent = 'Link copied!'; }
