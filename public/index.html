@@ -24,7 +24,16 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .logo b{color:#7CF2B0;font-weight:800}
 .logo:hover{color:#fff}
 .call{color:#fff;text-decoration:none;font-size:15px;font-weight:600}.call span{color:#7CF2B0}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:44px 0 80px}
+.disc{background:#081320;color:#AEBBC9;font-size:12.5px;text-align:center;padding:7px 16px;line-height:1.4}
+.hero{max-width:760px;margin:0 auto;text-align:center;padding:40px 0 36px}
+.hero .lede{margin-left:auto;margin-right:auto}
+.hero label.lbl{text-align:left}
+.hero .fine{text-align:center}
+.trust{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 22px;margin:18px 0 0;padding:0;list-style:none;font-size:14.5px;color:#C9D4E0}
+.trust li::before{content:"✓";color:#7CF2B0;font-weight:700;margin-right:7px}
+#panel{text-align:left;margin:28px auto 0;max-width:560px}
+.stripl{margin:0;text-align:center;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7F90A3}
+.strip{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;max-width:900px;margin:12px auto 0;padding:0 0 44px;list-style:none;font-family:Archivo,sans-serif;font-weight:600;font-size:17px;color:#DCE4EE}
 .eyebrow{margin:0 0 14px;font-size:15px;font-weight:600;color:#7CF2B0}
 h1{font-family:Archivo,sans-serif;font-size:54px;line-height:1.03;letter-spacing:-.025em;font-weight:800;margin-bottom:18px}
 .lede{margin:0 0 30px;font-size:19px;line-height:1.55;color:#C9D4E0;max-width:540px}
@@ -79,10 +88,11 @@ h2{font-family:Archivo,sans-serif;font-size:34px;line-height:1.1;font-weight:800
 footer{background:#F5F7FA;border-top:1px solid #E3E8EF;font-size:14px;line-height:1.6;color:#4A5D70}
 footer p{margin:0 0 8px}
 [hidden]{display:none !important}
-@media (max-width:860px){.hero,.two{grid-template-columns:1fr}.hero{gap:36px;padding-top:24px}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid #E3E8EF}.addr{flex-direction:column}.cta{width:100%}h1{font-size:38px}}
+@media (max-width:860px){.two{grid-template-columns:1fr}.hero{padding-top:20px}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid #E3E8EF}.addr{flex-direction:column}.cta{width:100%}h1{font-size:38px}}
 </style>
 </head>
 <body>
+<div class="disc">CheckMyFiber is an independent sales company, not an internet provider. We may be paid by providers when you sign up.</div>
 <section class="dark">
 <div class="wrap">
 <header class="top">
@@ -91,7 +101,6 @@ footer p{margin:0 0 8px}
 </header>
 
 <div class="hero">
-<div>
 <h1>Is fiber available at your address?</h1>
 <p class="lede">Check every fiber provider we sell in about 5 seconds. Free, and we'll text you your exact options.</p>
 <form id="checkForm" novalidate>
@@ -104,16 +113,9 @@ footer p{margin:0 0 8px}
 <p class="err" id="checkErr" role="alert" hidden></p>
 </form>
 <p class="fine">Free. No account, no credit check. We only ask for your number if there's something to offer.</p>
-</div>
 
-<div class="card" id="panel" aria-live="polite">
-<div id="example">
-<h2 style="font-size:24px;margin:0 0 6px">We check 13 fiber networks</h2>
-<p style="margin:0 0 18px;font-size:15px;line-height:1.5;color:#4A5D70">One address check covers every provider we're authorized to sell.</p>
-<ul class="plist"><li>Kinetic</li><li>Brightspeed</li><li>Verizon Fios</li><li>AT&amp;T Fiber</li><li>Frontier</li><li>Quantum Fiber</li><li>Fidium</li><li>Bluepeak</li><li>Ting</li><li>Ripple</li><li>Wire3</li><li>Point Broadband</li><li>Clearwave</li></ul>
-<p class="src" style="border-top:1px solid #E3E8EF;padding-top:14px">Independent sales company, not an internet provider. Coverage from the FCC National Broadband Map, <span class="asof"></span>.</p>
-</div>
-
+<ul class="trust"><li>13 fiber networks</li><li>All 50 states</li><li>FCC data, updated <span class="asof"></span></li></ul>
+<div class="card" id="panel" aria-live="polite" hidden>
 <div id="result" hidden>
 <p class="kicker">Your result</p>
 <p id="resAddr" style="margin:0 0 16px;font-size:15px;color:#33475B"></p>
@@ -140,6 +142,9 @@ footer p{margin:0 0 8px}
 <button type="button" class="cta full" id="shareBtn" style="background:#fff;color:#0A4FC4;border:2px solid #0A4FC4;height:50px;font-size:16px">Know a neighbor? Share this check</button>
 </div>
 </div>
+</div>
+<p class="stripl">Providers we check</p>
+<ul class="strip"><li>Kinetic</li><li>Brightspeed</li><li>Verizon Fios</li><li>AT&amp;T Fiber</li><li>Frontier</li><li>Quantum Fiber</li><li>Fidium</li><li>Bluepeak</li><li>Ting</li><li>Ripple</li><li>Wire3</li><li>Point Broadband</li><li>Clearwave</li></ul>
 </div>
 </div>
 </section>
@@ -249,7 +254,7 @@ $('checkForm').addEventListener('submit', async e => {
 });
 
 function showResult(d) {
-  $('example').hidden = true; $('done').hidden = true; $('result').hidden = false;
+  $('panel').hidden = false; $('done').hidden = true; $('result').hidden = false;
   $('resAddr').textContent = d.matched;
   const n = d.providers.length, box = $('resBox'), list = $('resList');
   list.innerHTML = '';
