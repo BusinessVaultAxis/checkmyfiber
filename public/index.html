@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Check Fiber Internet Availability at Your Address | CheckMyFiber</title>
+<title>Is Fiber Available at My Address? Free Check | CheckMyFiber</title>
 <meta name="description" content="Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your exact plans by text from a local rep.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A4FC4'/%3E%3Cpath d='M5 17.5h3.5l4.5 5L25 9.5' stroke='%23fff' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='9.5' r='2.4' fill='%237CF2B0'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,8 @@ h1,h2,h3{margin:0}
 .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 .dark{background:#0B1B2B;color:#fff}
 header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:Archivo,sans-serif;font-weight:800;font-size:21px;letter-spacing:-.01em}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:Archivo,sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.logo b{color:#7CF2B0;font-weight:800}
 .logo:hover{color:#fff}
 .call{color:#fff;text-decoration:none;font-size:15px;font-weight:600}.call span{color:#7CF2B0}
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:44px 0 80px}
@@ -51,6 +52,10 @@ input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #7CF2
 .chips li{padding:7px 12px;border:1px solid #DDE4EE;border-radius:999px;font-size:14px;font-weight:600;background:#F5F7FA}
 .facts{border-top:1px solid #E3E8EF;padding-top:14px;margin-bottom:12px}
 .facts p{display:flex;gap:8px;align-items:center;margin:0 0 8px;font-size:15px;color:#1F3347}
+#sugg{position:absolute;left:7px;right:7px;top:72px;z-index:20;margin:0;padding:6px;list-style:none;background:#fff;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+#sugg li{padding:12px 14px;border-radius:8px;font-size:16px;color:#0B1B2B;cursor:pointer}
+#sugg li[aria-selected=true],#sugg li:hover{background:#EEF3FB}
+#sugg li span{color:#4A5D70;font-size:14px}
 .src{margin:0;font-size:13px;line-height:1.5;color:#4A5D70}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
 .field label{font-size:14px;font-weight:600}
@@ -82,19 +87,19 @@ footer p{margin:0 0 8px}
 <section class="dark">
 <div class="wrap">
 <header class="top">
-<a class="logo" href="/"><svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M5 17.5h3.5l4.5 5L25 9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9.5" r="2.4" fill="#7CF2B0"/></svg>CheckMyFiber</a>
+<a class="logo" href="/"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M5 17.5h3.5l4.5 5L25 9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9.5" r="2.4" fill="#7CF2B0"/></svg>CheckMy<b>Fiber</b></a>
 <a class="call" id="callLink" href="#" hidden>Call or text <span id="callNum"></span></a>
 </header>
 
 <div class="hero">
 <div>
-<p class="eyebrow" id="eyebrow">Free fiber availability check</p>
-<h1>See which fiber providers serve your address.</h1>
-<p class="lede">Type your address and you'll see right away which fiber networks report coverage on your block. A local rep then confirms your exact plans by text.</p>
+<h1>Is fiber available at your address?</h1>
+<p class="lede">Check every fiber provider we sell in about 5 seconds. Free, and a local rep confirms your exact plans by text.</p>
 <form id="checkForm" novalidate>
 <label class="lbl" for="addr">Street address with city or ZIP</label>
-<div class="addr">
-<input type="text" id="addr" name="address" autocomplete="street-address" placeholder="e.g. 412 Lakeside Ave, 83814" required>
+<div class="addr" style="position:relative">
+<input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="Start typing your address" required>
+<ul id="sugg" role="listbox" hidden></ul>
 <button type="submit" class="cta" id="checkBtn">Check my address</button>
 </div>
 <p class="err" id="checkErr" role="alert" hidden></p>
@@ -123,7 +128,7 @@ footer p{margin:0 0 8px}
 <p class="body" id="resAsk" style="font-size:16px;margin-bottom:14px"></p>
 <form id="leadForm" novalidate>
 <div class="field"><label for="name">First name</label><input id="name" autocomplete="given-name" required></div>
-<div class="field"><label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+<div class="field"><label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" inputmode="tel" required><small style="color:#4A5D70;font-size:13px">Only used to text you about this address. Never sold.</small></div>
 <input class="hp" tabindex="-1" autocomplete="off" name="website" id="website" aria-hidden="true">
 <label class="consent"><input type="checkbox" id="consent"><span>I agree that CheckMyFiber (operated by Quota) may call or text me at this number about internet service, including by automated means. Consent isn't required to buy anything. Msg &amp; data rates may apply. Reply STOP to opt out.</span></label>
 <button type="submit" class="cta full" id="leadBtn">Text me my plans</button>
@@ -202,8 +207,38 @@ const $ = id => document.getElementById(id);
 const fmt = d => d >= 1000 ? (Math.round(d / 100) / 10) + ' Gig' : d + ' Mbps';
 let last = null;
 
+
+// Address suggestions (OpenStreetMap Photon), US only
+const sugg = $('sugg'), addrIn = $('addr'); let tmr, items = [], sel = -1;
+function closeS(){ sugg.hidden = true; addrIn.setAttribute('aria-expanded','false'); sel = -1; }
+function pick(i){ addrIn.value = items[i].full; closeS(); $('checkForm').requestSubmit(); }
+addrIn.addEventListener('input', () => {
+  clearTimeout(tmr); const q = addrIn.value.trim();
+  if (q.length < 5 || !/\d/.test(q)) return closeS();
+  tmr = setTimeout(async () => {
+    try {
+      const r = await fetch('https://photon.komoot.io/api/?limit=5&lang=en&layer=house&bbox=-170,18,-65,72&q=' + encodeURIComponent(q));
+      const d = await r.json();
+      items = d.features.map(f => f.properties).filter(p => p.countrycode === 'US' && p.housenumber && p.street)
+        .map(p => ({ line1: p.housenumber + ' ' + p.street, line2: [p.city || p.town || p.village || p.county, p.state, p.postcode].filter(Boolean).join(', ') }))
+        .map(x => ({ ...x, full: x.line1 + ', ' + x.line2 }));
+      if (!items.length) return closeS();
+      sugg.innerHTML = '';
+      items.forEach((x, i) => { const li = document.createElement('li'); li.role = 'option'; li.id = 'opt' + i; li.textContent = x.line1 + ' '; const sp = document.createElement('span'); sp.textContent = x.line2; li.appendChild(sp); li.addEventListener('mousedown', e => { e.preventDefault(); pick(i); }); sugg.appendChild(li); });
+      sugg.hidden = false; addrIn.setAttribute('aria-expanded','true');
+    } catch { closeS(); }
+  }, 250);
+});
+addrIn.addEventListener('keydown', e => {
+  if (sugg.hidden) return;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; [...sugg.children].forEach((li, i) => li.setAttribute('aria-selected', i === sel)); addrIn.setAttribute('aria-activedescendant', 'opt' + sel); }
+  else if (e.key === 'Enter' && sel >= 0) { e.preventDefault(); pick(sel); }
+  else if (e.key === 'Escape') closeS();
+});
+addrIn.addEventListener('blur', () => setTimeout(closeS, 150));
+
 $('checkForm').addEventListener('submit', async e => {
-  e.preventDefault();
+  e.preventDefault(); closeS();
   const address = $('addr').value.trim();
   const err = $('checkErr'); err.hidden = true;
   if (address.length < 5) { err.textContent = 'Enter your street address with your city or ZIP.'; err.hidden = false; return; }
