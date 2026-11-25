@@ -15,6 +15,31 @@ const cov = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(__dirname, 'dat
 const hexMap = new Map(Object.entries(cov.hex));
 console.log(`coverage loaded: ${hexMap.size} hexes, as of ${cov.asOf}`);
 
+
+// ---------- built-in stats (no cookies, no IPs) ----------
+const STATS_DIR = process.env.STATS_DIR || '/data';
+const STATS_FILE = path.join(STATS_DIR, 'stats.json');
+let stats = { days: {} };
+try { stats = JSON.parse(fs.readFileSync(STATS_FILE, 'utf8')); } catch {}
+let dirty = false;
+setInterval(() => { if (!dirty) return; try { fs.mkdirSync(STATS_DIR, { recursive: true }); fs.writeFileSync(STATS_FILE, JSON.stringify(stats)); dirty = false; } catch (e) { console.error('stats save', e.message); } }, 30000).unref();
+const BOT = /bot|crawl|spider|slurp|preview|monitor|curl|wget|python|headless|lighthouse/i;
+const today = () => new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+function bump(kind, page, source) {
+  const d = (stats.days[today()] ||= { views: 0, checks: 0, leads: 0, pages: {}, sources: {}, results: {} });
+  d[kind]++;
+  const pg = (d.pages[page] ||= { views: 0, checks: 0, leads: 0 }); pg[kind]++;
+  const sr = (d.sources[source] ||= { views: 0, checks: 0, leads: 0 }); sr[kind]++;
+  dirty = true;
+}
+function srcOf(req) {
+  const q = req.query.src || req.query.utm_source;
+  if (q) return String(q).slice(0, 60);
+  try { const h = new URL(req.get('referer')).hostname; if (!h.endsWith(req.hostname)) return h.replace(/^www\./, '').slice(0, 60); } catch {}
+  return 'direct';
+}
+const pageKey = p => String(p || '/').split('?')[0].slice(0, 120);
+
 const app = express();
 app.disable('x-powered-by');
 app.use(express.json({ limit: '20kb' }));
@@ -55,6 +80,8 @@ app.post('/api/check', async (req, res) => {
     const providers = rows
       .sort((a, b) => b[1] - a[1])
       .map(([k, down]) => ({ name: cov.isps[k], down }));
+    bump('checks', pageKey(req.body?.page), String(req.body?.source || 'direct').slice(0, 60));
+    const d = stats.days[today()]; d.results[level] = (d.results[level] || 0) + 1;
     res.json({ found: true, matched: g.matched, zip: g.zip, state: g.state, level, providers });
   } catch (e) {
     console.error('check failed', e.message);
@@ -88,6 +115,7 @@ app.post('/api/lead', async (req, res) => {
     const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
     // Apps Script runs doPost, then answers 302 to its output page
     if (!(r.ok || r.status === 302)) throw new Error('sheet ' + r.status);
+    bump('leads', pageKey(b.page), String(b.source || 'direct').slice(0, 60));
     res.json({ ok: true });
   } catch (e) {
     console.error('LEAD NOT SAVED', e.message, JSON.stringify({ ...lead, secret: undefined }));
@@ -116,6 +144,7 @@ app.set('trust proxy', true);
 const ALL_KEYS = ['kn','bs','vz','att','fr','qf','fi','bp','tg','rp','w3','pb'];
 const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.map(k => `<li>${esc(pname(k))}</li>`).join('')}</ul>`;
 function render(req, o) {
+  if (!o.noCount && !BOT.test(req.get('user-agent') || '')) bump('views', pageKey(req.path), srcOf(req));
   const v = {
     TITLE: o.title, DESC: o.desc, H1: o.h1, LEDE: o.lede,
     CANON: origin(req) + (o.path || req.path), ROBOTS: o.noindex ? '<meta name="robots" content="noindex,follow">' : '',
@@ -197,7 +226,25 @@ ${nearby.length ? `<h3 style="font-size:20px;margin:28px 0 8px">Fiber near ${esc
   }));
 });
 
-app.get('/robots.txt', (req, res) => res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${origin(req)}/sitemap.xml\n`));
+
+app.get('/stats', (req, res) => {
+  if (!process.env.STATS_KEY || req.query.key !== process.env.STATS_KEY) return res.status(404).send('Not found');
+  const days = Object.keys(stats.days).sort().reverse().slice(0, 30);
+  const pct = (a, b) => b ? (100 * a / b).toFixed(1) + '%' : '–';
+  const agg = key => { const m = {}; for (const day of days) for (const [k, v] of Object.entries(stats.days[day][key])) { const t = (m[k] ||= { views: 0, checks: 0, leads: 0 }); t.views += v.views; t.checks += v.checks; t.leads += v.leads; } return Object.entries(m).sort((a, b) => b[1].leads - a[1].leads || b[1].views - a[1].views).slice(0, 40); };
+  const tot = days.reduce((t, d) => (['views', 'checks', 'leads'].forEach(k => t[k] += stats.days[d][k]), t), { views: 0, checks: 0, leads: 0 });
+  const row = (name, v) => `<tr><td>${esc(name)}</td><td>${v.views}</td><td>${v.checks}</td><td>${v.leads}</td><td>${pct(v.checks, v.views)}</td><td>${pct(v.leads, v.checks)}</td><td><b>${pct(v.leads, v.views)}</b></td></tr>`;
+  const head = first => `<tr><th>${first}</th><th>Visits</th><th>Checks</th><th>Leads</th><th>Visit→Check</th><th>Check→Lead</th><th>Visit→Lead</th></tr>`;
+  res.send(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>CheckMyFiber stats</title>
+<style>body{font-family:system-ui,sans-serif;margin:24px;color:#0B1B2B}h1{margin:0 0 4px}h2{margin:28px 0 8px;font-size:18px}table{border-collapse:collapse;width:100%;max-width:900px;font-size:14px}td,th{text-align:left;padding:7px 10px;border-bottom:1px solid #E3E8EF}th{font-size:12px;text-transform:uppercase;color:#4A5D70}.k{display:flex;gap:28px;margin:12px 0}.k div{font-size:13px;color:#4A5D70}.k b{display:block;font-size:28px;color:#0B1B2B}</style>
+<h1>CheckMyFiber stats</h1><p style="color:#4A5D70;margin:0">Last 30 days · visits exclude bots · times in Eastern</p>
+<div class="k"><div><b>${tot.views}</b>Visits</div><div><b>${tot.checks}</b>Address checks</div><div><b>${tot.leads}</b>Leads</div><div><b>${pct(tot.leads, tot.views)}</b>Visit→Lead</div></div>
+<h2>By day</h2><table>${head('Day')}${days.map(d => row(d, stats.days[d])).join('')}</table>
+<h2>By source</h2><table>${head('Source')}${agg('sources').map(([k, v]) => row(k, v)).join('')}</table>
+<h2>By page</h2><table>${head('Page')}${agg('pages').map(([k, v]) => row(k, v)).join('')}</table>`);
+});
+
+app.get('/robots.txt', (req, res) => res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));
 app.get('/sitemap.xml', (req, res) => {
   const o = origin(req), d = '2026-11-19';
   const urls = [`${o}/`, ...[...byState.keys()].filter(st => STATES[st]).map(st => `${o}/fiber-internet/${st.toLowerCase()}`),
@@ -207,7 +254,7 @@ app.get('/sitemap.xml', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'], maxAge: '1h', index: false }));
 app.use((req, res) => res.status(404).send(render(req, {
-  title: 'Page not found | CheckMyFiber', desc: 'Check fiber availability at your address.', noindex: true,
+  title: 'Page not found | CheckMyFiber', desc: 'Check fiber availability at your address.', noindex: true, noCount: true,
   h1: "That page doesn't exist, but your fiber check does.", lede: 'Enter your address to see which fiber providers report service on your block.',
 })));
 app.listen(PORT, () => console.log('listening on ' + PORT));
