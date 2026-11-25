@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 {{SCHEMA}}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"CheckMyFiber","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","parentOrganization":{"@type":"Organization","name":"Quota"}}
+{"@context":"https://schema.org","@type":"Organization","name":"CheckMyFiber","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","telephone":"+1-917-720-6053","parentOrganization":{"@type":"Organization","name":"Quota"}}
 </script>
 <style>
 *{box-sizing:border-box}
@@ -202,7 +202,7 @@ footer p{margin:0 0 8px}
 <a href="#addr" class="sticky" id="sticky" hidden>Check my address</a>
 <footer>
 <div class="wrap" style="padding:32px 24px">
-<p style="color:#0B1B2B;font-weight:700">CheckMyFiber · Operated by Quota</p>
+<p style="color:#0B1B2B;font-weight:700">CheckMyFiber · Operated by Quota · <a href="tel:+19177206053">(917) 720-6053</a></p>
 <p>CheckMyFiber is an independent sales company, not an internet service provider. Coverage shown is based on FCC National Broadband Map data and is confirmed by our team before any order. Availability, pricing and plans are set by each provider. Provider names are trademarks of their respective owners.</p>
 {{STATES}}
 <p><a href="/privacy">Privacy policy</a> · <a href="/terms">Terms</a></p>
@@ -210,7 +210,7 @@ footer p{margin:0 0 8px}
 </footer>
 
 <script>
-const PHONE = ''; // e.g. '(208) 555-0100' — shows "Call or text" in the header when set
+const PHONE = '(917) 720-6053';
 const ASOF = 'June 2026 data';
 if (PHONE) { const a = document.getElementById('callLink'); a.hidden = false; a.href = 'tel:' + PHONE.replace(/\D/g, ''); document.getElementById('callNum').textContent = PHONE; }
 document.querySelectorAll('.asof').forEach(e => e.textContent = ASOF);
