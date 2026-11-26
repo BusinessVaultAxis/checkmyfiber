@@ -42,6 +42,8 @@ const pageKey = p => String(p || '/').split('?')[0].slice(0, 120);
 
 const app = express();
 app.disable('x-powered-by');
+// www → apex
+app.use((req, res, next) => req.hostname?.startsWith('www.') ? res.redirect(301, `https://${req.hostname.slice(4)}${req.originalUrl}`) : next());
 app.use(express.json({ limit: '20kb' }));
 
 function lookup(lat, lng) {
