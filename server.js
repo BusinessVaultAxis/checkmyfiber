@@ -125,6 +125,60 @@ app.post('/api/lead', async (req, res) => {
   }
 });
 
+// ---------- customer referrals ----------
+const REFER_TPL = fs.readFileSync(path.join(__dirname, 'views/refer.html'), 'utf8');
+// $100 holiday reward through Dec 31, 2026 (Eastern), then $50. The page itself switches on its own too.
+const promoOn = () => Date.now() < Date.parse('2027-01-01T00:00:00-05:00');
+app.get(['/refer', '/refer/:rep'], (req, res) => {
+  if (!BOT.test(req.get('user-agent') || '')) bump('views', '/refer', srcOf(req));
+  const html = promoOn() ? REFER_TPL : REFER_TPL
+    .replace('content="Get $100 for every friend who gets fiber"', 'content="Get $50 for every friend who gets fiber"')
+    .replace('<title>Get $100', '<title>Get $50');
+  res.set('Cache-Control', 'no-cache').send(html.replace('https://myfibercheck.com/refer-card.png', `${origin(req)}/refer-card-${promoOn() ? 100 : 50}.png`));
+});
+
+app.post('/api/referral', async (req, res) => {
+  const b = req.body || {}, f = b.friend || {}, me = b.referrer || {};
+  const clean = (v, n = 120) => String(v ?? '').replace(/[\r\n\t]+/g, ' ').trim().slice(0, n);
+  if (b.website) return res.json({ ok: true }); // honeypot
+  const friendName = clean(f.name, 60), friendPhone = clean(f.phone, 30);
+  const refName = clean(me.name, 60), refPhone = clean(me.phone, 30);
+  if (!friendName || friendPhone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: "Please add your friend's name and a 10-digit phone number." });
+  if (!refName || refPhone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: 'Please add your name and a 10-digit phone number.' });
+  const rep = clean(b.rep, 40);
+  const extras = [
+    f.interest?.length && 'Wants: ' + clean([].concat(f.interest).join(', '), 80),
+    f.time && 'Best time: ' + clean(f.time, 30),
+    f.rel && 'Relationship: ' + clean(f.rel, 30),
+    f.notes && 'Notes: ' + clean(f.notes, 300),
+  ].filter(Boolean).join(' | ');
+  const lead = {
+    secret: SHEET_SECRET,
+    name: friendName,
+    phone: friendPhone,
+    email: clean(f.email, 120),
+    address: clean(f.addr, 200),
+    matched: '', zip: '', state: '',
+    status: 'Referral',
+    providers: extras,
+    source: `Referral from ${refName} ${refPhone}` + (rep ? ` · rep ${rep}` : '') + (b.reward ? ` · reward ${clean(b.reward, 8)}` : ''),
+    consent: 'via referrer',
+    page: clean(b.page, 100) || '/refer',
+    // extra fields for a Referrals tab, if the sheet script uses them
+    type: 'referral', referrer_name: refName, referrer_phone: refPhone, rep, reward: clean(b.reward, 8),
+  };
+  try {
+    if (!SHEET_WEBHOOK) throw new Error('SHEET_WEBHOOK not set');
+    const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
+    if (!(r.ok || r.status === 302)) throw new Error('sheet ' + r.status);
+    bump('leads', '/refer', 'referral' + (rep ? ':' + rep : ''));
+    res.json({ ok: true });
+  } catch (e) {
+    console.error('REFERRAL NOT SAVED', e.message, JSON.stringify({ ...lead, secret: undefined }));
+    res.status(502).json({ error: 'Something went wrong saving your referral.' });
+  }
+});
+
 app.get('/healthz', (_q, r) => r.send('ok'));
 
 // ---------- pages ----------
