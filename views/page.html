@@ -36,6 +36,10 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .city th{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#4A5D70}
 .links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0 0;padding:0;list-style:none}
 .states{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin:4px 0 14px}
+.endcta{border-radius:18px;padding:40px 32px;text-align:center}
+.endcta h2{font-size:30px;margin:0 0 8px}
+.endcta p{margin:0 0 22px;color:#C9D4E0;font-size:17px}
+.endcta .addr{max-width:640px;margin:0 auto;text-align:left}
 .disc{background:#081320;color:#AEBBC9;font-size:12.5px;text-align:center;padding:7px 16px;line-height:1.4}
 .hero{max-width:760px;margin:0 auto;text-align:center;padding:40px 0 36px}
 .hero .lede{margin-left:auto;margin-right:auto}
@@ -124,7 +128,7 @@ footer p{margin:0 0 8px}
 </div>
 <p class="err" id="checkErr" role="alert" hidden></p>
 </form>
-<p class="fine">Free. No account, no credit check. We only ask for your number if there's something to offer.</p>
+<p class="fine">Free. No account, no credit check, no obligation.</p>
 
 <ul class="trust"><li>13 fiber networks</li><li>All 50 states</li><li>FCC data, updated <span class="asof"></span></li></ul>
 <div class="card" id="panel" aria-live="polite" hidden>
@@ -177,7 +181,7 @@ footer p{margin:0 0 8px}
 <p class="body">We work with Kinetic, Brightspeed, Verizon Fios, AT&amp;T Fiber, Frontier, Quantum Fiber, Fidium, BluePeak, Ting, Ripple, Wire3, Point Broadband and Clearwave, so you get the options that actually reach your home.</p>
 </div>
 <div class="rep">
-<p style="margin:0;font-size:18px;font-weight:700">A real local team</p>
+<p style="margin:0;font-size:18px;font-weight:700">A real team, not a call center</p>
 <p style="margin:2px 0 0;font-size:15px;color:#4A5D70">Quota · fiber sales</p>
 <q>My team sells fiber door to door. We built this so you can find out what's available without waiting for someone to knock. When you check your address, the text you get back comes from one of us.</q>
 </div>
@@ -193,9 +197,13 @@ footer p{margin:0 0 8px}
 </section>
 
 <section class="wrap" style="padding:40px 24px 80px;max-width:820px">
-<div class="dark" style="border-radius:18px;padding:36px">
-<h2 style="font-size:28px">Check your address</h2>
-<a href="#addr" class="cta" style="display:inline-flex;align-items:center;text-decoration:none" onclick="setTimeout(()=>document.getElementById('addr').focus(),300)">Check my address</a>
+<div class="dark endcta">
+<h2>Ready to see what reaches your home?</h2>
+<p>Free, takes about 5 seconds, and there's no obligation.</p>
+<form id="endForm" novalidate>
+<label class="lbl" for="addr2" style="position:absolute;left:-9999px">Street address with city or ZIP</label>
+<div class="addr"><input type="text" id="addr2" autocomplete="street-address" placeholder="Enter your street address"><button type="submit" class="cta">Check my address</button></div>
+</form>
 </div>
 </section>
 
@@ -315,6 +323,14 @@ $('leadForm').addEventListener('submit', async e => {
 const stick = $('sticky');
 new IntersectionObserver(([e]) => { stick.hidden = e.isIntersecting || !$('panel').hidden; }).observe($('checkForm'));
 stick.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => addrIn.focus(), 400); });
+
+// bottom form hands its address to the main check
+$('endForm').addEventListener('submit', e => {
+  e.preventDefault();
+  addrIn.value = $('addr2').value.trim() || addrIn.value;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (addrIn.value.trim()) $('checkForm').requestSubmit(); else setTimeout(() => addrIn.focus(), 400);
+});
 
 $('shareBtn').addEventListener('click', async () => {
   const url = location.origin + location.pathname + '?src=referral';
