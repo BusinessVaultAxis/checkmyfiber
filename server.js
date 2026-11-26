@@ -96,7 +96,7 @@ app.post('/api/check', async (req, res) => {
       .sort((a, b) => b[1] - a[1])
       .map(([k, down]) => ({ name: cov.isps[k], down }));
     bump('checks', pageKey(req.body?.page), String(req.body?.source || 'direct').slice(0, 60), req);
-    const d = stats.days[today()]; if (d) d.results[level] = (d.results[level] || 0) + 1;
+    const d = stats.days[today()]; if (d && !isOwner(req)) { d.results[level] = (d.results[level] || 0) + 1; d.states ||= {}; if (g.state) d.states[g.state] = (d.states[g.state] || 0) + 1; d.provs ||= {}; for (const p of providers) d.provs[p.name] = (d.provs[p.name] || 0) + 1; }
     res.json({ found: true, matched: g.matched, zip: g.zip, state: g.state, level, providers });
   } catch (e) {
     console.error('check failed', e.message);
@@ -219,7 +219,19 @@ app.set('trust proxy', true);
 const ALL_KEYS = ['kn','bs','vz','att','fr','qf','fi','bp','tg','rp','w3','pb'];
 const SHORT = { kn: ['Kinetic'], bs: ['Brightspeed'], vz: ['Verizon Fios'], att: ['AT&T Fiber'], fr: ['Frontier'], qf: ['Quantum Fiber'], fi: ['Fidium'], bp: ['Bluepeak'], tg: ['Ting'], rp: ['Ripple'], w3: ['Wire3'], pb: ['Point Broadband', 'Clearwave'] };
 const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+function botName(ua) {
+  if (/googlebot|google-inspectiontool|adsbot-google/i.test(ua)) return 'Google';
+  if (/bingbot|msnbot/i.test(ua)) return 'Bing';
+  if (/facebookexternalhit|meta-externalagent/i.test(ua)) return 'Facebook link preview';
+  if (/applebot/i.test(ua)) return 'Apple';
+  if (/ahrefs|semrush|mj12|dotbot|rogerbot|screaming/i.test(ua)) return 'SEO tools';
+  if (/gptbot|claudebot|perplexity|oai-searchbot|ccbot/i.test(ua)) return 'AI search';
+  if (BOT.test(ua)) return 'Other bots';
+  return null;
+}
 function render(req, o) {
+  const bn = botName(req.get('user-agent') || '');
+  if (bn) { const d = (stats.days[today()] ||= { views: 0, checks: 0, leads: 0, uniq: [], mobile: 0, pages: {}, sources: {}, results: {} }); d.bots ||= {}; d.bots[bn] = (d.bots[bn] || 0) + 1; if (bn === 'Google') { d.gpages ||= {}; d.gpages[pageKey(req.path)] = 1; } dirty = true; }
   const v = {
     TITLE: o.title, DESC: o.desc, H1: o.h1, LEDE: o.lede,
     CANON: origin(req) + (o.path || req.path), ROBOTS: o.noindex ? '<meta name="robots" content="noindex,follow">' : '',
@@ -317,6 +329,7 @@ app.get('/stats', (req, res) => {
   const fmtT = t => new Date(t).toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
   const label = { views: 'Visited', checks: 'Checked an address', leads: 'Became a lead' };
   const owner = isOwner(req);
+  const sumMap = key => { const m = {}; for (const d of days) for (const [k, v] of Object.entries(stats.days[d][key] || {})) m[k] = (m[k] || 0) + v; return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 25); };
   res.send(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>MyFiberCheck stats</title>
 <style>body{font-family:system-ui,-apple-system,sans-serif;margin:0;color:#0B1B2B;background:#F5F7FA}main{max-width:980px;margin:0 auto;padding:24px 18px 60px}h1{margin:0;font-size:26px}h2{margin:30px 0 10px;font-size:17px}.note{color:#4A5D70;font-size:14px;margin:4px 0 0}.ok{display:inline-block;margin-top:10px;background:#E7F6EE;color:#0E5E36;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.tile{background:#fff;border:1px solid #E3E8EF;border-radius:14px;padding:16px;font-size:13px;color:#4A5D70}.tile b{display:block;font-size:30px;color:#0B1B2B;line-height:1.1;margin-bottom:4px}.tile span{display:block;margin-top:4px;font-size:12px}table{border-collapse:collapse;width:100%;background:#fff;border:1px solid #E3E8EF;border-radius:12px;overflow:hidden;font-size:14px}td,th{text-align:left;padding:9px 12px;border-bottom:1px solid #EEF1F5}th{font-size:12px;text-transform:uppercase;color:#4A5D70;background:#FAFBFC}tr:last-child td{border-bottom:0}.lead td{background:#E7F6EE;font-weight:600}@media(max-width:700px){.tiles{grid-template-columns:repeat(2,1fr)}}</style>
 <main><h1>MyFiberCheck stats</h1><p class="note">Only real people are counted: browsers that load the page. Bots, crawlers and your own devices are excluded. Times are Eastern.</p>
@@ -327,6 +340,10 @@ ${owner ? '<span class="ok">✓ This device is excluded from the stats</span>' :
 <h2>By day</h2><table><tr><th>Day</th><th>Visitors</th><th>Checks</th><th>Leads</th><th>Visitor → lead</th></tr>${days.map(d => { const x = stats.days[d]; return `<tr><td>${d}</td><td>${U(x)}</td><td>${x.checks}</td><td>${x.leads}</td><td>${pct(x.leads, U(x))}</td></tr>`; }).join('') || '<tr><td colspan="5">–</td></tr>'}</table>
 <h2>Where visitors come from</h2><table><tr><th>Source</th><th>Page views</th><th>Checks</th><th>Leads</th></tr>${agg('sources').map(([k, v]) => row(k, v)).join('') || '<tr><td colspan="4">–</td></tr>'}</table>
 <h2>Which pages they land on</h2><table><tr><th>Page</th><th>Page views</th><th>Checks</th><th>Leads</th></tr>${agg('pages').map(([k, v]) => row(k, v)).join('') || '<tr><td colspan="4">–</td></tr>'}</table>
+<h2>What people's checks found</h2><table><tr><th>Result</th><th>Checks (30 days)</th></tr>${[['exact','Fiber reported at the address'],['nearby','Fiber reported next door'],['none','Nothing on the map (manual check)']].map(([k,l]) => `<tr><td>${l}</td><td>${days.reduce((n, d) => n + ((stats.days[d].results || {})[k] || 0), 0)}</td></tr>`).join('')}</table>
+<h2>Providers found in checks</h2><table><tr><th>Provider</th><th>Times found (30 days)</th></tr>${sumMap('provs').map(([k, v]) => `<tr><td>${esc(k)}</td><td>${v}</td></tr>`).join('') || '<tr><td colspan="2">–</td></tr>'}</table>
+<h2>Checks by state</h2><table><tr><th>State</th><th>Checks (30 days)</th></tr>${sumMap('states').map(([k, v]) => `<tr><td>${esc(STATES[k] || k)}</td><td>${v}</td></tr>`).join('') || '<tr><td colspan="2">–</td></tr>'}</table>
+<h2>Crawlers (not counted as visitors)</h2><p class="note" style="margin-bottom:10px">Google and Bing reading your pages is how search traffic starts. ${days.reduce((n, d) => n + Object.keys(stats.days[d].gpages || {}).length, 0)} page-visits by Google in the last 30 days.</p><table><tr><th>Crawler</th><th>Page hits (30 days)</th><th>Today</th></tr>${sumMap('bots').map(([k, v]) => `<tr><td>${esc(k)}</td><td>${v}</td><td>${(td.bots || {})[k] || 0}</td></tr>`).join('') || '<tr><td colspan="3">–</td></tr>'}</table>
 </main>`);
 });
 
