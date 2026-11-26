@@ -40,6 +40,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .endcta h2{font-size:30px;margin:0 0 8px}
 .endcta p{margin:0 0 22px;color:#C9D4E0;font-size:17px}
 .endcta .addr{max-width:640px;margin:0 auto;text-align:left}
+.callw{font-style:normal}
 .disc{background:#081320;color:#AEBBC9;font-size:12.5px;text-align:center;padding:7px 16px;line-height:1.4}
 .hero{max-width:760px;margin:0 auto;text-align:center;padding:40px 0 36px}
 .hero .lede{margin-left:auto;margin-right:auto}
@@ -104,7 +105,7 @@ h2{font-family:Archivo,sans-serif;font-size:34px;line-height:1.1;font-weight:800
 footer{background:#F5F7FA;border-top:1px solid #E3E8EF;font-size:14px;line-height:1.6;color:#4A5D70}
 footer p{margin:0 0 8px}
 [hidden]{display:none !important}
-@media (max-width:860px){.two{grid-template-columns:1fr}.hero{padding-top:20px}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid #E3E8EF}.addr{flex-direction:column}.cta{width:100%}h1{font-size:38px}}
+@media (max-width:860px){header.top{flex-wrap:nowrap}.callw{display:none}.call{white-space:nowrap;font-size:14px}.two{grid-template-columns:1fr}.hero{padding-top:20px}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid #E3E8EF}.addr{flex-direction:column}.cta{width:100%}h1{font-size:38px}}
 </style>
 </head>
 <body>
@@ -113,7 +114,7 @@ footer p{margin:0 0 8px}
 <div class="wrap">
 <header class="top">
 <a class="logo" href="/"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M5 17.5h3.5l4.5 5L25 9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9.5" r="2.4" fill="#7CF2B0"/></svg><span>CheckMy<b>Fiber</b></span></a>
-<a class="call" id="callLink" href="#" hidden>Call or text <span id="callNum"></span></a>
+<a class="call" id="callLink" href="#" hidden><i class="callw">Call or text </i><span id="callNum"></span></a>
 </header>
 
 <div class="hero">
