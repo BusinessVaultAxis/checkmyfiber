@@ -142,7 +142,8 @@ const origin = req => (process.env.SITE_URL || `${req.protocol}://${req.get('hos
 app.set('trust proxy', true);
 
 const ALL_KEYS = ['kn','bs','vz','att','fr','qf','fi','bp','tg','rp','w3','pb'];
-const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.map(k => `<li>${esc(pname(k))}</li>`).join('')}</ul>`;
+const SHORT = { kn: ['Kinetic'], bs: ['Brightspeed'], vz: ['Verizon Fios'], att: ['AT&T Fiber'], fr: ['Frontier'], qf: ['Quantum Fiber'], fi: ['Fidium'], bp: ['Bluepeak'], tg: ['Ting'], rp: ['Ripple'], w3: ['Wire3'], pb: ['Point Broadband', 'Clearwave'] };
+const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
 function render(req, o) {
   if (!o.noCount && !BOT.test(req.get('user-agent') || '')) bump('views', pageKey(req.path), srcOf(req));
   const v = {
