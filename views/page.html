@@ -99,7 +99,7 @@ input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #7CF2
 h2{font-family:Archivo,sans-serif;font-size:34px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
 .body{margin:0 0 16px;font-size:17px;line-height:1.6;color:#33475B}
 .rep{background:#fff;border-radius:16px;padding:28px}
-.rep q{display:block;font-size:17px;line-height:1.6;color:#1F3347;quotes:'"' '"';margin-top:14px}
+.rep q{display:block;font-size:17px;line-height:1.6;color:#1F3347;quotes:none;margin-top:14px}
 .q{border-top:1px solid #E3E8EF;padding:22px 0}.q:last-child{border-bottom:1px solid #E3E8EF}
 .q h3{font-size:18px;font-weight:700;margin-bottom:6px}.q p{margin:0;font-size:16px;line-height:1.6;color:#33475B}
 footer{background:#F5F7FA;border-top:1px solid #E3E8EF;font-size:14px;line-height:1.6;color:#4A5D70}
@@ -182,9 +182,13 @@ footer p{margin:0 0 8px}
 <p class="body">We work with Kinetic, Brightspeed, Verizon Fios, AT&amp;T Fiber, Frontier, Quantum Fiber, Fidium, Bluepeak, Ting, Ripple, Wire3, Point Broadband and Clearwave, so you get the options that actually reach your home.</p>
 </div>
 <div class="rep">
-<div style="display:flex;gap:14px;align-items:center"><img src="/rep.jpg" alt="A member of our fiber sales team" width="96" height="96" loading="lazy" style="width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none;background:#EEF3FB;border:2px solid #DDE4EE"><div><p style="margin:0;font-size:18px;font-weight:700">A real team, not a call center</p>
-<p style="margin:2px 0 0;font-size:15px;color:#4A5D70">Quota · fiber sales</p></div></div>
-<q>My team sells fiber door to door. We built this so you can find out what's available without waiting for someone to knock. When you check your address, the text you get back comes from one of us.</q>
+<p style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5D70">A real team, not a call center</p>
+<span aria-hidden="true" style="display:block;font-family:Archivo,sans-serif;font-size:64px;line-height:.8;color:#0A4FC4;margin-top:10px">&ldquo;</span>
+<q style="margin-top:0;font-size:18px">My team sells fiber door to door. We built this so you can find out what's available without waiting for someone to knock. When you check your address, the text you get back comes from one of us.</q>
+<div style="display:flex;gap:14px;align-items:center;margin-top:20px;padding-top:18px;border-top:1px solid #E3E8EF">
+<img src="/rep.jpg" alt="{{REPNAME}}, {{REPTITLE}}" width="72" height="72" loading="lazy" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex:none;background:#EEF3FB;border:2px solid #DDE4EE">
+<div><p style="margin:0;font-size:17px;font-weight:700">{{REPNAME}}</p><p style="margin:2px 0 0;font-size:14px;color:#4A5D70">{{REPTITLE}}</p><p style="margin:4px 0 0;font-size:14px"><a href="sms:+19177206053">Text me: (917) 720-6053</a></p></div>
+</div>
 </div>
 </div>
 </section>

@@ -206,9 +206,9 @@ function render(req, o) {
     TITLE: o.title, DESC: o.desc, H1: o.h1, LEDE: o.lede,
     CANON: origin(req) + (o.path || req.path), ROBOTS: o.noindex ? '<meta name="robots" content="noindex,follow">' : '',
     CITY: o.city || '', STRIP: stripHtml(o.strip || ALL_KEYS, o.stripLabel || 'Providers we check'), SCHEMA: o.schema ? `<script type="application/ld+json">${JSON.stringify(o.schema).replace(/</g, '\\u003c')}</script>` : '',
-    STATES: STATES_HTML,
+    STATES: STATES_HTML, REPNAME: esc(process.env.REP_NAME || 'Aidan'), REPTITLE: esc(process.env.REP_TITLE || 'Founder, Quota'),
   };
-  return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP)\}\}/g, (_, k) => (k === 'TITLE' || k === 'DESC' || k === 'H1' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
+  return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP|REPNAME|REPTITLE)\}\}/g, (_, k) => (k === 'TITLE' || k === 'DESC' || k === 'H1' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
 }
 
 app.get('/', (req, res) => res.send(render(req, {
