@@ -218,19 +218,20 @@ footer p{margin:0 0 8px}
 <p style="color:#0B1B2B;font-weight:700">MyFiberCheck · Operated by Quota · <a href="tel:+19177206053">(917) 720-6053</a></p>
 <p>MyFiberCheck is an independent sales company, not an internet service provider. Coverage shown is based on FCC National Broadband Map data and is confirmed by our team before any order. Availability, pricing and plans are set by each provider. Provider names are trademarks of their respective owners.</p>
 {{STATES}}
-<p><a href="/privacy">Privacy policy</a> · <a href="/terms">Terms</a></p>
+<p><a href="/about">About &amp; how it works</a> · <a href="/privacy">Privacy policy</a> · <a href="/terms">Terms</a></p>
 </div>
 </footer>
 
+<script src="/t.js"></script>
 <script>
 const PHONE = '(917) 720-6053';
 const ASOF = 'June 2026 data';
 if (PHONE) { const a = document.getElementById('callLink'); a.hidden = false; a.href = 'tel:' + PHONE.replace(/\D/g, ''); document.getElementById('callNum').textContent = PHONE; }
 document.querySelectorAll('.asof').forEach(e => e.textContent = ASOF);
 const qs = new URLSearchParams(location.search);
-const source = qs.get('src') || qs.get('utm_source') || (document.referrer ? new URL(document.referrer).hostname : 'direct');
+const source = (window.mfc && mfc.source) || qs.get('src') || qs.get('utm_source') || 'direct';
+const T = (e, d, once) => { try { window.mfc && mfc.track(e, d, once); } catch {} };
 const $ = id => document.getElementById(id);
-try { navigator.sendBeacon('/api/v', JSON.stringify({ page: location.pathname, source })); } catch {}
 const fmt = d => d >= 1000 ? (Math.round(d / 100) / 10) + ' Gig' : d + ' Mbps';
 let last = null;
 
@@ -238,9 +239,11 @@ let last = null;
 // Address suggestions (OpenStreetMap Photon), US only
 const sugg = $('sugg'), addrIn = $('addr'); let tmr, items = [], sel = -1;
 function closeS(){ sugg.hidden = true; addrIn.setAttribute('aria-expanded','false'); sel = -1; }
-function pick(i){ addrIn.value = items[i].full; closeS(); $('checkForm').requestSubmit(); }
+function pick(i){ T('suggest_pick'); addrIn.value = items[i].full; closeS(); $('checkForm').requestSubmit(); }
+addrIn.addEventListener('focus', () => T('addr_focus', null, true));
 addrIn.addEventListener('input', () => {
   clearTimeout(tmr); const q = addrIn.value.trim();
+  if (q.length >= 5) T('addr_typed', null, true);
   if (q.length < 5 || !/\d/.test(q)) return closeS();
   tmr = setTimeout(async () => {
     try {
@@ -252,7 +255,7 @@ addrIn.addEventListener('input', () => {
       if (!items.length) return closeS();
       sugg.innerHTML = '';
       items.forEach((x, i) => { const li = document.createElement('li'); li.role = 'option'; li.id = 'opt' + i; li.textContent = x.line1 + ' '; const sp = document.createElement('span'); sp.textContent = x.line2; li.appendChild(sp); li.addEventListener('mousedown', e => { e.preventDefault(); pick(i); }); sugg.appendChild(li); });
-      sugg.hidden = false; addrIn.setAttribute('aria-expanded','true');
+      sugg.hidden = false; addrIn.setAttribute('aria-expanded','true'); T('suggest_shown', null, true);
     } catch { closeS(); }
   }, 250);
 });
@@ -268,16 +271,18 @@ $('checkForm').addEventListener('submit', async e => {
   e.preventDefault(); closeS();
   const address = $('addr').value.trim();
   const err = $('checkErr'); err.hidden = true;
-  if (address.length < 5) { err.textContent = 'Enter your street address with your city or ZIP.'; err.hidden = false; return; }
+  if (address.length < 5) { T('check_too_short'); err.textContent = 'Enter your street address with your city or ZIP.'; err.hidden = false; return; }
+  T('check_submit', { len: address.length, hasZip: /\b\d{5}\b/.test(address) });
   $('checkBtn').disabled = true; $('checkBtn').textContent = 'Checking…';
   try {
     const r = await fetch('/api/check', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ address, page: location.pathname, source }) });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error);
-    if (!d.found) { err.textContent = "We couldn't find that address. Add your city and ZIP, like \"412 Lakeside Ave, Mesa AZ 85201\"."; err.hidden = false; return; }
+    if (!d.found) { T('check_notfound', { hasZip: /\b\d{5}\b/.test(address) }); err.textContent = "We couldn't find that address. Add your city and ZIP, like \"412 Lakeside Ave, Mesa AZ 85201\"."; err.hidden = false; return; }
     last = { address, ...d };
+    T('check_result', { level: d.level, n: d.providers.length, st: d.state });
     showResult(d);
-  } catch (x) { err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
+  } catch (x) { T('check_error', { msg: String(x.message).slice(0, 60) }); err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
   finally { $('checkBtn').disabled = false; $('checkBtn').textContent = 'Check my address'; }
 });
 
@@ -312,33 +317,39 @@ $('leadForm').addEventListener('submit', async e => {
   const body = { name: $('name').value, phone: $('phone').value, consent: $('consent').checked, website: $('website').value,
     address: last.address, matched: last.matched, zip: last.zip, state: last.state, status: last.status,
     providers: last.providers.map(p => p.name + ' (' + fmt(p.down) + ')').join(', '), source, page: location.pathname };
-  if (!body.name.trim() || body.phone.replace(/\D/g, '').length < 10) { err.textContent = 'Please add your first name and a 10-digit mobile number.'; err.hidden = false; return; }
-  if (!body.consent) { err.textContent = 'Please check the box so we can text you your options.'; err.hidden = false; return; }
+  T('lead_submit');
+  if (!body.name.trim() || body.phone.replace(/\D/g, '').length < 10) { T('lead_invalid', { why: !body.name.trim() ? 'name' : 'phone' }); err.textContent = 'Please add your first name and a 10-digit mobile number.'; err.hidden = false; return; }
+  if (!body.consent) { T('lead_invalid', { why: 'consent' }); err.textContent = 'Please check the box so we can text you your options.'; err.hidden = false; return; }
   $('leadBtn').disabled = true;
   try {
     const r = await fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error);
+    T('lead_ok', { status: last.status });
     $('result').hidden = true; $('done').hidden = false;
     $('doneHead').textContent = "You're all set, " + body.name.trim().split(' ')[0];
-  } catch (x) { err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
+  } catch (x) { T('lead_error', { msg: String(x.message).slice(0, 60) }); err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
   finally { $('leadBtn').disabled = false; }
 });
+
+['name','phone'].forEach(id => $(id).addEventListener('focus', () => T(id + '_focus', null, true)));
+$('consent').addEventListener('change', e => { if (e.target.checked) T('consent_on', null, true); });
 
 // sticky CTA on mobile once the form scrolls away
 const stick = $('sticky');
 new IntersectionObserver(([e]) => { stick.hidden = e.isIntersecting || !$('panel').hidden; }).observe($('checkForm'));
-stick.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => addrIn.focus(), 400); });
+stick.addEventListener('click', e => { e.preventDefault(); T('sticky_tap'); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => addrIn.focus(), 400); });
 
 // bottom form hands its address to the main check
 $('endForm').addEventListener('submit', e => {
-  e.preventDefault();
+  e.preventDefault(); T('bottom_form');
   addrIn.value = $('addr2').value.trim() || addrIn.value;
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (addrIn.value.trim()) $('checkForm').requestSubmit(); else setTimeout(() => addrIn.focus(), 400);
 });
 
 $('shareBtn').addEventListener('click', async () => {
+  T('share_tap');
   const url = location.origin + location.pathname + '?src=referral';
   const text = 'Check if fiber internet is available at your address:';
   if (navigator.share) { try { await navigator.share({ title: 'MyFiberCheck', text, url }); } catch {} }

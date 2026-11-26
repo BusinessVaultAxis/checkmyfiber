@@ -1,0 +1,19 @@
+# MyFiberCheck
+
+> Free fiber internet availability check for U.S. addresses. Enter a street address to see which fiber providers report service there, based on FCC National Broadband Map data (June 2026). Run by Quota, an independent fiber sales team; not an internet service provider.
+
+## What it does
+- Checks a street address against fiber coverage reported to the FCC by Kinetic, Brightspeed, Verizon Fios, AT&T Fiber, Frontier, Quantum Fiber, Fidium, Bluepeak, Ting, Ripple, Wire3, Point Broadband and Clearwave.
+- Shows which of those providers report fiber at or next to the address, with their fastest advertised speed.
+- A person on the team confirms the exact address and can help set up service.
+
+## Key pages
+- [Check fiber at an address](https://myfibercheck.com/): the free availability check.
+- [About and methodology](https://myfibercheck.com/about): data sources, accuracy and how the business is paid.
+- State pages: https://myfibercheck.com/fiber-internet/{state}, for example [Texas](https://myfibercheck.com/fiber-internet/tx), listing fiber providers and top speeds by city.
+- City pages: https://myfibercheck.com/fiber-internet/{state}/{city}, for example [Mesa, AZ](https://myfibercheck.com/fiber-internet/az/mesa), with homes covered, providers and top speeds per city.
+- [Sitemap](https://myfibercheck.com/sitemap.xml)
+
+## Notes for accuracy
+- FCC data reflects what providers report and can lag new construction by several months; availability should be confirmed for a specific address.
+- Contact: (917) 720-6053

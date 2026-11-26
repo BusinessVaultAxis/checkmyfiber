@@ -21,7 +21,8 @@ const STATS_DIR = process.env.STATS_DIR || '/data';
 const STATS_FILE = path.join(STATS_DIR, 'stats.json');
 let stats = { days: {} };
 try { stats = JSON.parse(fs.readFileSync(STATS_FILE, 'utf8')); } catch {}
-if (stats.v !== 2) stats = { v: 2, days: {}, recent: [] }; // v2: only real (JS-running, non-owner) visitors counted
+if (stats.v !== 2) stats = { v: 2, days: {}, recent: [] };
+stats.sessions ||= []; // v2: only real (JS-running, non-owner) visitors counted
 let dirty = false;
 setInterval(() => { if (!dirty) return; try { fs.mkdirSync(STATS_DIR, { recursive: true }); fs.writeFileSync(STATS_FILE, JSON.stringify(stats)); dirty = false; } catch (e) { console.error('stats save', e.message); } }, 30000).unref();
 const BOT = /bot|crawl|spider|slurp|preview|monitor|curl|wget|python|headless|lighthouse|facebookexternalhit|google|bing|yandex|ahrefs|semrush|uptime|scan|httpclient|axios|node-fetch|go-http|java|okhttp/i;
@@ -191,6 +192,44 @@ app.post('/api/referral', async (req, res) => {
   }
 });
 
+
+// ---------- visitor sessions (from /t.js) ----------
+const STEPS = [['view','Landed on the site'],['engaged','Scrolled or interacted'],['addr_focus','Clicked the address box'],['addr_typed','Typed an address'],['check_submit','Pressed "Check my address"'],['check_result','Saw their result'],['name_focus','Started the contact form'],['phone_focus','Clicked the phone field'],['consent_on','Checked the consent box'],['lead_submit','Pressed "Text me my options"'],['lead_ok','Became a lead']];
+const sessIdx = new Map(stats.sessions.map(x => [x.id, x]));
+function uaInfo(ua) {
+  const os = /iphone|ipad|ipod/i.test(ua) ? 'iOS' : /android/i.test(ua) ? 'Android' : /mac os x/i.test(ua) ? 'Mac' : /windows/i.test(ua) ? 'Windows' : /cros/i.test(ua) ? 'ChromeOS' : /linux/i.test(ua) ? 'Linux' : 'Other';
+  const br = /FBAN|FBAV|FB_IAB/i.test(ua) ? 'Facebook app' : /Instagram/i.test(ua) ? 'Instagram app' : /Edg\//.test(ua) ? 'Edge' : /SamsungBrowser/.test(ua) ? 'Samsung' : /CriOS|Chrome\//.test(ua) ? 'Chrome' : /FxiOS|Firefox/.test(ua) ? 'Firefox' : /Safari/.test(ua) ? 'Safari' : 'Other';
+  return { os, br, headless: /headless|phantom|puppeteer|playwright|lighthouse/i.test(ua) };
+}
+app.post('/api/e', express.text({ type: '*/*', limit: '4kb' }), (req, res) => {
+  res.status(204).end();
+  if (isOwner(req)) return;
+  const ua = req.get('user-agent') || ''; if (BOT.test(ua)) return;
+  let b; try { b = JSON.parse(req.body || '{}'); } catch { return; }
+  const id = String(b.sid || '').slice(0, 16), e = String(b.e || '').slice(0, 24); if (!id || !e) return;
+  const now = Date.now(), page = pageKey(b.page), d = b.d && typeof b.d === 'object' ? b.d : {};
+  let x = sessIdx.get(id);
+  if (!x) {
+    if (e !== 'view') return;
+    const u = uaInfo(ua);
+    x = { id, start: now, last: now, page, pages: [page], source: String(d.source || 'direct').slice(0, 60), refHost: String(d.refHost || '').slice(0, 80), ref: String(d.ref || '').slice(0, 200),
+      utm: d.utm || {}, tz: String(d.tz || '').slice(0, 40), lang: String(d.lang || '').slice(0, 12), scr: String(d.scr || '').slice(0, 12), vp: String(d.vp || '').slice(0, 12),
+      device: device(req), os: u.os, br: u.br, auto: !!d.wd || u.headless, newVisit: !!d.newVisit,
+      loc: [req.get('cf-ipcity'), req.get('cf-region-code') || req.get('cf-region'), req.get('cf-ipcountry')].filter(Boolean).join(', '),
+      ev: [], secs: 0, scroll: 0 };
+    stats.sessions.unshift(x); sessIdx.set(id, x);
+    if (stats.sessions.length > 600) sessIdx.delete(stats.sessions.pop().id);
+    bump('views', page, x.source, req);
+  } else if (e === 'view' && !x.pages.includes(page)) { x.pages.push(page); bump('views', page, x.source, req); }
+  x.last = now;
+  if (e === 'leave') { x.secs = Math.max(x.secs, Math.min(+d.secs || 0, 7200), Math.round((now - x.start) / 1000)); x.scroll = Math.max(x.scroll, Math.min(+d.scroll || 0, 100)); }
+  else if (e !== 'view' && x.ev.length < 60) {
+    const extra = d.level ? ':' + d.level : d.why ? ':' + d.why : d.msg ? ':' + String(d.msg).slice(0, 40) : '';
+    x.ev.push([Math.round((now - x.start) / 1000), e + extra]);
+  }
+  dirty = true;
+});
+
 // page-view beacon: sent by the page's own script, so only real browsers are counted
 app.post('/api/v', express.text({ type: '*/*', limit: '2kb' }), (req, res) => {
   let b = {}; try { b = JSON.parse(req.body || '{}'); } catch {}
@@ -225,7 +264,12 @@ function botName(ua) {
   if (/facebookexternalhit|meta-externalagent/i.test(ua)) return 'Facebook link preview';
   if (/applebot/i.test(ua)) return 'Apple';
   if (/ahrefs|semrush|mj12|dotbot|rogerbot|screaming/i.test(ua)) return 'SEO tools';
-  if (/gptbot|claudebot|perplexity|oai-searchbot|ccbot/i.test(ua)) return 'AI search';
+  if (/gptbot|oai-searchbot|chatgpt-user/i.test(ua)) return 'AI: ChatGPT (OpenAI)';
+  if (/claudebot|claude-searchbot|claude-user|anthropic/i.test(ua)) return 'AI: Claude (Anthropic)';
+  if (/perplexity/i.test(ua)) return 'AI: Perplexity';
+  if (/google-extended|gemini/i.test(ua)) return 'AI: Google Gemini';
+  if (/amazonbot/i.test(ua)) return 'AI: Amazon';
+  if (/ccbot|bytespider|meta-externalagent|cohere|diffbot|youbot/i.test(ua)) return 'AI: other';
   if (BOT.test(ua)) return 'Other bots';
   return null;
 }
@@ -328,14 +372,43 @@ app.get('/stats', (req, res) => {
   const row = (name, v) => `<tr><td>${esc(name)}</td><td>${v.views}</td><td>${v.checks}</td><td>${v.leads}</td></tr>`;
   const fmtT = t => new Date(t).toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
   const label = { views: 'Visited', checks: 'Checked an address', leads: 'Became a lead' };
+
+  // ----- funnel + journeys -----
+  const since = Date.now() - 30 * 864e5;
+  const ss = stats.sessions.filter(x => x.start >= since);
+  const evHas = (x, k) => x.ev.some(([, n]) => n.split(':')[0] === k);
+  const reached = (x, k) => { if (k === 'view') return true; const i = STEPS.findIndex(s => s[0] === k); return STEPS.slice(i).some(([kk]) => evHas(x, kk)) || (k === 'engaged' && x.ev.length > 0); };
+  const human = x => !x.auto && (x.ev.length > 0 || x.secs >= 5);
+  const hs = ss.filter(human);
+  const funnelRows = STEPS.map(([k, l], i) => { const n = hs.filter(x => reached(x, k)).length; return { k, l, n }; });
+  const funnel = funnelRows.map((r, i) => { const prev = i ? funnelRows[i - 1].n : r.n; const drop = i && prev ? Math.round(100 * (prev - r.n) / prev) : 0;
+    return `<tr${drop >= 50 && prev >= 3 ? ' class="warn"' : ''}><td>${i + 1}. ${r.l}</td><td><b>${r.n}</b></td><td>${pct(r.n, funnelRows[0].n)}</td><td>${i ? (drop ? '−' + drop + '%' : '0%') : ''}</td></tr>`; }).join('');
+  const stepLabel = Object.fromEntries(STEPS);
+  const furthest = x => { let f = 'Landed on the site'; for (const [k, l] of STEPS) if (reached(x, k)) f = l; return f; };
+  const dur = s => s >= 60 ? Math.floor(s / 60) + 'm ' + (s % 60) + 's' : s + 's';
+  const tzName = tz => ({ 'America/New_York': 'Eastern', 'America/Detroit': 'Eastern', 'America/Chicago': 'Central', 'America/Denver': 'Mountain', 'America/Boise': 'Mountain', 'America/Phoenix': 'Arizona', 'America/Los_Angeles': 'Pacific', 'America/Anchorage': 'Alaska', 'Pacific/Honolulu': 'Hawaii' }[tz] || tz || '?');
+  const journeys = stats.sessions.slice(0, 50).map(x => `<tr class="${x.ev.some(([, n]) => n === 'lead_ok') ? 'lead' : ''}">
+<td>${fmtT(x.start)}</td><td>${human(x) ? '<span class="h">Person</span>' : x.auto ? '<span class="b">Automated</span>' : '<span class="u">Unconfirmed</span>'}</td>
+<td>${esc(x.pages.join(' → '))}</td><td>${esc(x.utm && x.utm.c ? x.source + ' / ' + x.utm.c : x.source)}${x.refHost && x.refHost !== x.source ? `<br><small>${esc(x.refHost)}</small>` : ''}</td>
+<td>${esc(x.loc || tzName(x.tz))}<br><small>${esc(x.lang)}</small></td><td>${x.device} · ${esc(x.br)} · ${esc(x.os)}<br><small>${esc(x.scr)}${x.newVisit ? ' · new' : ' · returning'}</small></td>
+<td>${dur(x.secs)}<br><small>${x.scroll}% scrolled</small></td><td>${esc(furthest(x))}</td>
+<td><small>${x.ev.map(([t, n]) => `${dur(t)} ${esc(n)}`).join('<br>') || '–'}</small></td></tr>`).join('');
+  const srcRows = (() => { const m = {}; for (const x of hs) { const k = x.source; const t = (m[k] ||= { v: 0, c: 0, l: 0, secs: 0 }); t.v++; t.secs += x.secs; if (reached(x, 'check_submit')) t.c++; if (reached(x, 'lead_ok')) t.l++; } return Object.entries(m).sort((a, b) => b[1].l - a[1].l || b[1].v - a[1].v).map(([k, t]) => `<tr><td>${esc(k)}</td><td>${t.v}</td><td>${t.c}</td><td>${t.l}</td><td>${pct(t.l, t.v)}</td><td>${dur(Math.round(t.secs / t.v))}</td></tr>`).join(''); })();
+  const devRows = (() => { const m = {}; for (const x of hs) { const k = x.device + ' · ' + x.br; const t = (m[k] ||= { v: 0, c: 0, l: 0 }); t.v++; if (reached(x, 'check_submit')) t.c++; if (reached(x, 'lead_ok')) t.l++; } return Object.entries(m).sort((a, b) => b[1].v - a[1].v).map(([k, t]) => `<tr><td>${esc(k)}</td><td>${t.v}</td><td>${t.c}</td><td>${t.l}</td></tr>`).join(''); })();
+  const issues = (() => { const m = {}; for (const x of hs) for (const [, n] of x.ev) { const k = n.split(':')[0]; if (['check_notfound','check_error','check_too_short','lead_invalid','lead_error'].includes(k)) m[n] = (m[n] || 0) + 1; } return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${v}</td></tr>`).join(''); })();
   const owner = isOwner(req);
   const sumMap = key => { const m = {}; for (const d of days) for (const [k, v] of Object.entries(stats.days[d][key] || {})) m[k] = (m[k] || 0) + v; return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 25); };
   res.send(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>MyFiberCheck stats</title>
-<style>body{font-family:system-ui,-apple-system,sans-serif;margin:0;color:#0B1B2B;background:#F5F7FA}main{max-width:980px;margin:0 auto;padding:24px 18px 60px}h1{margin:0;font-size:26px}h2{margin:30px 0 10px;font-size:17px}.note{color:#4A5D70;font-size:14px;margin:4px 0 0}.ok{display:inline-block;margin-top:10px;background:#E7F6EE;color:#0E5E36;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.tile{background:#fff;border:1px solid #E3E8EF;border-radius:14px;padding:16px;font-size:13px;color:#4A5D70}.tile b{display:block;font-size:30px;color:#0B1B2B;line-height:1.1;margin-bottom:4px}.tile span{display:block;margin-top:4px;font-size:12px}table{border-collapse:collapse;width:100%;background:#fff;border:1px solid #E3E8EF;border-radius:12px;overflow:hidden;font-size:14px}td,th{text-align:left;padding:9px 12px;border-bottom:1px solid #EEF1F5}th{font-size:12px;text-transform:uppercase;color:#4A5D70;background:#FAFBFC}tr:last-child td{border-bottom:0}.lead td{background:#E7F6EE;font-weight:600}@media(max-width:700px){.tiles{grid-template-columns:repeat(2,1fr)}}</style>
+<style>body{font-family:system-ui,-apple-system,sans-serif;margin:0;color:#0B1B2B;background:#F5F7FA}main{max-width:980px;margin:0 auto;padding:24px 18px 60px}h1{margin:0;font-size:26px}h2{margin:30px 0 10px;font-size:17px}.note{color:#4A5D70;font-size:14px;margin:4px 0 0}.ok{display:inline-block;margin-top:10px;background:#E7F6EE;color:#0E5E36;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.tile{background:#fff;border:1px solid #E3E8EF;border-radius:14px;padding:16px;font-size:13px;color:#4A5D70}.tile b{display:block;font-size:30px;color:#0B1B2B;line-height:1.1;margin-bottom:4px}.tile span{display:block;margin-top:4px;font-size:12px}table{border-collapse:collapse;width:100%;background:#fff;border:1px solid #E3E8EF;border-radius:12px;overflow:hidden;font-size:14px}td,th{text-align:left;padding:9px 12px;border-bottom:1px solid #EEF1F5}th{font-size:12px;text-transform:uppercase;color:#4A5D70;background:#FAFBFC}tr:last-child td{border-bottom:0}.warn td{background:#FDECEA}.h{color:#0E5E36;font-weight:700}.u{color:#7A5B00}.b{color:#B3261E}small{color:#4A5D70}.j td{vertical-align:top;font-size:13px}.lead td{background:#E7F6EE;font-weight:600}@media(max-width:700px){.tiles{grid-template-columns:repeat(2,1fr)}}</style>
 <main><h1>MyFiberCheck stats</h1><p class="note">Only real people are counted: browsers that load the page. Bots, crawlers and your own devices are excluded. Times are Eastern.</p>
 ${owner ? '<span class="ok">✓ This device is excluded from the stats</span>' : '<span class="ok">✓ This device is now excluded (refresh to confirm)</span>'}
 <h2>Today</h2><div class="tiles">${tile(U(td), 'Real visitors', `${td.mobile || 0} on phones`)}${tile(td.checks, 'Address checks', pct(td.checks, U(td)) + ' of visitors')}${tile(td.leads, 'Leads', pct(td.leads, td.checks) + ' of checks')}${tile(pct(td.leads, U(td)), 'Visitor → lead')}</div>
 <h2>Last 30 days</h2><div class="tiles">${tile(tot.u, 'Real visitors')}${tile(tot.c, 'Address checks')}${tile(tot.l, 'Leads')}${tile(pct(tot.l, tot.u), 'Visitor → lead')}</div>
+<h2>Where people drop off (last 30 days, real people only)</h2><p class="note" style="margin-bottom:10px">Each step counts people who got at least that far. Red rows lose half or more of the people from the step before; that's what to fix first.</p><table><tr><th>Step</th><th>People</th><th>Of all visitors</th><th>Lost from previous step</th></tr>${funnel}</table>
+<h2>Problems people hit</h2><table><tr><th>What went wrong</th><th>Times</th></tr>${issues || '<tr><td colspan="2">None yet</td></tr>'}</table>
+<h2>Visitor journeys (latest 50)</h2><p class="note" style="margin-bottom:10px"><b>Person</b> = scrolled, clicked or stayed 5+ seconds. <b>Unconfirmed</b> = loaded the page but never interacted (often a link preview or scanner). <b>Automated</b> = the browser reported itself as automated. Location is the visitor's time zone unless Cloudflare location headers are on.</p><div style="overflow-x:auto"><table class="j"><tr><th>When</th><th>Who</th><th>Pages</th><th>Came from</th><th>Where</th><th>Device</th><th>Time</th><th>Got as far as</th><th>Step by step</th></tr>${journeys || '<tr><td colspan="9">No visitors yet.</td></tr>'}</table></div>
+<h2>Sources (real people, 30 days)</h2><table><tr><th>Source</th><th>People</th><th>Checked</th><th>Leads</th><th>Visitor → lead</th><th>Avg time</th></tr>${srcRows || '<tr><td colspan="6">–</td></tr>'}</table>
+<h2>Devices and apps (real people, 30 days)</h2><table><tr><th>Device · browser</th><th>People</th><th>Checked</th><th>Leads</th></tr>${devRows || '<tr><td colspan="4">–</td></tr>'}</table>
 <h2>Live activity (latest 60)</h2><table><tr><th>When</th><th>What happened</th><th>Page</th><th>Came from</th><th>Device</th></tr>${(stats.recent || []).map(e => `<tr class="${e.kind === 'leads' ? 'lead' : ''}"><td>${fmtT(e.t)}</td><td>${label[e.kind]}</td><td>${esc(e.page)}</td><td>${esc(e.source)}</td><td>${e.device}</td></tr>`).join('') || '<tr><td colspan="5">No real visitors yet.</td></tr>'}</table>
 <h2>By day</h2><table><tr><th>Day</th><th>Visitors</th><th>Checks</th><th>Leads</th><th>Visitor → lead</th></tr>${days.map(d => { const x = stats.days[d]; return `<tr><td>${d}</td><td>${U(x)}</td><td>${x.checks}</td><td>${x.leads}</td><td>${pct(x.leads, U(x))}</td></tr>`; }).join('') || '<tr><td colspan="5">–</td></tr>'}</table>
 <h2>Where visitors come from</h2><table><tr><th>Source</th><th>Page views</th><th>Checks</th><th>Leads</th></tr>${agg('sources').map(([k, v]) => row(k, v)).join('') || '<tr><td colspan="4">–</td></tr>'}</table>
@@ -350,7 +423,7 @@ ${owner ? '<span class="ok">✓ This device is excluded from the stats</span>' :
 app.get('/robots.txt', (req, res) => res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));
 app.get('/sitemap.xml', (req, res) => {
   const o = origin(req), d = '2026-11-19';
-  const urls = [`${o}/`, ...[...byState.keys()].filter(st => STATES[st]).map(st => `${o}/fiber-internet/${st.toLowerCase()}`),
+  const urls = [`${o}/`, `${o}/about`, ...[...byState.keys()].filter(st => STATES[st]).map(st => `${o}/fiber-internet/${st.toLowerCase()}`),
     ...cities.filter(c => c.homes >= INDEX_MIN && STATES[c.st]).map(c => `${o}/fiber-internet/${c.st.toLowerCase()}/${c.slug}`)];
   res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `<url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join('\n')}\n</urlset>`);
 });
