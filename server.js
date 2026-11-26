@@ -21,13 +21,26 @@ const STATS_DIR = process.env.STATS_DIR || '/data';
 const STATS_FILE = path.join(STATS_DIR, 'stats.json');
 let stats = { days: {} };
 try { stats = JSON.parse(fs.readFileSync(STATS_FILE, 'utf8')); } catch {}
+if (stats.v !== 2) stats = { v: 2, days: {}, recent: [] }; // v2: only real (JS-running, non-owner) visitors counted
 let dirty = false;
 setInterval(() => { if (!dirty) return; try { fs.mkdirSync(STATS_DIR, { recursive: true }); fs.writeFileSync(STATS_FILE, JSON.stringify(stats)); dirty = false; } catch (e) { console.error('stats save', e.message); } }, 30000).unref();
-const BOT = /bot|crawl|spider|slurp|preview|monitor|curl|wget|python|headless|lighthouse/i;
+const BOT = /bot|crawl|spider|slurp|preview|monitor|curl|wget|python|headless|lighthouse|facebookexternalhit|google|bing|yandex|ahrefs|semrush|uptime|scan|httpclient|axios|node-fetch|go-http|java|okhttp/i;
+const isOwner = req => /(?:^|;\s*)mfc_owner=1/.test(req.get('cookie') || '');
+const device = req => /mobile|iphone|android/i.test(req.get('user-agent') || '') ? 'mobile' : 'desktop';
+const crypto = await import('node:crypto');
 const today = () => new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
-function bump(kind, page, source) {
-  const d = (stats.days[today()] ||= { views: 0, checks: 0, leads: 0, pages: {}, sources: {}, results: {} });
+function bump(kind, page, source, req) {
+  if (req && (isOwner(req) || BOT.test(req.get('user-agent') || ''))) return;
+  const d = (stats.days[today()] ||= { views: 0, checks: 0, leads: 0, uniq: [], mobile: 0, pages: {}, sources: {}, results: {} });
   d[kind]++;
+  if (req) {
+    if (kind === 'views') {
+      const h = crypto.createHash('sha256').update(today() + (req.ip || '') + (req.get('user-agent') || '') + (process.env.STATS_KEY || '')).digest('hex').slice(0, 10);
+      if (!d.uniq.includes(h)) { d.uniq.push(h); if (device(req) === 'mobile') d.mobile++; }
+    }
+    stats.recent.unshift({ t: Date.now(), kind, page, source, device: device(req) });
+    stats.recent.length = Math.min(stats.recent.length, 60);
+  }
   const pg = (d.pages[page] ||= { views: 0, checks: 0, leads: 0 }); pg[kind]++;
   const sr = (d.sources[source] ||= { views: 0, checks: 0, leads: 0 }); sr[kind]++;
   dirty = true;
@@ -82,8 +95,8 @@ app.post('/api/check', async (req, res) => {
     const providers = rows
       .sort((a, b) => b[1] - a[1])
       .map(([k, down]) => ({ name: cov.isps[k], down }));
-    bump('checks', pageKey(req.body?.page), String(req.body?.source || 'direct').slice(0, 60));
-    const d = stats.days[today()]; d.results[level] = (d.results[level] || 0) + 1;
+    bump('checks', pageKey(req.body?.page), String(req.body?.source || 'direct').slice(0, 60), req);
+    const d = stats.days[today()]; if (d) d.results[level] = (d.results[level] || 0) + 1;
     res.json({ found: true, matched: g.matched, zip: g.zip, state: g.state, level, providers });
   } catch (e) {
     console.error('check failed', e.message);
@@ -117,7 +130,7 @@ app.post('/api/lead', async (req, res) => {
     const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
     // Apps Script runs doPost, then answers 302 to its output page
     if (!(r.ok || r.status === 302)) throw new Error('sheet ' + r.status);
-    bump('leads', pageKey(b.page), String(b.source || 'direct').slice(0, 60));
+    bump('leads', pageKey(b.page), String(b.source || 'direct').slice(0, 60), req);
     res.json({ ok: true });
   } catch (e) {
     console.error('LEAD NOT SAVED', e.message, JSON.stringify({ ...lead, secret: undefined }));
@@ -130,7 +143,6 @@ const REFER_TPL = fs.readFileSync(path.join(__dirname, 'views/refer.html'), 'utf
 // $100 holiday reward through Dec 31, 2026 (Eastern), then $50. The page itself switches on its own too.
 const promoOn = () => Date.now() < Date.parse('2027-01-01T00:00:00-05:00');
 app.get(['/refer', '/refer/:rep'], (req, res) => {
-  if (!BOT.test(req.get('user-agent') || '')) bump('views', '/refer', srcOf(req));
   const html = promoOn() ? REFER_TPL : REFER_TPL
     .replace('content="Get $100 for every friend who gets fiber"', 'content="Get $50 for every friend who gets fiber"')
     .replace('<title>Get $100', '<title>Get $50');
@@ -171,12 +183,19 @@ app.post('/api/referral', async (req, res) => {
     if (!SHEET_WEBHOOK) throw new Error('SHEET_WEBHOOK not set');
     const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
     if (!(r.ok || r.status === 302)) throw new Error('sheet ' + r.status);
-    bump('leads', '/refer', 'referral' + (rep ? ':' + rep : ''));
+    bump('leads', '/refer', 'referral' + (rep ? ':' + rep : ''), req);
     res.json({ ok: true });
   } catch (e) {
     console.error('REFERRAL NOT SAVED', e.message, JSON.stringify({ ...lead, secret: undefined }));
     res.status(502).json({ error: 'Something went wrong saving your referral.' });
   }
+});
+
+// page-view beacon: sent by the page's own script, so only real browsers are counted
+app.post('/api/v', express.text({ type: '*/*', limit: '2kb' }), (req, res) => {
+  let b = {}; try { b = JSON.parse(req.body || '{}'); } catch {}
+  bump('views', pageKey(b.page), String(b.source || 'direct').slice(0, 60), req);
+  res.status(204).end();
 });
 
 app.get('/healthz', (_q, r) => r.send('ok'));
@@ -201,7 +220,6 @@ const ALL_KEYS = ['kn','bs','vz','att','fr','qf','fi','bp','tg','rp','w3','pb'];
 const SHORT = { kn: ['Kinetic'], bs: ['Brightspeed'], vz: ['Verizon Fios'], att: ['AT&T Fiber'], fr: ['Frontier'], qf: ['Quantum Fiber'], fi: ['Fidium'], bp: ['Bluepeak'], tg: ['Ting'], rp: ['Ripple'], w3: ['Wire3'], pb: ['Point Broadband', 'Clearwave'] };
 const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
 function render(req, o) {
-  if (!o.noCount && !BOT.test(req.get('user-agent') || '')) bump('views', pageKey(req.path), srcOf(req));
   const v = {
     TITLE: o.title, DESC: o.desc, H1: o.h1, LEDE: o.lede,
     CANON: origin(req) + (o.path || req.path), ROBOTS: o.noindex ? '<meta name="robots" content="noindex,follow">' : '',
@@ -286,19 +304,30 @@ ${nearby.length ? `<h3 style="font-size:20px;margin:28px 0 8px">Fiber near ${esc
 
 app.get('/stats', (req, res) => {
   if (!process.env.STATS_KEY || req.query.key !== process.env.STATS_KEY) return res.status(404).send('Not found');
+  // opening this page marks the device as yours so your own visits stop counting
+  res.cookie('mfc_owner', '1', { maxAge: 365 * 864e5, httpOnly: true, sameSite: 'lax', secure: true });
   const days = Object.keys(stats.days).sort().reverse().slice(0, 30);
-  const pct = (a, b) => b ? (100 * a / b).toFixed(1) + '%' : '–';
-  const agg = key => { const m = {}; for (const day of days) for (const [k, v] of Object.entries(stats.days[day][key])) { const t = (m[k] ||= { views: 0, checks: 0, leads: 0 }); t.views += v.views; t.checks += v.checks; t.leads += v.leads; } return Object.entries(m).sort((a, b) => b[1].leads - a[1].leads || b[1].views - a[1].views).slice(0, 40); };
-  const tot = days.reduce((t, d) => (['views', 'checks', 'leads'].forEach(k => t[k] += stats.days[d][k]), t), { views: 0, checks: 0, leads: 0 });
-  const row = (name, v) => `<tr><td>${esc(name)}</td><td>${v.views}</td><td>${v.checks}</td><td>${v.leads}</td><td>${pct(v.checks, v.views)}</td><td>${pct(v.leads, v.checks)}</td><td><b>${pct(v.leads, v.views)}</b></td></tr>`;
-  const head = first => `<tr><th>${first}</th><th>Visits</th><th>Checks</th><th>Leads</th><th>Visit→Check</th><th>Check→Lead</th><th>Visit→Lead</th></tr>`;
+  const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '–';
+  const U = d => (d.uniq || []).length;
+  const agg = key => { const m = {}; for (const day of days) for (const [k, v] of Object.entries(stats.days[day][key])) { const t = (m[k] ||= { views: 0, checks: 0, leads: 0 }); t.views += v.views; t.checks += v.checks; t.leads += v.leads; } return Object.entries(m).sort((a, b) => b[1].leads - a[1].leads || b[1].checks - a[1].checks || b[1].views - a[1].views).slice(0, 30); };
+  const td = stats.days[today()] || { views: 0, checks: 0, leads: 0, uniq: [], mobile: 0, results: {} };
+  const tot = days.reduce((t, d) => { const x = stats.days[d]; t.u += U(x); t.c += x.checks; t.l += x.leads; return t; }, { u: 0, c: 0, l: 0 });
+  const tile = (n, label, sub = '') => `<div class="tile"><b>${n}</b>${label}${sub ? `<span>${sub}</span>` : ''}</div>`;
+  const row = (name, v) => `<tr><td>${esc(name)}</td><td>${v.views}</td><td>${v.checks}</td><td>${v.leads}</td></tr>`;
+  const fmtT = t => new Date(t).toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  const label = { views: 'Visited', checks: 'Checked an address', leads: 'Became a lead' };
+  const owner = isOwner(req);
   res.send(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>MyFiberCheck stats</title>
-<style>body{font-family:system-ui,sans-serif;margin:24px;color:#0B1B2B}h1{margin:0 0 4px}h2{margin:28px 0 8px;font-size:18px}table{border-collapse:collapse;width:100%;max-width:900px;font-size:14px}td,th{text-align:left;padding:7px 10px;border-bottom:1px solid #E3E8EF}th{font-size:12px;text-transform:uppercase;color:#4A5D70}.k{display:flex;gap:28px;margin:12px 0}.k div{font-size:13px;color:#4A5D70}.k b{display:block;font-size:28px;color:#0B1B2B}</style>
-<h1>MyFiberCheck stats</h1><p style="color:#4A5D70;margin:0">Last 30 days · visits exclude bots · times in Eastern</p>
-<div class="k"><div><b>${tot.views}</b>Visits</div><div><b>${tot.checks}</b>Address checks</div><div><b>${tot.leads}</b>Leads</div><div><b>${pct(tot.leads, tot.views)}</b>Visit→Lead</div></div>
-<h2>By day</h2><table>${head('Day')}${days.map(d => row(d, stats.days[d])).join('')}</table>
-<h2>By source</h2><table>${head('Source')}${agg('sources').map(([k, v]) => row(k, v)).join('')}</table>
-<h2>By page</h2><table>${head('Page')}${agg('pages').map(([k, v]) => row(k, v)).join('')}</table>`);
+<style>body{font-family:system-ui,-apple-system,sans-serif;margin:0;color:#0B1B2B;background:#F5F7FA}main{max-width:980px;margin:0 auto;padding:24px 18px 60px}h1{margin:0;font-size:26px}h2{margin:30px 0 10px;font-size:17px}.note{color:#4A5D70;font-size:14px;margin:4px 0 0}.ok{display:inline-block;margin-top:10px;background:#E7F6EE;color:#0E5E36;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.tile{background:#fff;border:1px solid #E3E8EF;border-radius:14px;padding:16px;font-size:13px;color:#4A5D70}.tile b{display:block;font-size:30px;color:#0B1B2B;line-height:1.1;margin-bottom:4px}.tile span{display:block;margin-top:4px;font-size:12px}table{border-collapse:collapse;width:100%;background:#fff;border:1px solid #E3E8EF;border-radius:12px;overflow:hidden;font-size:14px}td,th{text-align:left;padding:9px 12px;border-bottom:1px solid #EEF1F5}th{font-size:12px;text-transform:uppercase;color:#4A5D70;background:#FAFBFC}tr:last-child td{border-bottom:0}.lead td{background:#E7F6EE;font-weight:600}@media(max-width:700px){.tiles{grid-template-columns:repeat(2,1fr)}}</style>
+<main><h1>MyFiberCheck stats</h1><p class="note">Only real people are counted: browsers that load the page. Bots, crawlers and your own devices are excluded. Times are Eastern.</p>
+${owner ? '<span class="ok">✓ This device is excluded from the stats</span>' : '<span class="ok">✓ This device is now excluded (refresh to confirm)</span>'}
+<h2>Today</h2><div class="tiles">${tile(U(td), 'Real visitors', `${td.mobile || 0} on phones`)}${tile(td.checks, 'Address checks', pct(td.checks, U(td)) + ' of visitors')}${tile(td.leads, 'Leads', pct(td.leads, td.checks) + ' of checks')}${tile(pct(td.leads, U(td)), 'Visitor → lead')}</div>
+<h2>Last 30 days</h2><div class="tiles">${tile(tot.u, 'Real visitors')}${tile(tot.c, 'Address checks')}${tile(tot.l, 'Leads')}${tile(pct(tot.l, tot.u), 'Visitor → lead')}</div>
+<h2>Live activity (latest 60)</h2><table><tr><th>When</th><th>What happened</th><th>Page</th><th>Came from</th><th>Device</th></tr>${(stats.recent || []).map(e => `<tr class="${e.kind === 'leads' ? 'lead' : ''}"><td>${fmtT(e.t)}</td><td>${label[e.kind]}</td><td>${esc(e.page)}</td><td>${esc(e.source)}</td><td>${e.device}</td></tr>`).join('') || '<tr><td colspan="5">No real visitors yet.</td></tr>'}</table>
+<h2>By day</h2><table><tr><th>Day</th><th>Visitors</th><th>Checks</th><th>Leads</th><th>Visitor → lead</th></tr>${days.map(d => { const x = stats.days[d]; return `<tr><td>${d}</td><td>${U(x)}</td><td>${x.checks}</td><td>${x.leads}</td><td>${pct(x.leads, U(x))}</td></tr>`; }).join('') || '<tr><td colspan="5">–</td></tr>'}</table>
+<h2>Where visitors come from</h2><table><tr><th>Source</th><th>Page views</th><th>Checks</th><th>Leads</th></tr>${agg('sources').map(([k, v]) => row(k, v)).join('') || '<tr><td colspan="4">–</td></tr>'}</table>
+<h2>Which pages they land on</h2><table><tr><th>Page</th><th>Page views</th><th>Checks</th><th>Leads</th></tr>${agg('pages').map(([k, v]) => row(k, v)).join('') || '<tr><td colspan="4">–</td></tr>'}</table>
+</main>`);
 });
 
 app.get('/robots.txt', (req, res) => res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));

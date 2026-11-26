@@ -324,5 +324,6 @@ if("contacts" in navigator&&"ContactsManager" in window){$("#pickContact").hidde
 try{myItems=JSON.parse(localStorage.getItem("mfc_ref_items")||"[]")}catch{myItems=[]}
 renderMine();
 </script>
+<script>try{const q=new URLSearchParams(location.search);let src=q.get('src')||q.get('utm_source');if(!src){try{const h=new URL(document.referrer).hostname;src=h&&h!==location.hostname?h.replace(/^www\./,''):'direct'}catch{src='direct'}}navigator.sendBeacon('/api/v',JSON.stringify({page:'/refer',source:src}))}catch{}</script>
 </body>
 </html>

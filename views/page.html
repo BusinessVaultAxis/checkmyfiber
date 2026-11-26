@@ -230,6 +230,7 @@ document.querySelectorAll('.asof').forEach(e => e.textContent = ASOF);
 const qs = new URLSearchParams(location.search);
 const source = qs.get('src') || qs.get('utm_source') || (document.referrer ? new URL(document.referrer).hostname : 'direct');
 const $ = id => document.getElementById(id);
+try { navigator.sendBeacon('/api/v', JSON.stringify({ page: location.pathname, source })); } catch {}
 const fmt = d => d >= 1000 ? (Math.round(d / 100) / 10) + ' Gig' : d + ' Mbps';
 let last = null;
 
