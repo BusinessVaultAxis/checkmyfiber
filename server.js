@@ -157,7 +157,7 @@ function render(req, o) {
 
 app.get('/', (req, res) => res.send(render(req, {
   path: '/',
-  title: 'Is Fiber Available at My Address? Free Check | CheckMyFiber',
+  title: 'Is Fiber Available at My Address? Free Check | MyFiberCheck',
   desc: 'Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your options by text.',
   h1: 'Is fiber available at your address?',
   lede: "Check every fiber provider we sell in about 5 seconds. Free, and we'll text you your exact options.",
@@ -178,7 +178,7 @@ app.get('/fiber-internet/:st', (req, res, next) => {
 <ul class="links">${top.map(c => `<li><a href="/fiber-internet/${st.toLowerCase()}/${c.slug}">${esc(c.name)}</a></li>`).join('')}</ul>
 </section>`;
   res.send(render(req, {
-    title: `Fiber Internet in ${STATES[st]}: Providers by City (2026) | CheckMyFiber`,
+    title: `Fiber Internet in ${STATES[st]}: Providers by City (2026) | MyFiberCheck`,
     desc: `See which fiber internet providers serve ${STATES[st]} cities, top speeds by provider, and check fiber availability at your exact address for free.`,
     h1: `Is fiber available at your ${STATES[st]} address?`,
     lede: `We check ${provs.size} fiber providers across ${num(list.length)} ${STATES[st]} communities. Free, and we'll text you your exact options.`,
@@ -212,7 +212,7 @@ ${faq.map(([q, a]) => `<div class="q"><h3>${esc(q)}</h3><p>${esc(a)}</p></div>`)
 ${nearby.length ? `<h3 style="font-size:20px;margin:28px 0 8px">Fiber near ${esc(c.name)}</h3><ul class="links">${nearby.map(n => `<li><a href="/fiber-internet/${st.toLowerCase()}/${n.slug}">${esc(n.name)}</a></li>`).join('')}<li><a href="/fiber-internet/${st.toLowerCase()}">All ${esc(S)} cities</a></li></ul>` : ''}
 </section>`;
   res.send(render(req, {
-    title: `Fiber Internet in ${place}: Providers & Availability (2026) | CheckMyFiber`,
+    title: `Fiber Internet in ${place}: Providers & Availability (2026) | MyFiberCheck`,
     desc: `${names.length} fiber provider${names.length > 1 ? 's' : ''} report service in ${place}, with plans up to ${spd(fastest[2])}. Check fiber availability at your exact ${c.name} address for free.`,
     h1: `Is fiber available at your ${c.name} address?`,
     lede: `${names.length > 1 ? `${names.length} fiber providers report` : `${names[0]} reports`} service in ${c.name}. Check your exact address in about 5 seconds, and we'll text you your options.`,
@@ -236,9 +236,9 @@ app.get('/stats', (req, res) => {
   const tot = days.reduce((t, d) => (['views', 'checks', 'leads'].forEach(k => t[k] += stats.days[d][k]), t), { views: 0, checks: 0, leads: 0 });
   const row = (name, v) => `<tr><td>${esc(name)}</td><td>${v.views}</td><td>${v.checks}</td><td>${v.leads}</td><td>${pct(v.checks, v.views)}</td><td>${pct(v.leads, v.checks)}</td><td><b>${pct(v.leads, v.views)}</b></td></tr>`;
   const head = first => `<tr><th>${first}</th><th>Visits</th><th>Checks</th><th>Leads</th><th>Visit→Check</th><th>Check→Lead</th><th>Visit→Lead</th></tr>`;
-  res.send(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>CheckMyFiber stats</title>
+  res.send(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>MyFiberCheck stats</title>
 <style>body{font-family:system-ui,sans-serif;margin:24px;color:#0B1B2B}h1{margin:0 0 4px}h2{margin:28px 0 8px;font-size:18px}table{border-collapse:collapse;width:100%;max-width:900px;font-size:14px}td,th{text-align:left;padding:7px 10px;border-bottom:1px solid #E3E8EF}th{font-size:12px;text-transform:uppercase;color:#4A5D70}.k{display:flex;gap:28px;margin:12px 0}.k div{font-size:13px;color:#4A5D70}.k b{display:block;font-size:28px;color:#0B1B2B}</style>
-<h1>CheckMyFiber stats</h1><p style="color:#4A5D70;margin:0">Last 30 days · visits exclude bots · times in Eastern</p>
+<h1>MyFiberCheck stats</h1><p style="color:#4A5D70;margin:0">Last 30 days · visits exclude bots · times in Eastern</p>
 <div class="k"><div><b>${tot.views}</b>Visits</div><div><b>${tot.checks}</b>Address checks</div><div><b>${tot.leads}</b>Leads</div><div><b>${pct(tot.leads, tot.views)}</b>Visit→Lead</div></div>
 <h2>By day</h2><table>${head('Day')}${days.map(d => row(d, stats.days[d])).join('')}</table>
 <h2>By source</h2><table>${head('Source')}${agg('sources').map(([k, v]) => row(k, v)).join('')}</table>
@@ -255,7 +255,7 @@ app.get('/sitemap.xml', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'], maxAge: '1h', index: false }));
 app.use((req, res) => res.status(404).send(render(req, {
-  title: 'Page not found | CheckMyFiber', desc: 'Check fiber availability at your address.', noindex: true, noCount: true,
+  title: 'Page not found | MyFiberCheck', desc: 'Check fiber availability at your address.', noindex: true, noCount: true,
   h1: "That page doesn't exist, but your fiber check does.", lede: 'Enter your address to see which fiber providers report service on your block.',
 })));
 app.listen(PORT, () => console.log('listening on ' + PORT));

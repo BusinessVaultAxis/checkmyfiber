@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 {{SCHEMA}}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"CheckMyFiber","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","telephone":"+1-917-720-6053","parentOrganization":{"@type":"Organization","name":"Quota"}}
+{"@context":"https://schema.org","@type":"Organization","name":"MyFiberCheck","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","telephone":"+1-917-720-6053","parentOrganization":{"@type":"Organization","name":"Quota"}}
 </script>
 <style>
 *{box-sizing:border-box}
@@ -113,7 +113,7 @@ footer p{margin:0 0 8px}
 <section class="dark">
 <div class="wrap">
 <header class="top">
-<a class="logo" href="/"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M5 17.5h3.5l4.5 5L25 9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9.5" r="2.4" fill="#7CF2B0"/></svg><span>CheckMy<b>Fiber</b></span></a>
+<a class="logo" href="/"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M5 17.5h3.5l4.5 5L25 9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9.5" r="2.4" fill="#7CF2B0"/></svg><span>My<b>Fiber</b>Check</span></a>
 <a class="call" id="callLink" href="#" hidden><i class="callw">Call or text </i><span id="callNum"></span></a>
 </header>
 
@@ -143,7 +143,7 @@ footer p{margin:0 0 8px}
 <div class="field"><label for="name">First name</label><input id="name" autocomplete="given-name" required></div>
 <div class="field"><label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
 <input class="hp" tabindex="-1" autocomplete="off" name="website" id="website" aria-hidden="true">
-<label class="consent"><input type="checkbox" id="consent"><span>I agree that CheckMyFiber (operated by Quota) may call or text me at this number about internet service, including by automated means. Consent isn't required to buy anything. Msg &amp; data rates may apply. Reply STOP to opt out.</span></label>
+<label class="consent"><input type="checkbox" id="consent"><span>I agree that MyFiberCheck (operated by Quota) may call or text me at this number about internet service, including by automated means. Consent isn't required to buy anything. Msg &amp; data rates may apply. Reply STOP to opt out.</span></label>
 <button type="submit" class="cta full" id="leadBtn">Text me my options</button>
 <p class="err" id="leadErr" role="alert" hidden style="color:#B3261E"></p>
 </form>
@@ -192,7 +192,7 @@ footer p{margin:0 0 8px}
 <section class="wrap" style="padding:72px 24px 40px;max-width:820px">
 <h2>Common questions</h2>
 <div class="q"><h3>How accurate is the check?</h3><p>The instant result uses the coverage each provider reports to the FCC. It's a reliable starting point but can be a few months behind new construction, so someone on our team confirms your exact address before you commit to anything.</p></div>
-<div class="q"><h3>Who are you?</h3><p>CheckMyFiber is run by Quota, an independent sales team that sells fiber for several providers. We're not an internet provider ourselves.</p></div>
+<div class="q"><h3>Who are you?</h3><p>MyFiberCheck is run by Quota, an independent sales team that sells fiber for several providers. We're not an internet provider ourselves.</p></div>
 <div class="q"><h3>What if nothing shows up?</h3><p>New lines often aren't on the map yet. Leave your number and we'll check by hand, and we'll text you if fiber reaches your street later.</p></div>
 <div class="q"><h3>Will I get spam calls?</h3><p>No. We never sell your number. You'll hear from us about your address, and you can reply STOP anytime.</p></div>
 </section>
@@ -211,8 +211,8 @@ footer p{margin:0 0 8px}
 <a href="#addr" class="sticky" id="sticky" hidden>Check my address</a>
 <footer>
 <div class="wrap" style="padding:32px 24px">
-<p style="color:#0B1B2B;font-weight:700">CheckMyFiber · Operated by Quota · <a href="tel:+19177206053">(917) 720-6053</a></p>
-<p>CheckMyFiber is an independent sales company, not an internet service provider. Coverage shown is based on FCC National Broadband Map data and is confirmed by our team before any order. Availability, pricing and plans are set by each provider. Provider names are trademarks of their respective owners.</p>
+<p style="color:#0B1B2B;font-weight:700">MyFiberCheck · Operated by Quota · <a href="tel:+19177206053">(917) 720-6053</a></p>
+<p>MyFiberCheck is an independent sales company, not an internet service provider. Coverage shown is based on FCC National Broadband Map data and is confirmed by our team before any order. Availability, pricing and plans are set by each provider. Provider names are trademarks of their respective owners.</p>
 {{STATES}}
 <p><a href="/privacy">Privacy policy</a> · <a href="/terms">Terms</a></p>
 </div>
@@ -336,7 +336,7 @@ $('endForm').addEventListener('submit', e => {
 $('shareBtn').addEventListener('click', async () => {
   const url = location.origin + location.pathname + '?src=referral';
   const text = 'Check if fiber internet is available at your address:';
-  if (navigator.share) { try { await navigator.share({ title: 'CheckMyFiber', text, url }); } catch {} }
+  if (navigator.share) { try { await navigator.share({ title: 'MyFiberCheck', text, url }); } catch {} }
   else { await navigator.clipboard.writeText(url); $('shareBtn').textContent = 'Link copied!'; }
 });
 </script>
