@@ -41,6 +41,25 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .endcta p{margin:0 0 22px;color:#C9D4E0;font-size:17px}
 .endcta .addr{max-width:640px;margin:0 auto;text-align:left}
 .callw{font-style:normal}
+
+.field{position:relative;flex:1;display:flex;min-width:0}
+.field .pin{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none}
+.addr .field input{padding-left:44px;width:100%}
+.arr{display:inline-block;margin-left:6px;transition:transform .15s}
+.cta:hover .arr{transform:translateX(3px)}
+.callico{display:none;vertical-align:middle}
+@media (max-width:860px){
+ .field{flex:none;width:100%}
+ .call{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:rgba(124,242,176,.12);border:1px solid rgba(124,242,176,.35)}
+ .call #callNum{display:none}
+ .callico{display:block}
+ .trust{flex-direction:column;align-items:center;gap:6px}
+ .trust li{min-width:220px;text-align:left}
+ .strip{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding:2px 20px 30px;margin:12px -24px 0;scrollbar-width:none}
+ .strip::-webkit-scrollbar{display:none}
+ .strip li{flex:none;scroll-snap-align:start}
+}
+
 .disc{background:#081320;color:#AEBBC9;font-size:12px;text-align:center;padding:6px 12px;line-height:1.35}
 .hero{max-width:760px;margin:0 auto;text-align:center;padding:40px 0 36px}
 .hero .lede{margin-left:auto;margin-right:auto}
@@ -156,7 +175,7 @@ footer p{margin:0 0 8px}
 <div class="wrap">
 <header class="top">
 <a class="logo" href="/"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0A4FC4"/><path d="M5 17.5h3.5l4.5 5L25 9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9.5" r="2.4" fill="#7CF2B0"/></svg><span>My<b>Fiber</b>Check</span></a>
-<a class="call" id="callLink" href="#" hidden><i class="callw">Call or text </i><span id="callNum"></span></a>
+<a class="call" id="callLink" href="#" hidden aria-label="Call (917) 720-6053"><svg class="callico" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke="#7CF2B0" stroke-width="2" stroke-linejoin="round"/></svg><i class="callw">Call or text </i><span id="callNum"></span></a>
 </header>
 
 <div class="hero">
@@ -165,9 +184,9 @@ footer p{margin:0 0 8px}
 <form id="checkForm" novalidate>
 <label class="lbl" for="addr">Street address with city or ZIP</label>
 <div class="addr" style="position:relative">
-<input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="Start typing your address" required>
+<span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="#0A4FC4" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="#0A4FC4"/></svg><input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="Start typing your address" required></span>
 <ul id="sugg" role="listbox" hidden></ul>
-<button type="submit" class="cta" id="checkBtn">Check my address</button>
+<button type="submit" class="cta" id="checkBtn">Check my address <span aria-hidden="true" class="arr">→</span></button>
 </div>
 <p class="err" id="checkErr" role="alert" hidden></p>
 </form>
@@ -249,7 +268,7 @@ footer p{margin:0 0 8px}
 <p>Free, takes about 5 seconds, and there's no obligation.</p>
 <form id="endForm" novalidate>
 <label class="lbl" for="addr2" style="position:absolute;left:-9999px">Street address with city or ZIP</label>
-<div class="addr"><input type="text" id="addr2" autocomplete="street-address" placeholder="Enter your street address"><button type="submit" class="cta">Check my address</button></div>
+<div class="addr"><span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="#0A4FC4" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="#0A4FC4"/></svg><input type="text" id="addr2" autocomplete="street-address" placeholder="Enter your street address"></span><button type="submit" class="cta">Check my address <span aria-hidden="true" class="arr">→</span></button></div>
 </form>
 </div>
 </section>
@@ -325,7 +344,7 @@ $('checkForm').addEventListener('submit', async e => {
     T('check_result', { level: d.level, n: d.providers.length, st: d.state });
     showResult(d);
   } catch (x) { T('check_error', { msg: String(x.message).slice(0, 60) }); err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
-  finally { $('checkBtn').disabled = false; $('checkBtn').textContent = 'Check my address'; }
+  finally { $('checkBtn').disabled = false; $('checkBtn').innerHTML = 'Check my address <span aria-hidden="true" class="arr">→</span>'; }
 });
 
 function showResult(d) {
