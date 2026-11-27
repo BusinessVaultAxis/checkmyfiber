@@ -6,7 +6,7 @@
 <title>Get $100 for every friend who gets fiber | MyFiberCheck</title>
 <meta name="description" content="Know someone who could use faster internet? Send their name and number and a local rep will check what's available at their address.">
 <meta property="og:title" content="Get $100 for every friend who gets fiber">
-<meta property="og:description" content="Send us someone who could use faster internet. Takes 30 seconds.">
+<meta property="og:description" content="Know a neighbor, friend or family member who could use faster internet? Takes 30 seconds.">
 <meta property="og:image" content="https://myfibercheck.com/refer-card.png">
 <meta property="og:site_name" content="MyFiberCheck">
 <meta name="robots" content="noindex">
@@ -263,8 +263,8 @@ let myItems=[],me=null,last=null;
 if(REP){$("#repTag").hidden=false;$("#repInit").textContent=REP[0].toUpperCase();$("#repTxt").textContent=`From ${REP}, who set up your fiber`;
   $("#faqAfter").textContent=`${REP} or someone on our local team calls them within one business day, mentions you sent them, and checks which fiber providers serve their address.`}
 if(REWARD_YOU){$("#h1").innerHTML=REWARD_FRIEND?`Give ${REWARD_FRIEND}, get <span class="lime">${REWARD_YOU}</span>`:`Get <span class="lime">${REWARD_YOU}</span> for every friend who gets fiber`;
-  $(".hero p:not(.promo)").textContent=`Send us someone who could use faster internet. ${REWARD_FRIEND?`They get ${REWARD_FRIEND} and you get ${REWARD_YOU}`:`You get ${REWARD_YOU}`} once their fiber is installed.`;
-  $("#faqReward").hidden=false;if(PROMO_ON){$(".hero p:not(.promo)").textContent=`Send us someone who could use faster internet. You get ${REWARD_YOU} once their fiber is installed. Offer ends December 31st.`;}$("#rewardLine").textContent=` and send you your ${REWARD_YOU}`;$("#faqRewardTxt").textContent=`You get ${REWARD_YOU} after your friend's fiber service is installed. There's no limit, so every friend who switches earns you ${REWARD_YOU}.`}
+  $(".hero p:not(.promo)").textContent=`Know a neighbor, friend or family member who could use faster internet? ${REWARD_FRIEND?`They get ${REWARD_FRIEND} and you get ${REWARD_YOU}`:`You get ${REWARD_YOU}`} once their fiber is installed.`;
+  $("#faqReward").hidden=false;if(PROMO_ON){$(".hero p:not(.promo)").textContent=`Know a neighbor, friend or family member who could use faster internet? You get ${REWARD_YOU} once their fiber is installed. Offer ends December 31st.`;}$("#rewardLine").textContent=` and send you your ${REWARD_YOU}`;$("#faqRewardTxt").textContent=`You get ${REWARD_YOU} after your friend's fiber service is installed. There's no limit, so every friend who switches earns you ${REWARD_YOU}.`}
 if(PROVIDERS){$("#provTag").hidden=false;$("#provTag").textContent=PROVIDERS}
 if(REWARD){$("#rewardTag").hidden=false;$("#rewardTag").textContent=REWARD;$("#rewardLine").textContent=" and credit your reward";$("#step3").textContent+=" "+REWARD+"."}
 $("#interest").innerHTML=INTERESTS.map((v,i)=>`<label class="chip"><input type="checkbox" name="interest" value="${v}" ${i===0?"checked":""}><span>${v}</span></label>`).join("");
