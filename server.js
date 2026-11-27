@@ -287,15 +287,15 @@ function render(req, o) {
     CITY: o.city || '', STRIP: stripHtml(o.strip || ALL_KEYS, o.stripLabel || 'Participating providers include'), SCHEMA: o.schema ? `<script type="application/ld+json">${JSON.stringify(o.schema).replace(/</g, '\\u003c')}</script>` : '',
     STATES: STATES_HTML, REPNAME: esc(process.env.REP_NAME || 'Aidan'), REPTITLE: esc(process.env.REP_TITLE || 'Founder, MyFiberCheck'),
   };
-  return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP|REPNAME|REPTITLE)\}\}/g, (_, k) => k === 'H1' ? esc(v.H1).replace(/(your (?:[^.?]* )?address[.?]?)/i, '<span class="hl">$1</span>') : (k === 'TITLE' || k === 'DESC' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
+  return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP|REPNAME|REPTITLE)\}\}/g, (_, k) => k === 'H1' ? esc(v.H1).replace(/(your (?:[^.?]* )?(?:address|street)[.?]?)/i, '<span class="hl">$1</span>') : (k === 'TITLE' || k === 'DESC' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
 }
 
 app.get('/', (req, res) => res.send(render(req, {
   path: '/',
   title: 'Is Fiber Available at My Address? Free Check | MyFiberCheck',
   desc: 'Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your options by text.',
-  h1: 'Find the fiber internet options at your address.',
-  lede: 'Check participating fiber networks at your address for free and receive confirmed options from a real team.',
+  h1: 'Is fiber on your street?',
+  lede: 'Get an instant preliminary answer from FCC coverage data, then a person on our team confirms your exact options by text.',
 })));
 
 app.get('/fiber-internet/:st', (req, res, next) => {
@@ -315,7 +315,7 @@ app.get('/fiber-internet/:st', (req, res, next) => {
   res.send(render(req, {
     title: `Fiber Internet in ${STATES[st]}: Providers by City (2026) | MyFiberCheck`,
     desc: `See which fiber internet providers serve ${STATES[st]} cities, top speeds by provider, and check fiber availability at your exact address for free.`,
-    h1: `Find the fiber internet options at your ${STATES[st]} address.`,
+    h1: `Is fiber on your ${STATES[st]} street?`,
     lede: `We check ${provs.size} fiber providers across ${num(list.length)} ${STATES[st]} communities. Free, and we'll text you your exact options.`,
     city, strip: [...provs.entries()].sort((a, b) => b[1][0] - a[1][0]).map(e => e[0]), stripLabel: `Fiber providers in ${STATES[st]}`,
     schema: { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -349,7 +349,7 @@ ${nearby.length ? `<h3 style="font-size:20px;margin:28px 0 8px">Fiber near ${esc
   res.send(render(req, {
     title: `Fiber Internet in ${place}: Providers & Availability (2026) | MyFiberCheck`,
     desc: `${names.length} fiber provider${names.length > 1 ? 's' : ''} report service in ${place}, with plans up to ${spd(fastest[2])}. Check fiber availability at your exact ${c.name} address for free.`,
-    h1: `Find the fiber internet options at your ${c.name} address.`,
+    h1: `Is fiber on your ${c.name} street?`,
     lede: `${names.length > 1 ? `${names.length} fiber providers report` : `${names[0]} reports`} service in ${c.name}. Check your exact address in about 5 seconds, and we'll text you your options.`,
     city, noindex: c.homes < INDEX_MIN, strip: c.providers.map(p => p[0]), stripLabel: `Fiber providers in ${c.name}`,
     schema: [

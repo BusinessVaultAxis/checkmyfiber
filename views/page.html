@@ -7,342 +7,289 @@
 <link rel="canonical" href="{{CANON}}">
 {{ROBOTS}}
 <meta name="description" content="{{DESC}}">
-<link rel="icon" href="/brand/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/brand/icon-180.png">
-<meta name="theme-color" content="#0B1B2B">
+<link rel="icon" href="/brand/hex.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F6FAF9">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 {{SCHEMA}}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"MyFiberCheck","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","telephone":"+1-917-720-6053","parentOrganization":{"@type":"Organization","name":"Quota"}}
 </script>
 <style>
-:root{--navy:#0B1B2B;--navy2:#0A2440;--ink:#0B1B2B;--body:#3A4B5E;--muted:#5B6B7C;--line:#E3E8EF;--bg:#F4F7FA;--teal:#0FA39A;--teal-d:#0B7F78;--btn:#0E7C7B;--btn-h:#0A6362;--cyan:#2DD4E8;--mint:#E6F7F5}
+:root{--navy:#0B1B2B;--ink:#0B1B2B;--body:#3E4F60;--muted:#66778A;--line:#DCE5E3;--bg:#F6FAF9;--teal:#0E7C7B;--teal-h:#0A6362;--teal-l:#DDF3F0;--glow:#2DD4BF}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5}
-a{color:var(--teal-d)}a:hover{color:var(--btn-h)}
-h1,h2,h3{margin:0;letter-spacing:-.02em}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-.disc{background:#07131F;color:#9FB0C2;font-size:12px;text-align:center;padding:6px 12px}
-/* header */
-.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
-.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--navy);font-weight:800;font-size:23px;letter-spacing:-.03em}
-.brand:hover{color:var(--navy)}.brand b{color:var(--teal);font-weight:800}
-.mark{width:34px;height:34px;color:var(--navy);flex:none}
-.links{display:flex;gap:34px;list-style:none;margin:0;padding:0}
-.links a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15.5px}.links a:hover{color:var(--teal-d)}
-.navr{display:flex;align-items:center;gap:18px}
-.call{color:var(--ink);text-decoration:none;font-weight:600;font-size:14.5px;white-space:nowrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:46px;padding:0 20px;border-radius:10px;background:var(--btn);color:#fff;font:inherit;font-weight:700;font-size:15.5px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;box-shadow:0 6px 18px rgba(14,124,123,.25)}
-.btn:hover{background:var(--btn-h);color:#fff}
-.arr{display:inline-block;transition:transform .15s}.btn:hover .arr,.cta:hover .arr{transform:translateX(3px)}
+body{margin:0;font-family:Geist,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:var(--teal)}a:hover{color:var(--teal-h)}
+h1,h2,h3{margin:0}
+.serif{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.02em}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+.top{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);font-weight:700;font-size:21px;letter-spacing:-.02em}
+.brand:hover{color:var(--navy)}.brand b{color:var(--teal);font-weight:700}
+.hexmark{width:30px;height:33px;flex:none}
+.help{font-size:14.5px;color:var(--muted);text-align:right;line-height:1.3}.help a{color:var(--ink);font-weight:600;text-decoration:none;white-space:nowrap}
 /* hero */
-.hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 85% 20%,#0E3557 0%,#0A2440 40%,#071A2E 100%);color:#fff}
-.streaks{position:absolute;right:0;top:0;height:100%;width:min(62%,780px);pointer-events:none}
-.hero .wrap{position:relative;padding-top:64px;padding-bottom:36px}
-.hero h1{font-size:60px;line-height:1.04;font-weight:800;max-width:760px}
-.hl{color:var(--cyan)}
-.lede{margin:18px 0 30px;font-size:19.5px;line-height:1.5;color:#D3DEEA;max-width:640px}
-.checker{background:#fff;color:var(--ink);border-radius:18px;padding:26px 28px 22px;max-width:860px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
-.checker label.lbl{display:block;font-weight:700;font-size:18px;margin-bottom:12px}
-.addr{display:flex;gap:12px}
-.field{position:relative;flex:1;display:flex;min-width:0}
-.field .pin{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-.addr input{flex:1;width:100%;height:58px;padding:0 16px 0 46px;border:1.5px solid #CBD5E1;border-radius:11px;font:inherit;font-size:17px;color:var(--ink);background:#fff}
-.addr input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(15,163,154,.15)}
-.cta{height:58px;padding:0 26px;border:0;border-radius:11px;background:var(--btn);color:#fff;font:inherit;font-size:17.5px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 8px 20px rgba(14,124,123,.3)}
-.cta:hover{background:var(--btn-h)}.cta[disabled]{opacity:.7;cursor:progress}
-.reassure{display:flex;flex-wrap:wrap;gap:6px 18px;margin:14px 0 0;padding:0;list-style:none;font-size:14.5px;color:var(--body);font-weight:500}
-.reassure li{display:flex;align-items:center;gap:6px}.reassure svg{color:var(--teal)}
-.err{margin:12px 0 0;font-size:15px;color:#B3261E;font-weight:600}
-#sugg{position:absolute;left:0;right:0;top:64px;z-index:20;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 40px rgba(11,27,43,.18)}
-#sugg li{padding:12px 14px;border-radius:8px;font-size:16px;color:var(--ink);cursor:pointer}
-#sugg li[aria-selected=true],#sugg li:hover{background:var(--mint)}#sugg li span{color:var(--muted);font-size:14px}
-.facts{display:flex;justify-content:space-between;gap:20px;max-width:1040px;margin:34px auto 0;padding:0;list-style:none}
-.facts li{display:flex;align-items:center;gap:12px;font-size:16px;color:#E3ECF5;flex:1;justify-content:center}
-.facts li+li{border-left:1px solid rgba(255,255,255,.16)}
-.facts svg{color:#9FE7F2;flex:none}
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;padding:36px 0 56px;min-height:calc(100vh - 140px);max-height:760px}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:500;color:var(--body)}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--glow);box-shadow:0 0 0 4px rgba(45,212,191,.18)}
+h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:66px;line-height:1.02;letter-spacing:-.025em;margin:20px 0 16px}
+.hl{color:var(--teal);font-style:italic}
+.lede{font-size:19px;color:var(--body);max-width:520px;margin:0 0 28px}
+.search{position:relative;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #C9D6D3;border-radius:999px;padding:7px 7px 7px 18px;box-shadow:0 18px 50px rgba(11,27,43,.10);max-width:560px;transition:border-color .15s,box-shadow .15s}
+.search:focus-within{border-color:var(--teal);box-shadow:0 18px 50px rgba(11,27,43,.12),0 0 0 5px rgba(14,124,123,.12)}
+.search .pin{color:var(--teal);flex:none}
+.search input{flex:1;min-width:0;height:52px;border:0;outline:0;font:inherit;font-size:18px;color:var(--ink);background:transparent}
+.cta{height:52px;padding:0 26px;border:0;border-radius:999px;background:var(--teal);color:#fff;font:inherit;font-size:17px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cta:hover{background:var(--teal-h)}.cta[disabled]{opacity:.7;cursor:progress}
+.arr{display:inline-block;transition:transform .15s}.cta:hover .arr{transform:translateX(3px)}
+.privacy{display:flex;align-items:center;gap:7px;margin:14px 0 0 6px;font-size:14px;color:var(--muted)}
+.err{margin:12px 0 0 6px;font-size:15px;color:#B3261E;font-weight:600}
+#sugg{position:absolute;left:12px;right:12px;top:70px;z-index:20;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(11,27,43,.16)}
+#sugg li{padding:12px 14px;border-radius:9px;font-size:16px;cursor:pointer}#sugg li[aria-selected=true],#sugg li:hover{background:var(--teal-l)}#sugg li span{color:var(--muted);font-size:14px}
+.prog{display:flex;gap:6px;margin:30px 0 0;padding:0;list-style:none;font-size:13.5px;color:var(--muted);font-weight:500}
+.prog li{display:flex;align-items:center;gap:7px}.prog li+li::before{content:"";width:22px;height:1px;background:#C9D6D3;margin-right:4px}
+.prog b{width:22px;height:22px;border-radius:50%;border:1.5px solid #C9D6D3;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
+.prog li.on b{background:var(--teal);border-color:var(--teal);color:#fff}.prog li.now{color:var(--ink);font-weight:600}
+/* right side */
+.side{position:relative;min-height:440px;display:flex;align-items:center;justify-content:center}
+.hexmap{width:100%;max-width:470px}
+.hx{fill:#E7EFEE;stroke:var(--bg);stroke-width:3}
+.hx.on{fill:var(--teal);opacity:.85;animation:lit 3.2s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes lit{0%,100%{opacity:.55}50%{opacity:.95}}
+@media (prefers-reduced-motion:reduce){.hx.on{animation:none}}
+.note{position:absolute;left:0;bottom:22px;max-width:270px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:13.5px;color:var(--body);box-shadow:0 12px 30px rgba(11,27,43,.08)}
+.note b{color:var(--ink)}
 /* result panel */
-.card{background:#fff;color:var(--ink);border-radius:18px;padding:26px 28px;max-width:860px;margin-top:20px;box-shadow:0 24px 60px rgba(0,0,0,.3)}
-.kicker{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.prelim{display:inline-block;margin:0 0 12px;padding:4px 10px;border-radius:999px;background:#FFF4E0;color:#7A4A00;font-size:12.5px;font-weight:700}
-.good,.warn,.info{border-radius:12px;padding:14px 16px;margin-bottom:14px}
-.good{background:var(--mint)}.good p{margin:0;font-size:18px;font-weight:700;color:#0B5E58}
-.warn{background:#FFF4E5}.warn p{margin:0;font-size:18px;font-weight:700;color:#7A3E00}
-.info{background:#E8F1FB}.info p{margin:0;font-size:18px;font-weight:700;color:#0A3A6C}
-.prov{display:flex;flex-direction:column;gap:8px;margin:0 0 16px;padding:0;list-style:none}
-.prov li{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-weight:700}
-.prov li span{font-weight:500;font-size:14px;color:var(--body)}
+.panel{width:100%;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 24px 60px rgba(11,27,43,.12)}
+.ptop{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--teal);font-weight:600;cursor:pointer;text-decoration:underline}
+#resAddr{margin:0 0 12px;font-size:15px;color:var(--body)}
+.good,.warn,.info{border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.good{background:var(--teal-l)}.good p{margin:0;font-size:18px;font-weight:600;color:#08534F}
+.warn{background:#FFF4E5}.warn p{margin:0;font-size:18px;font-weight:600;color:#7A3E00}
+.info{background:#EAF1F8}.info p{margin:0;font-size:18px;font-weight:600;color:#0A3A6C}
+.prov{display:flex;flex-direction:column;gap:8px;margin:0 0 14px;padding:0;list-style:none}
+.prov li{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-weight:600}
+.prov li span{font-weight:400;font-size:14px;color:var(--body)}
+.pre{margin:0 0 14px;font-size:13px;color:var(--muted)}
+.body{margin:0 0 14px;font-size:16px;color:var(--body)}
+.full{width:100%;border-radius:14px}
 .lf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .lfield{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.lfield label{font-size:14px;font-weight:700}
-.lfield input{height:52px;padding:0 14px;border:1.5px solid #CBD5E1;border-radius:10px;font:inherit;font-size:17px;color:var(--ink)}
-.lfield input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(15,163,154,.15)}
+.lfield label{font-size:14px;font-weight:600}
+.lfield input{height:52px;padding:0 14px;border:1.5px solid #C9D6D3;border-radius:12px;font:inherit;font-size:17px}
+.lfield input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(14,124,123,.12)}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.5;color:var(--muted);margin:2px 0 14px}
 .consent input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--teal)}
-.full{width:100%}.hp{position:absolute;left:-9999px}
-.src{margin:12px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
-.body{margin:0 0 14px;font-size:17px;line-height:1.65;color:var(--body)}
-/* providers band */
-.band{background:var(--bg);border-bottom:1px solid var(--line)}
-.stripl{margin:0;padding-top:26px;text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#334155}
-.strip{display:flex;flex-wrap:wrap;justify-content:center;margin:14px auto 0;padding:0 0 26px;list-style:none;max-width:1160px}
-.strip li{padding:6px 22px;font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--navy)}
-.strip li+li{border-left:1px solid #CBD5E1}
-.disclaim{margin:-12px 0 0;padding-bottom:18px;text-align:center;font-size:12px;color:var(--muted)}
+.hp{position:absolute;left:-9999px}
+.src{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+/* networks line */
+.nets{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+.nets .wrap{display:flex;align-items:center;gap:20px;padding:18px 28px;overflow:hidden}
+.stripl{margin:0;flex:none;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.strip{display:flex;flex-wrap:wrap;gap:4px 0;margin:0;padding:0;list-style:none;font-size:15px;font-weight:500;color:var(--ink)}
+.strip li+li::before{content:"·";margin:0 10px;color:#A9B8B6}
 /* sections */
-.sec{padding:84px 0}.sec.alt{background:var(--bg)}
-.sec h2{font-size:42px;line-height:1.1;text-align:center;font-weight:800}
-.sub{margin:12px auto 0;text-align:center;max-width:640px;font-size:17.5px;color:var(--body)}
-.steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:14px;margin-top:42px}
-.step{display:flex;gap:16px;padding:24px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 2px 10px rgba(11,27,43,.04)}
-.tile{width:52px;height:52px;border-radius:12px;background:var(--mint);color:var(--teal-d);display:flex;align-items:center;justify-content:center;flex:none}
-.step h3{font-size:19px;margin-bottom:6px}.step p{margin:0;font-size:15.5px;color:var(--body)}
-.stepar{align-self:center;color:var(--teal);font-size:26px;font-weight:700}
-.note{max-width:820px;margin:26px auto 0;padding:14px 18px;border-radius:12px;background:#FFF8EB;border:1px solid #F5DEB3;font-size:15px;color:#5B4200;text-align:center}
-.team{display:grid;grid-template-columns:300px 1px 1fr;gap:40px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:40px;box-shadow:0 2px 12px rgba(11,27,43,.05)}
-.team img{width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 20%;border-radius:16px;background:#EEF3FB}
-.vline{width:1px;height:100%;background:var(--line)}
-.team h2{text-align:left;font-size:40px}
-.uline{position:relative;white-space:nowrap}.uline::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:4px;border-radius:4px;background:var(--teal)}
-.who{margin:14px 0 0;font-size:15px;color:var(--muted)}.who b{color:var(--ink)}
-.facts3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
-.fact{padding:22px;border-radius:16px;background:#fff;border:1px solid var(--line)}
-.fact .tile{width:44px;height:44px;margin-bottom:12px}
-.fact h3{font-size:17px;margin-bottom:6px}.fact p{margin:0;font-size:15px;color:var(--body)}
-/* faq */
-.faq{max-width:820px;margin:36px auto 0}
-.faq details{border-bottom:1px solid var(--line);padding:4px 0}
-.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:700;font-size:18px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:26px;font-weight:500;color:var(--teal);transition:transform .2s}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq p{margin:0 0 18px;font-size:16px;line-height:1.65;color:var(--body)}
-/* contact + end cta */
-.contact{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:var(--navy);color:#fff;border-radius:22px;padding:44px;position:relative;overflow:hidden}
-.contact h2{text-align:left;font-size:34px;color:#fff}.contact p{color:#C9D6E3;font-size:16.5px;margin:10px 0 0}
-.contact .rows{display:flex;flex-direction:column;gap:12px}
-.contact .rows a{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-weight:700;font-size:17px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px}
-.contact .rows a:hover{background:rgba(255,255,255,.1)}.contact .rows svg{color:var(--cyan)}
-.endcta{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px;text-align:center}
-.endcta h2{font-size:30px}.endcta p{margin:8px 0 20px;color:var(--body)}
-.endcta .addr{max-width:680px;margin:0 auto}
-/* city content */
-.city{max-width:900px;margin:0 auto;padding:64px 24px 8px}
-.city h2{font-size:32px;margin-bottom:12px}
-.city table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:16px}
-.city th,.city td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}
-.city th{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-.city .q{border-top:1px solid var(--line);padding:18px 0}.city .q h3{font-size:18px;margin-bottom:6px}.city .q p{margin:0;color:var(--body)}
-.links2,.city .links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0 0;padding:0;list-style:none}
+.sec{padding:84px 0}
+.sec h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:40px;letter-spacing:-.02em;line-height:1.1;max-width:640px}
+.sub{margin:12px 0 0;font-size:17px;color:var(--body);max-width:620px}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:40px 0 0;padding:0;list-style:none;counter-reset:s}
+.tl li{position:relative;padding:0 28px 0 0}
+.tl li::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-weight:600;margin-bottom:16px;position:relative;z-index:1}
+.tl li::after{content:"";position:absolute;left:44px;right:8px;top:20px;height:1px;background:#C9D6D3}
+.tl li:last-child::after{display:none}
+.tl h3{font-size:19px;font-weight:600;margin-bottom:6px}.tl p{margin:0;font-size:15.5px;color:var(--body)}
+.tl small{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:600;color:var(--teal);background:var(--teal-l);padding:3px 9px;border-radius:999px}
+.trust{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.tcard{padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+.tcard .ic{width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid var(--line);color:var(--teal);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.tcard h3{font-size:16.5px;font-weight:600;margin-bottom:6px}.tcard p{margin:0;font-size:14.5px;color:var(--body)}
+.founder{display:flex;align-items:center;gap:18px;margin-top:28px;padding:18px 20px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.founder img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 20%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.founder p{margin:0;font-size:15.5px;color:var(--body)}.founder b{color:var(--ink)}
+.faqgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:30px}
+.faqgrid details{border-bottom:1px solid var(--line)}
+.faqgrid summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px;padding:18px 0;font-weight:600;font-size:17px}
+.faqgrid summary::-webkit-details-marker{display:none}
+.faqgrid summary::after{content:"+";color:var(--teal);font-size:22px;line-height:1;transition:transform .2s}
+.faqgrid details[open] summary::after{transform:rotate(45deg)}
+.faqgrid p{margin:0 0 18px;font-size:15.5px;color:var(--body)}
+.final{text-align:center;padding:72px 0 84px}
+.final h2{margin:0 auto}
+.final .search{margin:26px auto 0;text-align:left}
+/* city */
+.city{max-width:900px;margin:0 auto;padding:64px 28px 8px}
+.city h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:32px;margin-bottom:12px}
+.city table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:16px;background:#fff;border-radius:12px;overflow:hidden}
+.city th,.city td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}
+.city th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.city .q{border-top:1px solid var(--line);padding:16px 0}.city .q h3{font-size:17px;font-weight:600;margin-bottom:6px}.city .q p{margin:0;color:var(--body)}
+.city .links{display:flex;flex-wrap:wrap;gap:8px 18px;padding:0;list-style:none}
 /* footer */
-footer{background:#0A1726;color:#A9B8C8;font-size:14px;line-height:1.6}
-footer .wrap{padding:44px 24px 36px}
-.ftop{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.1)}
-footer .brand{color:#fff}footer .brand:hover{color:#fff}footer .mark{color:#fff}footer .brand b{color:#2DD4BF}
-.flinks{display:flex;flex-wrap:wrap;gap:8px 26px;list-style:none;margin:0;padding:0}
-.flinks a{color:#E3ECF5;text-decoration:none;font-weight:500}.flinks a:hover{color:#fff}
-.fcols{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;padding-top:24px}
-footer p{margin:0 0 10px}footer a{color:#CFE0EE}
-.states{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin:4px 0 14px}
-.states a{color:#9FB0C2}
-.sticky{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;justify-content:center;height:54px;border-radius:12px;background:var(--btn);color:#fff;font-weight:700;font-size:16.5px;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+footer{background:var(--navy);color:#A9B8C8;font-size:13.5px;line-height:1.6}
+footer .wrap{padding:40px 28px}
+footer .brand{color:#fff}footer .brand b{color:var(--glow)}footer .hexmark path:first-child{fill:#13263A}
+.fl{display:flex;flex-wrap:wrap;gap:6px 22px;margin:18px 0;padding:0;list-style:none}.fl a{color:#E3ECF5;text-decoration:none}
+footer p{margin:0 0 10px;max-width:820px}footer a{color:#CFE0EE}
+.states{display:flex;flex-wrap:wrap;gap:3px 12px;font-size:12.5px;margin:4px 0 10px}.states a{color:#93A5B8}
+.sticky{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;justify-content:center;height:54px;border-radius:999px;background:var(--teal);color:#fff;font-weight:600;font-size:16.5px;text-decoration:none;box-shadow:0 10px 30px rgba(11,27,43,.25)}
 .sticky:hover{color:#fff}
 [hidden]{display:none !important}
-:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 @media (min-width:901px){.sticky{display:none !important}}
 @media (max-width:900px){
- .links,.call{display:none}
- .nav .wrap{height:62px}.brand{font-size:20px}.mark{width:30px;height:30px}
- .btn{height:38px;padding:0 12px;font-size:13.5px;box-shadow:none}.nav .btn .arr{display:none}.nav .wrap{padding:0 16px}
- .hero .wrap{padding-top:34px;padding-bottom:26px}
- .hero h1{font-size:36px}
- .lede{font-size:16.5px;margin:12px 0 22px}
- .streaks{width:100%;opacity:.45}
- .checker,.card{padding:20px 18px}
- .checker label.lbl{font-size:16.5px}
- .addr{flex-direction:column;gap:10px}
- .field{flex:none;width:100%}
- .addr input{height:56px;font-size:17px}
- .cta{width:100%;height:56px}
- .reassure{font-size:13.5px;gap:6px 14px}
- .facts{flex-direction:column;align-items:flex-start;gap:12px;margin-top:24px}
- .facts li{justify-content:flex-start;font-size:15px}.facts li+li{border-left:0}
+ .wrap{padding:0 18px}.top{height:62px}.brand{font-size:19px}.hexmark{width:26px;height:29px}
+ .help span{display:none}.help a{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:14px}
+ .hero{grid-template-columns:1fr;gap:20px;padding:14px 0 36px;min-height:0;max-height:none}
+ .chip{font-size:12.5px}
+ h1{font-size:42px;margin:14px 0 10px}
+ .lede{font-size:16.5px;margin-bottom:20px}
+ .search{flex-wrap:wrap;border-radius:18px;padding:6px;gap:6px}
+ .search .pin{margin-left:10px}
+ .search input{height:50px;font-size:17px;flex:1 1 60%}
+ .cta{flex:1 1 100%;height:52px;border-radius:13px}
+ #sugg{top:62px}
+ .privacy{font-size:13px;margin-left:2px}
+ .prog{margin-top:18px;font-size:12.5px;flex-wrap:wrap}.prog li+li::before{width:12px}
+ .side{min-height:0}
+ .hexmap{display:none}.note{position:static;max-width:none}
+ .panel{padding:20px 18px}
  .lf{grid-template-columns:1fr;gap:0}
- .stripl{padding-top:20px}
- .strip{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:0 12px 22px;scrollbar-width:none}
- .strip::-webkit-scrollbar{display:none}
- .strip li{flex:none;font-size:17px;padding:4px 16px}
+ .nets .wrap{flex-direction:column;align-items:flex-start;gap:8px;padding:16px 18px}
+ .strip{font-size:14px}
  .sec{padding:52px 0}.sec h2{font-size:30px}.sub{font-size:16px}
- .steps{grid-template-columns:1fr;gap:12px;margin-top:28px}.stepar{display:none}
- .step{padding:18px}
- .team{grid-template-columns:1fr;gap:20px;padding:22px}.vline{display:none}
- .team img{max-width:220px}
- .team h2{font-size:30px}
- .facts3{grid-template-columns:1fr}
- .faq summary{font-size:16.5px}
- .contact{grid-template-columns:1fr;padding:28px 22px}.contact h2{font-size:27px}
- .endcta{padding:26px 18px}.endcta h2{font-size:25px}
- .city{padding:44px 20px 4px}.city h2{font-size:26px}.city table{font-size:14px}.city th,.city td{padding:10px 6px}
- .fcols{grid-template-columns:1fr}
- footer .wrap{padding:32px 20px 96px}
+ .tl{grid-template-columns:1fr;gap:22px;margin-top:28px}
+ .tl li{display:grid;grid-template-columns:40px 1fr;gap:0 14px;padding:0}.tl li::before{grid-row:span 3;margin:0}.tl li::after{left:19px;right:auto;top:44px;bottom:-22px;width:1px;height:auto}
+ .grid4{grid-template-columns:1fr 1fr;gap:12px}.tcard{padding:16px}.tcard .ic{width:38px;height:38px;margin-bottom:10px}
+ .faqgrid{grid-template-columns:1fr}
+ .final{padding:48px 0 60px}
+ .city{padding:44px 18px 4px}.city h2{font-size:26px}.city table{font-size:14px}.city th,.city td{padding:10px 8px}
+ footer .wrap{padding:32px 18px 96px}
 }
+@media (max-width:420px){.grid4{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="disc">MyFiberCheck is an independent sales company, not an internet provider. We may be compensated when you sign up.</div>
-<header class="nav"><div class="wrap">
-<a class="brand" href="/" aria-label="MyFiberCheck home"><svg class="mark" viewBox="0 0 54 56" aria-hidden="true"><g fill="none" stroke-linecap="round"><path d="M6 47 L18 19" stroke="currentColor" stroke-width="5"/><path d="M15 47 L25 24" stroke="currentColor" stroke-width="5" opacity=".55"/><path d="M24 35 l7.5 7.5 L48 15" stroke="var(--teal)" stroke-width="6.5" stroke-linejoin="round"/></g><circle cx="18" cy="19" r="4.2" fill="var(--teal)"/><circle cx="25" cy="24" r="3.6" fill="currentColor" opacity=".55"/></svg><span>MyFiber<b>Check</b></span></a>
-<ul class="links"><li><a href="#how">How it works</a></li><li><a href="#providers">Providers</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li></ul>
-<div class="navr"><a class="call" id="callLink" href="tel:+19177206053" hidden><span id="callNum"></span></a><a class="btn" href="#addr" id="navCta">Check my address <span aria-hidden="true" class="arr">→</span></a></div>
-</div></header>
-
-<main>
-<section class="hero" id="top">
-<svg class="streaks" viewBox="0 0 700 520" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#2DD4E8" stop-opacity="0"/><stop offset=".6" stop-color="#2DD4E8" stop-opacity=".55"/><stop offset="1" stop-color="#7EF0FF" stop-opacity=".9"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="2.2"/></filter></defs><g fill="none" stroke="url(#sg)" stroke-linecap="round"><path d="M-40 470 C 260 430, 470 300, 720 40" stroke-width="2.6" opacity="0.35"/><path d="M-34 459 C 274 414, 478 274, 720 62" stroke-width="1.6" opacity="0.42"/><path d="M-28 448 C 288 398, 486 248, 720 84" stroke-width="1.6" opacity="0.49"/><path d="M-22 437 C 302 382, 494 222, 720 106" stroke-width="2.6" opacity="0.56"/><path d="M-16 426 C 316 366, 502 196, 720 128" stroke-width="1.6" opacity="0.63"/><path d="M-10 415 C 330 350, 510 170, 720 150" stroke-width="1.6" opacity="0.35"/><path d="M-4 404 C 344 334, 518 144, 720 172" stroke-width="2.6" opacity="0.42"/><path d="M2 393 C 358 318, 526 118, 720 194" stroke-width="1.6" opacity="0.49"/><path d="M8 382 C 372 302, 534 92, 720 216" stroke-width="1.6" opacity="0.56"/><path d="M14 371 C 386 286, 542 66, 720 238" stroke-width="2.6" opacity="0.63"/><path d="M20 360 C 400 270, 550 40, 720 260" stroke-width="1.6" opacity="0.35"/></g><g fill="#9FF6FF" filter="url(#gl)"><circle cx="612" cy="132" r="3"/><circle cx="560" cy="196" r="2.4"/><circle cx="648" cy="248" r="2.6"/><circle cx="505" cy="262" r="2"/><circle cx="676" cy="98" r="2.2"/><circle cx="590" cy="320" r="2"/></g></svg>
 <div class="wrap">
+<header class="top">
+<a class="brand" href="/"><svg class="hexmark" viewBox="0 0 40 44" aria-hidden="true"><path d="M20 2l17 10v20L20 42 3 32V12z" fill="#0B1B2B"/><path d="M12 22.5l5.5 5.5L29 16" fill="none" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>MyFiber<b>Check</b></span></a>
+<div class="help"><span>Questions? Call or text<br></span><a href="tel:+19177206053" id="callLink">(917) 720-6053</a><span id="callNum" hidden></span></div>
+</header>
+
+<section class="hero" id="top">
+<div>
+<span class="chip"><i></i>Free · 13 fiber networks · All 50 states</span>
 <h1>{{H1}}</h1>
 <p class="lede">{{LEDE}}</p>
-<form id="checkForm" class="checker" novalidate>
-<label class="lbl" for="addr">Enter your home address</label>
-<div class="addr" style="position:relative">
-<span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="123 Main St, City, State" required></span>
-<button type="submit" class="cta" id="checkBtn">Check availability <span aria-hidden="true" class="arr">→</span></button>
-<ul id="sugg" role="listbox" hidden></ul>
-</div>
+<form id="checkForm" novalidate>
+<label for="addr" style="position:absolute;left:-9999px">Your street address</label>
+<div class="search"><svg class="pin" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="Enter your street address" required><button type="submit" class="cta" id="checkBtn">Check <span aria-hidden="true" class="arr">→</span></button><ul id="sugg" role="listbox" hidden></ul></div>
 <p class="err" id="checkErr" role="alert" hidden></p>
-<ul class="reassure"><li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Free to check</li><li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No credit check</li><li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No obligation</li></ul>
+<p class="privacy"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Used only to check coverage. No account, no credit check, no obligation.</p>
 </form>
+<ol class="prog" aria-label="Progress"><li class="on now"><b>1</b>Your address</li><li><b>2</b>Preliminary result</li><li><b>3</b>Confirmed options</li></ol>
+</div>
 
-<div class="card" id="panel" aria-live="polite" hidden>
+<div class="side">
+<div id="visual" style="width:100%;display:flex;justify-content:center;position:relative"><svg class="hexmap" viewBox="0 0 465 401" aria-hidden="true"><polygon points="42.5,17.0 42.5,43.0 20.0,56.0 -2.5,43.0 -2.5,17.0 20.0,4.0" class="hx" style="--d:0.00s"/><polygon points="87.5,17.0 87.5,43.0 65.0,56.0 42.5,43.0 42.5,17.0 65.0,4.0" class="hx" style="--d:0.08s"/><polygon points="132.6,17.0 132.6,43.0 110.1,56.0 87.5,43.0 87.5,17.0 110.1,4.0" class="hx" style="--d:0.16s"/><polygon points="177.6,17.0 177.6,43.0 155.1,56.0 132.6,43.0 132.6,17.0 155.1,4.0" class="hx" style="--d:0.24s"/><polygon points="222.6,17.0 222.6,43.0 200.1,56.0 177.6,43.0 177.6,17.0 200.1,4.0" class="hx" style="--d:0.32s"/><polygon points="267.7,17.0 267.7,43.0 245.2,56.0 222.6,43.0 222.6,17.0 245.2,4.0" class="hx" style="--d:0.40s"/><polygon points="312.7,17.0 312.7,43.0 290.2,56.0 267.7,43.0 267.7,17.0 290.2,4.0" class="hx" style="--d:0.48s"/><polygon points="357.7,17.0 357.7,43.0 335.2,56.0 312.7,43.0 312.7,17.0 335.2,4.0" class="hx" style="--d:0.56s"/><polygon points="402.8,17.0 402.8,43.0 380.3,56.0 357.7,43.0 357.7,17.0 380.3,4.0" class="hx" style="--d:0.64s"/><polygon points="65.0,56.0 65.0,82.0 42.5,95.0 20.0,82.0 20.0,56.0 42.5,43.0" class="hx" style="--d:0.08s"/><polygon points="110.1,56.0 110.1,82.0 87.5,95.0 65.0,82.0 65.0,56.0 87.5,43.0" class="hx" style="--d:0.16s"/><polygon points="155.1,56.0 155.1,82.0 132.6,95.0 110.1,82.0 110.1,56.0 132.6,43.0" class="hx" style="--d:0.24s"/><polygon points="200.1,56.0 200.1,82.0 177.6,95.0 155.1,82.0 155.1,56.0 177.6,43.0" class="hx" style="--d:0.32s"/><polygon points="245.2,56.0 245.2,82.0 222.6,95.0 200.1,82.0 200.1,56.0 222.6,43.0" class="hx" style="--d:0.40s"/><polygon points="290.2,56.0 290.2,82.0 267.7,95.0 245.2,82.0 245.2,56.0 267.7,43.0" class="hx" style="--d:0.48s"/><polygon points="335.2,56.0 335.2,82.0 312.7,95.0 290.2,82.0 290.2,56.0 312.7,43.0" class="hx" style="--d:0.56s"/><polygon points="380.3,56.0 380.3,82.0 357.7,95.0 335.2,82.0 335.2,56.0 357.7,43.0" class="hx" style="--d:0.64s"/><polygon points="425.3,56.0 425.3,82.0 402.8,95.0 380.3,82.0 380.3,56.0 402.8,43.0" class="hx" style="--d:0.72s"/><polygon points="42.5,95.0 42.5,121.0 20.0,134.0 -2.5,121.0 -2.5,95.0 20.0,82.0" class="hx" style="--d:0.16s"/><polygon points="87.5,95.0 87.5,121.0 65.0,134.0 42.5,121.0 42.5,95.0 65.0,82.0" class="hx" style="--d:0.24s"/><polygon points="132.6,95.0 132.6,121.0 110.1,134.0 87.5,121.0 87.5,95.0 110.1,82.0" class="hx" style="--d:0.32s"/><polygon points="177.6,95.0 177.6,121.0 155.1,134.0 132.6,121.0 132.6,95.0 155.1,82.0" class="hx on" style="--d:0.40s"/><polygon points="222.6,95.0 222.6,121.0 200.1,134.0 177.6,121.0 177.6,95.0 200.1,82.0" class="hx on" style="--d:0.48s"/><polygon points="267.7,95.0 267.7,121.0 245.2,134.0 222.6,121.0 222.6,95.0 245.2,82.0" class="hx" style="--d:0.56s"/><polygon points="312.7,95.0 312.7,121.0 290.2,134.0 267.7,121.0 267.7,95.0 290.2,82.0" class="hx on" style="--d:0.64s"/><polygon points="357.7,95.0 357.7,121.0 335.2,134.0 312.7,121.0 312.7,95.0 335.2,82.0" class="hx" style="--d:0.72s"/><polygon points="402.8,95.0 402.8,121.0 380.3,134.0 357.7,121.0 357.7,95.0 380.3,82.0" class="hx" style="--d:0.80s"/><polygon points="65.0,134.0 65.0,160.0 42.5,173.0 20.0,160.0 20.0,134.0 42.5,121.0" class="hx" style="--d:0.24s"/><polygon points="110.1,134.0 110.1,160.0 87.5,173.0 65.0,160.0 65.0,134.0 87.5,121.0" class="hx" style="--d:0.32s"/><polygon points="155.1,134.0 155.1,160.0 132.6,173.0 110.1,160.0 110.1,134.0 132.6,121.0" class="hx" style="--d:0.40s"/><polygon points="200.1,134.0 200.1,160.0 177.6,173.0 155.1,160.0 155.1,134.0 177.6,121.0" class="hx on" style="--d:0.48s"/><polygon points="245.2,134.0 245.2,160.0 222.6,173.0 200.1,160.0 200.1,134.0 222.6,121.0" class="hx on" style="--d:0.56s"/><polygon points="290.2,134.0 290.2,160.0 267.7,173.0 245.2,160.0 245.2,134.0 267.7,121.0" class="hx on" style="--d:0.64s"/><polygon points="335.2,134.0 335.2,160.0 312.7,173.0 290.2,160.0 290.2,134.0 312.7,121.0" class="hx" style="--d:0.72s"/><polygon points="380.3,134.0 380.3,160.0 357.7,173.0 335.2,160.0 335.2,134.0 357.7,121.0" class="hx" style="--d:0.80s"/><polygon points="425.3,134.0 425.3,160.0 402.8,173.0 380.3,160.0 380.3,134.0 402.8,121.0" class="hx" style="--d:0.88s"/><polygon points="42.5,173.0 42.5,199.0 20.0,212.0 -2.5,199.0 -2.5,173.0 20.0,160.0" class="hx" style="--d:0.32s"/><polygon points="87.5,173.0 87.5,199.0 65.0,212.0 42.5,199.0 42.5,173.0 65.0,160.0" class="hx" style="--d:0.40s"/><polygon points="132.6,173.0 132.6,199.0 110.1,212.0 87.5,199.0 87.5,173.0 110.1,160.0" class="hx on" style="--d:0.48s"/><polygon points="177.6,173.0 177.6,199.0 155.1,212.0 132.6,199.0 132.6,173.0 155.1,160.0" class="hx" style="--d:0.56s"/><polygon points="222.6,173.0 222.6,199.0 200.1,212.0 177.6,199.0 177.6,173.0 200.1,160.0" class="hx on" style="--d:0.64s"/><polygon points="267.7,173.0 267.7,199.0 245.2,212.0 222.6,199.0 222.6,173.0 245.2,160.0" class="hx on" style="--d:0.72s"/><polygon points="312.7,173.0 312.7,199.0 290.2,212.0 267.7,199.0 267.7,173.0 290.2,160.0" class="hx on" style="--d:0.80s"/><polygon points="357.7,173.0 357.7,199.0 335.2,212.0 312.7,199.0 312.7,173.0 335.2,160.0" class="hx" style="--d:0.88s"/><polygon points="402.8,173.0 402.8,199.0 380.3,212.0 357.7,199.0 357.7,173.0 380.3,160.0" class="hx" style="--d:0.96s"/><polygon points="65.0,212.0 65.0,238.0 42.5,251.0 20.0,238.0 20.0,212.0 42.5,199.0" class="hx" style="--d:0.40s"/><polygon points="110.1,212.0 110.1,238.0 87.5,251.0 65.0,238.0 65.0,212.0 87.5,199.0" class="hx" style="--d:0.48s"/><polygon points="155.1,212.0 155.1,238.0 132.6,251.0 110.1,238.0 110.1,212.0 132.6,199.0" class="hx" style="--d:0.56s"/><polygon points="200.1,212.0 200.1,238.0 177.6,251.0 155.1,238.0 155.1,212.0 177.6,199.0" class="hx" style="--d:0.64s"/><polygon points="245.2,212.0 245.2,238.0 222.6,251.0 200.1,238.0 200.1,212.0 222.6,199.0" class="hx" style="--d:0.72s"/><polygon points="290.2,212.0 290.2,238.0 267.7,251.0 245.2,238.0 245.2,212.0 267.7,199.0" class="hx" style="--d:0.80s"/><polygon points="335.2,212.0 335.2,238.0 312.7,251.0 290.2,238.0 290.2,212.0 312.7,199.0" class="hx" style="--d:0.88s"/><polygon points="380.3,212.0 380.3,238.0 357.7,251.0 335.2,238.0 335.2,212.0 357.7,199.0" class="hx" style="--d:0.96s"/><polygon points="425.3,212.0 425.3,238.0 402.8,251.0 380.3,238.0 380.3,212.0 402.8,199.0" class="hx" style="--d:1.04s"/><polygon points="42.5,251.0 42.5,277.0 20.0,290.0 -2.5,277.0 -2.5,251.0 20.0,238.0" class="hx" style="--d:0.48s"/><polygon points="87.5,251.0 87.5,277.0 65.0,290.0 42.5,277.0 42.5,251.0 65.0,238.0" class="hx" style="--d:0.56s"/><polygon points="132.6,251.0 132.6,277.0 110.1,290.0 87.5,277.0 87.5,251.0 110.1,238.0" class="hx" style="--d:0.64s"/><polygon points="177.6,251.0 177.6,277.0 155.1,290.0 132.6,277.0 132.6,251.0 155.1,238.0" class="hx" style="--d:0.72s"/><polygon points="222.6,251.0 222.6,277.0 200.1,290.0 177.6,277.0 177.6,251.0 200.1,238.0" class="hx" style="--d:0.80s"/><polygon points="267.7,251.0 267.7,277.0 245.2,290.0 222.6,277.0 222.6,251.0 245.2,238.0" class="hx" style="--d:0.88s"/><polygon points="312.7,251.0 312.7,277.0 290.2,290.0 267.7,277.0 267.7,251.0 290.2,238.0" class="hx" style="--d:0.96s"/><polygon points="357.7,251.0 357.7,277.0 335.2,290.0 312.7,277.0 312.7,251.0 335.2,238.0" class="hx" style="--d:1.04s"/><polygon points="402.8,251.0 402.8,277.0 380.3,290.0 357.7,277.0 357.7,251.0 380.3,238.0" class="hx" style="--d:1.12s"/><polygon points="65.0,290.0 65.0,316.0 42.5,329.0 20.0,316.0 20.0,290.0 42.5,277.0" class="hx" style="--d:0.56s"/><polygon points="110.1,290.0 110.1,316.0 87.5,329.0 65.0,316.0 65.0,290.0 87.5,277.0" class="hx" style="--d:0.64s"/><polygon points="155.1,290.0 155.1,316.0 132.6,329.0 110.1,316.0 110.1,290.0 132.6,277.0" class="hx" style="--d:0.72s"/><polygon points="200.1,290.0 200.1,316.0 177.6,329.0 155.1,316.0 155.1,290.0 177.6,277.0" class="hx" style="--d:0.80s"/><polygon points="245.2,290.0 245.2,316.0 222.6,329.0 200.1,316.0 200.1,290.0 222.6,277.0" class="hx" style="--d:0.88s"/><polygon points="290.2,290.0 290.2,316.0 267.7,329.0 245.2,316.0 245.2,290.0 267.7,277.0" class="hx" style="--d:0.96s"/><polygon points="335.2,290.0 335.2,316.0 312.7,329.0 290.2,316.0 290.2,290.0 312.7,277.0" class="hx" style="--d:1.04s"/><polygon points="380.3,290.0 380.3,316.0 357.7,329.0 335.2,316.0 335.2,290.0 357.7,277.0" class="hx" style="--d:1.12s"/><polygon points="425.3,290.0 425.3,316.0 402.8,329.0 380.3,316.0 380.3,290.0 402.8,277.0" class="hx" style="--d:1.20s"/><polygon points="42.5,329.0 42.5,355.0 20.0,368.0 -2.5,355.0 -2.5,329.0 20.0,316.0" class="hx" style="--d:0.64s"/><polygon points="87.5,329.0 87.5,355.0 65.0,368.0 42.5,355.0 42.5,329.0 65.0,316.0" class="hx" style="--d:0.72s"/><polygon points="132.6,329.0 132.6,355.0 110.1,368.0 87.5,355.0 87.5,329.0 110.1,316.0" class="hx" style="--d:0.80s"/><polygon points="177.6,329.0 177.6,355.0 155.1,368.0 132.6,355.0 132.6,329.0 155.1,316.0" class="hx" style="--d:0.88s"/><polygon points="222.6,329.0 222.6,355.0 200.1,368.0 177.6,355.0 177.6,329.0 200.1,316.0" class="hx" style="--d:0.96s"/><polygon points="267.7,329.0 267.7,355.0 245.2,368.0 222.6,355.0 222.6,329.0 245.2,316.0" class="hx" style="--d:1.04s"/><polygon points="312.7,329.0 312.7,355.0 290.2,368.0 267.7,355.0 267.7,329.0 290.2,316.0" class="hx" style="--d:1.12s"/><polygon points="357.7,329.0 357.7,355.0 335.2,368.0 312.7,355.0 312.7,329.0 335.2,316.0" class="hx" style="--d:1.20s"/><polygon points="402.8,329.0 402.8,355.0 380.3,368.0 357.7,355.0 357.7,329.0 380.3,316.0" class="hx" style="--d:1.28s"/><g transform="translate(208.6,107.0)"><path d="M14 40s14-12.2 14-24A14 14 0 1 0 0 16c0 11.8 14 24 14 24z" fill="#0B1B2B"/><circle cx="14" cy="16" r="5.5" fill="#2DD4BF"/></g></svg>
+<p class="note"><b>How it works:</b> we compare your address with coverage that 13 fiber networks report to the FCC, then a person on our team confirms it.</p></div>
+
+<div class="panel" id="panel" aria-live="polite" hidden>
 <div id="result" hidden>
-<p class="kicker">Preliminary result</p>
-<p id="resAddr" style="margin:0 0 12px;font-size:15px;color:var(--body)"></p>
-<span class="prelim">Based on FCC data · our team confirms before you sign up</span>
+<div class="ptop"><span class="kicker">Preliminary result</span><button type="button" class="linkbtn" id="changeAddr">Change address</button></div>
+<p id="resAddr"></p>
 <div id="resBox"><p id="resHead"></p></div>
 <ul class="prov" id="resList"></ul>
-<p class="body" id="resAsk" style="font-size:16px;margin-bottom:14px"></p>
-<form id="leadForm" novalidate>
+<p class="pre">From FCC coverage data (<span class="asof"></span>). Not final until our team confirms your exact address.</p>
+<button type="button" class="cta full" id="goConfirm">Get my confirmed options →</button>
+<form id="leadForm" novalidate hidden>
+<p class="body" id="resAsk"></p>
 <div class="lf">
 <div class="lfield"><label for="name">First name</label><input id="name" autocomplete="given-name" required></div>
 <div class="lfield"><label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
 </div>
 <input class="hp" tabindex="-1" autocomplete="off" name="website" id="website" aria-hidden="true">
-<label class="consent"><input type="checkbox" id="consent"><span>I agree that MyFiberCheck (operated by Quota) may call or text me at this number about internet service, including by automated means. Consent isn't required to buy anything. Msg &amp; data rates may apply. Reply STOP to opt out. See our <a href="/privacy">Privacy Policy</a>.</span></label>
+<label class="consent"><input type="checkbox" id="consent"><span>I agree that MyFiberCheck (operated by Quota) may call or text me at this number about internet service, including by automated means. Consent isn't required to buy anything. Msg &amp; data rates may apply. Reply STOP to opt out. <a href="/privacy">Privacy Policy</a>.</span></label>
 <button type="submit" class="cta full" id="leadBtn">Text me my options</button>
 <p class="err" id="leadErr" role="alert" hidden></p>
 </form>
-<p class="src">Source: FCC National Broadband Map, <span class="asof"></span>. Results show where providers report fiber; your exact address is confirmed by a person on our team.</p>
 </div>
 <div id="done" hidden style="text-align:center">
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#E6F7F5"/><path d="M20 33l8 8 16-18" stroke="#0FA39A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-<h2 style="font-size:28px;margin:14px 0 10px" id="doneHead">You're all set</h2>
-<p class="body">A person on our team is confirming your exact address with the providers now. Watch for a text from us with your confirmed options.</p>
-<div style="background:var(--bg);border-radius:14px;padding:16px;text-align:left;font-size:15px;line-height:1.7;color:var(--body);margin-bottom:16px">
-<strong style="color:var(--ink)">What happens next</strong><br>1. We check your exact address with each provider<br>2. You get a text with your confirmed options<br>3. If you choose one, we help set up the install</div>
-<button type="button" class="cta full" id="shareBtn" style="background:#fff;color:var(--teal-d);border:2px solid var(--teal);height:50px;font-size:16px;box-shadow:none">Know a neighbor? Share this check</button>
+<svg width="60" height="60" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#DDF3F0"/><path d="M20 33l8 8 16-18" stroke="#0E7C7B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h2 class="serif" style="font-size:28px;margin:12px 0 8px" id="doneHead">You're all set</h2>
+<p class="body">A person on our team is confirming your exact address with the providers. Watch for a text with your confirmed options. You decide from there; no obligation.</p>
+<button type="button" class="cta full" id="shareBtn" style="background:#fff;color:var(--teal);border:1.5px solid var(--teal)">Know a neighbor? Share this check</button>
 </div>
 </div>
-
-<ul class="facts"><li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".5"/></svg><span><span class="netcount">13</span> participating networks</span></li><li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12v9"/><circle cx="12" cy="10" r="2"/><path d="M8.5 6.5a5 5 0 0 0 0 7"/><path d="M15.5 6.5a5 5 0 0 1 0 7"/><path d="M5.5 3.5a9 9 0 0 0 0 13"/><path d="M18.5 3.5a9 9 0 0 1 0 13"/></svg><span>Coverage data from the FCC</span></li><li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Human verification before signup</span></li></ul>
 </div>
 </section>
+</div>
 
-<section class="band" id="providers">
-{{STRIP}}
-<p class="disclaim">Fiber networks we're authorized to sell. Names are trademarks of their owners; no endorsement implied.</p>
-</section>
+<section class="nets" id="providers"><div class="wrap">{{STRIP}}</div></section>
 
 {{CITY}}
 
 <section class="sec" id="how"><div class="wrap">
-<h2>How it works</h2>
-<p class="sub">An instant look at what's reported at your address, then a real person confirms it.</p>
-<div class="steps">
-<div class="step"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg></div><div><h3>1. Enter your address</h3><p>See which participating fiber networks report service at your address, right away.</p></div></div>
-<div class="stepar" aria-hidden="true">→</div>
-<div class="step"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></div><div><h3>2. We verify your options</h3><p>A person on our team confirms exact-address availability with the providers.</p></div></div>
-<div class="stepar" aria-hidden="true">→</div>
-<div class="step"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></div><div><h3>3. Choose what works for you</h3><p>Get your confirmed options by text. If you pick one, we help set up the install.</p></div></div>
-</div>
-<p class="note"><b>Preliminary vs. confirmed:</b> the instant result in step 1 comes from coverage providers report to the FCC and can be a few months behind new construction. Availability is only confirmed in step 2, before you sign up for anything.</p>
+<h2>What happens after you check</h2>
+<p class="sub">No sales pitch to sit through. Here's exactly what to expect.</p>
+<ol class="tl">
+<li><h3>You see a preliminary result</h3><p>Instantly, from the coverage each fiber network reports to the FCC for your address.</p><small>Instant</small></li>
+<li><h3>A person confirms it</h3><p>If you want your confirmed options, someone on our team checks your exact address with the providers.</p><small>Human-verified</small></li>
+<li><h3>You get a text and decide</h3><p>We text you what's actually available. Pick one and we help set it up, or don't. There's no obligation.</p><small>Your call</small></li>
+</ol>
 </div></section>
 
-<section class="sec alt" id="team"><div class="wrap">
-<div class="team">
-<img src="/rep.jpg" alt="{{REPNAME}}, {{REPTITLE}}" width="300" height="300" loading="lazy">
-<div class="vline"></div>
-<div>
-<h2>Real people. <span class="uline">Real follow-through.</span></h2>
-<p class="body" style="margin-top:18px;font-size:18px">"My team sells fiber door to door. We built MyFiberCheck so you can find out what's available without waiting for someone to knock. When you check your address, the text you get back comes from one of us."</p>
-<p class="who"><b>{{REPNAME}}</b> · {{REPTITLE}} · <a href="sms:+19177206053">Text (917) 720-6053</a></p>
+<section class="sec trust" id="trust"><div class="wrap">
+<h2>Transparent by design</h2>
+<p class="sub">You're trusting us with your address. Here's who we are and what we do with it.</p>
+<div class="grid4">
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg></div><h3>Who we are</h3><p>An independent sales company (Quota) authorized to sell several fiber networks. Not an internet provider. We may be paid when you sign up.</p></div>
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3>Where results come from</h3><p>FCC National Broadband Map data (<span class="asof"></span>). It can lag new construction, which is why a person confirms.</p></div>
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/></svg></div><h3>How we contact you</h3><p>Only if you ask, and only about internet at your address. Reply STOP anytime.</p></div>
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>What we never do</h3><p>Sell your information. It goes to a provider only if you ask us to set up service.</p></div>
 </div>
-</div>
-<div class="facts3">
-<div class="fact"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg></div><h3>Who runs MyFiberCheck</h3><p>Quota, an independent sales company authorized to sell fiber from several providers. We're not an internet provider, and we may be paid when you sign up.</p></div>
-<div class="fact"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>How availability is verified</h3><p>Your instant result comes from FCC coverage data. Before you sign up, a person on our team confirms your exact address with the providers.</p></div>
-<div class="fact"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/></svg></div><h3>What happens after you submit</h3><p>We text you your confirmed options. You choose whether to sign up; there's no obligation. Reply STOP anytime.</p></div>
-</div>
+<div class="founder"><img src="/rep.jpg" alt="{{REPNAME}}, {{REPTITLE}}" width="64" height="64" loading="lazy"><p>"My team sells fiber door to door. The text you get back comes from one of us." <b>{{REPNAME}}, {{REPTITLE}}</b> · <a href="sms:+19177206053">Text (917) 720-6053</a></p></div>
 </div></section>
 
 <section class="sec" id="faq"><div class="wrap">
-<h2>Common questions</h2>
-<div class="faq">
-<details open><summary>How does the availability check work?</summary><p>We find your address's location with the U.S. Census Bureau's address lookup, then compare it with the fiber coverage each provider reports to the FCC (National Broadband Map, <span class="asof"></span>). That gives a preliminary answer in seconds. A person on our team then confirms your exact address with the providers.</p></details>
-<details><summary>Is it free?</summary><p>Yes. Checking your address costs nothing, there's no credit check to see your options, and there's no obligation to sign up.</p></details>
-<details><summary>Is MyFiberCheck an internet provider?</summary><p>No. MyFiberCheck is run by Quota, an independent sales company that's authorized to sell fiber internet from several providers. Plans, prices and installation are provided by the internet provider you choose. We may be paid by the provider when you sign up.</p></details>
-<details><summary>What happens after I submit my address and number?</summary><p>A person on our team checks your exact address with the participating providers and texts you what's actually available. If you want one of the options, we help you set up the order. If you don't, that's it.</p></details>
-<details><summary>How is my information handled?</summary><p>We use your address and number only to check availability and contact you about internet service. We don't sell your information. We share it with a provider only if you ask us to set up service. Reply STOP to any text to opt out. Details are in our <a href="/privacy">Privacy Policy</a>.</p></details>
-<details><summary>What if nothing shows up at my address?</summary><p>New fiber often isn't on the FCC map yet. Leave your number and we'll check by hand, and we can text you if fiber reaches your street later.</p></details>
+<h2>Questions, answered</h2>
+<div class="faqgrid">
+<div>
+<details><summary>How does the check work?</summary><p>We locate your address with the U.S. Census Bureau's address lookup and compare it with fiber coverage that providers report to the FCC. That's your preliminary result. A person on our team confirms the exact address before anything else happens.</p></details>
+<details><summary>Is it really free?</summary><p>Yes. Checking costs nothing, there's no credit check to see your options, and no obligation to sign up.</p></details>
+<details><summary>Are you an internet provider?</summary><p>No. MyFiberCheck is run by Quota, an independent sales company. Plans, prices and installation come from the provider you choose. We may be paid by that provider.</p></details>
+</div>
+<div>
+<details><summary>What happens after I give my number?</summary><p>Someone on our team checks your exact address with the providers and texts you what's available. If you want one, we help set up the order. If not, that's the end of it.</p></details>
+<details><summary>How is my information handled?</summary><p>Used only to check availability and contact you about it. Never sold. Shared with a provider only if you ask us to set up service. See our <a href="/privacy">Privacy Policy</a>.</p></details>
+<details><summary>What if nothing shows up?</summary><p>New fiber often isn't on the FCC map yet. Leave your number and we'll check by hand.</p></details>
+</div>
 </div>
 </div></section>
 
-<section class="sec alt" id="contact" style="padding-top:20px"><div class="wrap">
-<div class="contact">
-<div><h2>Talk to a real person</h2><p>Questions about fiber at your address? Call or text our team directly.</p></div>
-<div class="rows">
-<a href="tel:+19177206053"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call (917) 720-6053</a>
-<a href="sms:+19177206053"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"/></svg>Text (917) 720-6053</a>
-<a href="mailto:quotasaleshq@gmail.com"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>quotasaleshq@gmail.com</a>
-</div>
-</div>
-<div class="endcta">
-<h2>Ready to see what reaches your home?</h2>
-<p>Free to check, no credit check, no obligation.</p>
-<form id="endForm" novalidate>
-<label for="addr2" style="position:absolute;left:-9999px">Street address with city or ZIP</label>
-<div class="addr"><span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr2" autocomplete="street-address" placeholder="123 Main St, City, State"></span><button type="submit" class="cta">Check availability <span aria-hidden="true" class="arr">→</span></button></div>
-</form>
-</div>
+<section class="final trust"><div class="wrap">
+<h2 class="serif" style="font-size:36px;max-width:none">Find out in about 5 seconds.</h2>
+<form id="endForm" novalidate><label for="addr2" style="position:absolute;left:-9999px">Your street address</label>
+<div class="search"><svg class="pin" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr2" autocomplete="street-address" placeholder="Enter your street address"><button type="submit" class="cta">Check <span aria-hidden="true" class="arr">→</span></button></div></form>
 </div></section>
-</main>
 
-<a href="#addr" class="sticky" id="sticky" hidden>Check my address <span aria-hidden="true" class="arr">→</span></a>
+<a href="#addr" class="sticky" id="sticky" hidden>Check my address →</a>
 
 <footer><div class="wrap">
-<div class="ftop"><a class="brand" href="/"><svg class="mark" viewBox="0 0 54 56" aria-hidden="true"><g fill="none" stroke-linecap="round"><path d="M6 47 L18 19" stroke="currentColor" stroke-width="5"/><path d="M15 47 L25 24" stroke="currentColor" stroke-width="5" opacity=".55"/><path d="M24 35 l7.5 7.5 L48 15" stroke="var(--teal)" stroke-width="6.5" stroke-linejoin="round"/></g><circle cx="18" cy="19" r="4.2" fill="var(--teal)"/><circle cx="25" cy="24" r="3.6" fill="currentColor" opacity=".55"/></svg><span>MyFiber<b>Check</b></span></a>
-<ul class="flinks"><li><a href="/about">About</a></li><li><a href="#how">How it works</a></li><li><a href="#providers">Providers</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li></ul></div>
-<div class="fcols">
-<div>
-<p><b style="color:#fff">Independent sales company.</b> MyFiberCheck is operated by Quota, an independent sales company, not an internet service provider. We may be compensated by providers when you sign up.</p>
-<p><b style="color:#fff">Provider disclosure.</b> Provider names are trademarks of their respective owners and are used only to identify the networks we check. Availability, pricing and plans are set by each provider.</p>
-<p><b style="color:#fff">Data source.</b> Preliminary coverage is based on the FCC National Broadband Map (<span class="asof"></span>) and is confirmed by our team before any order.</p>
-</div>
-<div>
-<p><b style="color:#fff">Contact</b><br><a href="tel:+19177206053">(917) 720-6053</a> · <a href="mailto:quotasaleshq@gmail.com">quotasaleshq@gmail.com</a></p>
+<a class="brand" href="/"><svg class="hexmark" viewBox="0 0 40 44" aria-hidden="true"><path d="M20 2l17 10v20L20 42 3 32V12z" fill="#0B1B2B"/><path d="M12 22.5l5.5 5.5L29 16" fill="none" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>MyFiber<b>Check</b></span></a>
+<ul class="fl"><li><a href="/about">About</a></li><li><a href="#how">How it works</a></li><li><a href="#faq">FAQ</a></li><li><a href="tel:+19177206053">Contact: (917) 720-6053</a></li><li><a href="mailto:quotasaleshq@gmail.com">quotasaleshq@gmail.com</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li></ul>
+<p>MyFiberCheck is operated by Quota, an independent sales company, not an internet service provider. We may be compensated by providers when you sign up. Provider names are trademarks of their respective owners and are used only to identify the networks we check; no endorsement is implied. Preliminary coverage is based on the FCC National Broadband Map (<span class="asof"></span>) and is confirmed by our team before any order.</p>
 {{STATES}}
-</div>
-</div>
 </div></footer>
 <script src="/t.js"></script>
 <script>
 const PHONE = '(917) 720-6053';
 const ASOF = 'June 2026 data';
 if (PHONE) { const a = document.getElementById('callLink'); a.hidden = false; a.href = 'tel:' + PHONE.replace(/\D/g, ''); document.getElementById('callNum').textContent = PHONE; }
-document.querySelectorAll('.strip li').length && document.querySelectorAll('.netcount').forEach(e => { if (location.pathname === '/') e.textContent = '13'; });
-document.getElementById('navCta').addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => document.getElementById('addr').focus(), 350); });
+
 document.querySelectorAll('.asof').forEach(e => e.textContent = ASOF);
 const qs = new URLSearchParams(location.search);
 const source = (window.mfc && mfc.source) || qs.get('src') || qs.get('utm_source') || 'direct';
@@ -399,7 +346,7 @@ $('checkForm').addEventListener('submit', async e => {
     T('check_result', { level: d.level, n: d.providers.length, st: d.state });
     showResult(d);
   } catch (x) { T('check_error', { msg: String(x.message).slice(0, 60) }); err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
-  finally { $('checkBtn').disabled = false; $('checkBtn').innerHTML = 'Check availability <span aria-hidden="true" class="arr">→</span>'; }
+  finally { $('checkBtn').disabled = false; $('checkBtn').innerHTML = 'Check <span aria-hidden="true" class="arr">→</span>'; }
 });
 
 function showResult(d) {
@@ -423,9 +370,13 @@ function showResult(d) {
     last.status = 'Needs manual check';
   }
   $('leadBtn').textContent = n ? 'Text me my options' : 'Check my address by hand';
-  $('panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  $('name').focus({ preventScroll: true });
+  $('visual').hidden = true; $('leadForm').hidden = true; $('goConfirm').hidden = false; setStep(2);
+  $('goConfirm').textContent = n ? 'Get my confirmed options →' : 'Have us check by hand →';
+  if (innerWidth < 900) $('panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+function setStep(k) { document.querySelectorAll('.prog li').forEach((li, i) => { li.classList.toggle('on', i < k); li.classList.toggle('now', i === k - 1); }); }
+$('goConfirm').addEventListener('click', () => { T('confirm_click'); $('goConfirm').hidden = true; $('leadForm').hidden = false; setStep(3); $('name').focus(); });
+$('changeAddr').addEventListener('click', () => { T('change_addr'); $('panel').hidden = true; $('visual').hidden = false; setStep(1); addrIn.focus(); addrIn.select(); });
 
 $('leadForm').addEventListener('submit', async e => {
   e.preventDefault();
@@ -442,7 +393,7 @@ $('leadForm').addEventListener('submit', async e => {
     const d = await r.json();
     if (!r.ok) throw new Error(d.error);
     T('lead_ok', { status: last.status });
-    $('result').hidden = true; $('done').hidden = false;
+    $('result').hidden = true; $('done').hidden = false; setStep(3); document.querySelectorAll('.prog li').forEach(li => li.classList.add('on'));
     $('doneHead').textContent = "You're all set, " + body.name.trim().split(' ')[0];
   } catch (x) { T('lead_error', { msg: String(x.message).slice(0, 60) }); err.textContent = x.message || 'Something went wrong. Please try again.'; err.hidden = false; }
   finally { $('leadBtn').disabled = false; }
