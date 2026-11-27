@@ -56,6 +56,9 @@ const pageKey = p => String(p || '/').split('?')[0].slice(0, 120);
 
 const app = express();
 app.disable('x-powered-by');
+// PREVIEW=1: isolated redesign preview. Never indexed, never delivers leads.
+const PREVIEW = process.env.PREVIEW === '1';
+if (PREVIEW) app.use((req, res, next) => { res.set('X-Robots-Tag', 'noindex, nofollow'); next(); });
 // www → apex
 app.use((req, res, next) => req.hostname?.startsWith('www.') ? res.redirect(301, `https://${req.hostname.slice(4)}${req.originalUrl}`) : next());
 app.use(express.json({ limit: '20kb' }));
@@ -126,6 +129,7 @@ app.post('/api/lead', async (req, res) => {
   if (!lead.name || lead.phone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: 'Please add your name and a 10-digit phone number.' });
   if (lead.consent !== 'yes') return res.status(400).json({ error: 'Please check the box so we can text you.' });
   if (b.website) return res.json({ ok: true }); // honeypot
+  if (PREVIEW) { console.log('PREVIEW lead (not delivered):', lead.name); return res.json({ ok: true, preview: true }); }
   try {
     if (!SHEET_WEBHOOK) throw new Error('SHEET_WEBHOOK not set');
     const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
@@ -420,7 +424,7 @@ ${owner ? '<span class="ok">✓ This device is excluded from the stats</span>' :
 </main>`);
 });
 
-app.get('/robots.txt', (req, res) => res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));
+app.get('/robots.txt', (req, res) => PREVIEW ? res.type('text/plain').send('User-agent: *\nDisallow: /\n') : res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));
 app.get('/sitemap.xml', (req, res) => {
   const o = origin(req), d = '2026-11-19';
   const urls = [`${o}/`, `${o}/about`, ...[...byState.keys()].filter(st => STATES[st]).map(st => `${o}/fiber-internet/${st.toLowerCase()}`),
