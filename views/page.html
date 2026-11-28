@@ -28,7 +28,7 @@ h1,h2,h3{margin:0;font-family:var(--h);letter-spacing:-.02em;font-weight:700}
 /* utility + nav */
 .util{background:var(--navy);color:#9DB0C3;font-size:13px;border-bottom:1px solid #1B3047}
 .util .wrap{display:flex;justify-content:space-between;align-items:center;height:36px;gap:16px}
-.util a{color:#D5E2EE;text-decoration:none;font-weight:500}.util a:hover{color:#fff}
+.util .show-m{display:none}.util a{white-space:nowrap;color:#D5E2EE;text-decoration:none;font-weight:500}.util a:hover{color:#fff}
 .nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);font-family:var(--h);font-weight:700;font-size:21px;letter-spacing:-.025em}
@@ -176,7 +176,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 @media (max-width:1024px){.links{display:none}.hero .wrap{grid-template-columns:1fr 1fr;gap:36px}h1{font-size:46px}}
 @media (max-width:900px){
  .wrap{padding:0 18px}
- .util .wrap{height:auto;padding-top:7px;padding-bottom:7px;font-size:12px}.util .hide-m{display:none}
+ .util .wrap{height:auto;padding-top:7px;padding-bottom:7px;font-size:12px}.util .hide-m{display:none}.util .show-m{display:inline}
  .nav .wrap{height:60px}.brand{font-size:19px}.mark{width:30px;height:30px}
  .call{display:none}.btn{height:40px;padding:0 14px;font-size:14px}.btn .arr{display:none}
  .hero .wrap{grid-template-columns:1fr;gap:0;padding-top:30px;padding-bottom:36px}
@@ -213,7 +213,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 </style>
 </head>
 <body>
-<div class="util"><div class="wrap"><span>Independent sales company · not an internet provider<span class="hide-m"> · we may be paid when you sign up</span></span><a href="#transparency">How we work →</a></div></div>
+<div class="util"><div class="wrap"><span>Independent sales company<span class="hide-m"> · not an internet provider · we may be paid when you sign up</span><span class="show-m"> · not an ISP</span></span><a href="#transparency">How we work →</a></div></div>
 <header class="nav"><div class="wrap">
 <a class="brand" href="/" aria-label="MyFiberCheck home"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#0B1B2B"/><path d="M9 29V18.5L20 10l11 8.5V29" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.5 21.5l3.6 3.6 6.4-7" fill="none" stroke="#2DD4BF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>MyFiber<b>Check</b></span></a>
 <ul class="links"><li><a href="#how">How it works</a></li><li><a href="#providers">Networks</a></li><li><a href="#transparency">Transparency</a></li><li><a href="#faq">FAQ</a></li></ul>
@@ -391,8 +391,8 @@ addrIn.addEventListener('input', () => {
       const d = await r.json();
       items = d.features.map(f => f.properties).filter(p => p.countrycode === 'US' && p.housenumber && p.street)
         .map(p => ({ line1: p.housenumber + ' ' + p.street, line2: [p.city || p.town || p.village || p.county, p.state, p.postcode].filter(Boolean).join(', ') }))
-        .map(x => ({ ...x, full: x.line1 + ', ' + x.line2 }));
-      if (!items.length) return closeS();
+        .map(x => ({ ...x, full: x.line1 + ', ' + x.line2 })).filter((x, i, a) => a.findIndex(y => y.full === x.full) === i);
+      if (!items.length || addrIn.value.trim() !== q || document.activeElement !== addrIn || $('checkBtn').disabled) return closeS();
       sugg.innerHTML = '';
       items.forEach((x, i) => { const li = document.createElement('li'); li.role = 'option'; li.id = 'opt' + i; li.textContent = x.line1 + ' '; const sp = document.createElement('span'); sp.textContent = x.line2; li.appendChild(sp); li.addEventListener('mousedown', e => { e.preventDefault(); pick(i); }); sugg.appendChild(li); });
       sugg.hidden = false; addrIn.setAttribute('aria-expanded','true'); T('suggest_shown', null, true);
@@ -407,6 +407,7 @@ addrIn.addEventListener('keydown', e => {
 });
 addrIn.addEventListener('blur', () => setTimeout(closeS, 150));
 
+$('checkForm').addEventListener('submit', () => { clearTimeout(tmr); closeS(); });
 $('checkForm').addEventListener('submit', async e => {
   e.preventDefault(); closeS();
   const address = $('addr').value.trim();
