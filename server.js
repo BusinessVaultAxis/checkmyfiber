@@ -294,8 +294,8 @@ app.get('/', (req, res) => res.send(render(req, {
   path: '/',
   title: 'Is Fiber Available at My Address? Free Check | MyFiberCheck',
   desc: 'Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your options by text.',
-  h1: 'Find the fiber internet options at your address.',
-  lede: 'Check participating fiber networks at your address for free and receive confirmed options from a real team.',
+  h1: 'Find fiber internet at your address.',
+  lede: 'One free check across 13 fiber networks. See what providers report at your home in seconds, then get your options confirmed by a real person.',
 })));
 
 app.get('/fiber-internet/:st', (req, res, next) => {
@@ -315,7 +315,7 @@ app.get('/fiber-internet/:st', (req, res, next) => {
   res.send(render(req, {
     title: `Fiber Internet in ${STATES[st]}: Providers by City (2026) | MyFiberCheck`,
     desc: `See which fiber internet providers serve ${STATES[st]} cities, top speeds by provider, and check fiber availability at your exact address for free.`,
-    h1: `Find the fiber internet options at your ${STATES[st]} address.`,
+    h1: `Find fiber internet at your ${STATES[st]} address.`,
     lede: `We check ${provs.size} fiber providers across ${num(list.length)} ${STATES[st]} communities. Free, and we'll text you your exact options.`,
     city, strip: [...provs.entries()].sort((a, b) => b[1][0] - a[1][0]).map(e => e[0]), stripLabel: `Fiber providers in ${STATES[st]}`,
     schema: { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -349,7 +349,7 @@ ${nearby.length ? `<h3 style="font-size:20px;margin:28px 0 8px">Fiber near ${esc
   res.send(render(req, {
     title: `Fiber Internet in ${place}: Providers & Availability (2026) | MyFiberCheck`,
     desc: `${names.length} fiber provider${names.length > 1 ? 's' : ''} report service in ${place}, with plans up to ${spd(fastest[2])}. Check fiber availability at your exact ${c.name} address for free.`,
-    h1: `Find the fiber internet options at your ${c.name} address.`,
+    h1: `Find fiber internet at your ${c.name} address.`,
     lede: `${names.length > 1 ? `${names.length} fiber providers report` : `${names[0]} reports`} service in ${c.name}. Check your exact address in about 5 seconds, and we'll text you your options.`,
     city, noindex: c.homes < INDEX_MIN, strip: c.providers.map(p => p[0]), stripLabel: `Fiber providers in ${c.name}`,
     schema: [
