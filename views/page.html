@@ -22,7 +22,7 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px}
 a{color:var(--teal-d)}a:hover{color:var(--btn-h)}
-h1,h2,h3{margin:0;font-family:var(--h);letter-spacing:-.02em;font-weight:700}
+h1,h2,h3{margin:0;line-height:1.12;font-family:var(--h);letter-spacing:-.02em;font-weight:700}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 .label{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 /* utility + nav */
@@ -145,7 +145,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 .nets{border-bottom:1px solid var(--line);background:#fff}
 .netrow{display:flex;align-items:center;gap:32px;padding:22px 0}
 .netrow .stripl{flex:none;margin:0;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.netrow .strip{display:flex;flex-wrap:wrap;align-items:center;gap:10px 30px;margin:0;padding:0;list-style:none}
+.netrow .strip{flex:1;display:grid;grid-template-columns:repeat(7,auto);justify-content:space-between;align-items:center;gap:12px 24px;margin:0;padding:0;list-style:none}
 .netrow .strip li{font-family:var(--h);font-weight:600;font-size:16.5px;color:#33475B;letter-spacing:-.01em;white-space:nowrap}
 .team{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:center;max-width:860px}
 .team img{width:120px;height:120px;border-radius:50%;object-fit:cover;object-position:50% 25%}
@@ -153,6 +153,9 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 .intro{margin:0;font-size:17.5px;line-height:1.6;color:var(--body)}
 .faqwrap{display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start}
 .disclose{color:#D5E2EE}
+.sech1{margin-bottom:44px;max-width:640px}
+#team{padding:56px 0}
+footer a[href^="tel"]{white-space:nowrap}
 [hidden]{display:none !important}
 :focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 @media (min-width:901px){.sticky{display:none !important}}
@@ -189,12 +192,14 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 
 @media (max-width:900px){
  .netrow{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 0}
- .netrow .strip{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 36px);margin:0 -18px;padding:0 18px 4px;gap:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .netrow .strip{display:flex;flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 36px);margin:0 -18px;padding:0 18px 4px;gap:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
  .netrow .strip::-webkit-scrollbar{display:none}
  .netrow .strip li{font-size:15.5px}
  .team{grid-template-columns:72px 1fr;gap:16px;align-items:start}.team img{width:72px;height:72px}
  .intro{font-size:16px}
  .faqwrap{grid-template-columns:1fr;gap:20px}
+ .sech1{margin-bottom:28px}
+ #team{padding:40px 0}
  .steps li{grid-template-columns:24px 1fr;padding-bottom:24px}.node{grid-row:span 2}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
@@ -271,7 +276,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 {{CITY}}
 
 <section class="sec" id="how"><div class="wrap">
-<div class="sech"><div><p class="kick label">How it works</p><h2>Three steps to confirmed options</h2></div><p class="sub">You see a result before sharing anything personal.</p></div>
+<div class="sech1"><p class="kick label">How it works</p><h2>Three steps to confirmed options</h2><p class="sub" style="margin-top:12px">You see a result before sharing anything personal.</p></div>
 <ol class="steps">
 <li><div class="node"><b></b></div><h3>Check your address</h3><p>See which fiber networks report coverage in your area.</p></li>
 <li><div class="node"><b></b></div><h3>Review your options</h3><p>Get a preliminary availability result instantly.</p></li>
