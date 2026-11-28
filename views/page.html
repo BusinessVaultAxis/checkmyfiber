@@ -47,7 +47,7 @@ h1,h2,h3{margin:0;line-height:1.12;font-family:var(--h);letter-spacing:-.02em;fo
 .eyebrow{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--glow);margin:0 0 18px}
 .eyebrow::before{content:"";width:22px;height:1.5px;background:var(--glow)}
 h1{font-size:50px;line-height:1.08;letter-spacing:-.02em;font-weight:700}
-.hl{color:inherit}
+.hl{color:var(--glow)}
 .lede{font-size:18.5px;line-height:1.55;color:#C3D1DF;margin:18px 0 28px;max-width:520px}
 .checker{background:#fff;color:var(--ink);border-radius:10px;padding:22px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .lbl{display:block;font-family:var(--h);font-weight:600;font-size:16px;margin-bottom:10px}
@@ -67,7 +67,7 @@ h1{font-size:50px;line-height:1.08;letter-spacing:-.02em;font-weight:700}
 #sugg li{padding:12px 14px;border-radius:8px;font-size:16px;cursor:pointer}#sugg li[aria-selected=true],#sugg li:hover{background:var(--mint)}#sugg li span{color:var(--muted);font-size:14px}
 .mapfig{margin:0;position:relative}
 .mapfig img{width:100%;height:auto;display:block}
-.mapfig figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:13px;color:#8FA3B8}
+.mapfig figcaption{display:flex;justify-content:flex-end;text-align:right;gap:16px;margin-top:12px;font-size:13px;color:#8FA3B8}
 .mapfig figcaption i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--glow);margin-right:6px;vertical-align:1px}
 /* result card */
 .card{background:#fff;color:var(--ink);border-radius:10px;padding:24px;margin-top:16px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
@@ -139,11 +139,6 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 .sticky{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;justify-content:center;gap:6px;height:54px;border-radius:12px;background:var(--btn);color:#fff;font-family:var(--h);font-weight:600;font-size:16.5px;text-decoration:none;box-shadow:0 10px 30px rgba(11,27,43,.3)}
 .sticky:hover{color:#fff}
 
-.nets{border-bottom:1px solid var(--line);background:#fff}
-.netrow{display:flex;align-items:center;gap:32px;padding:22px 0}
-.netrow .stripl{flex:none;margin:0;font-size:14px;font-weight:600;color:var(--muted)}
-.netrow .strip{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:12px 34px;margin:0;padding:0;list-style:none}
-.netrow .strip li{font-family:var(--h);font-weight:600;font-size:16.5px;color:#33475B;letter-spacing:-.01em;white-space:nowrap}
 .team{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:center;max-width:860px}
 .team img{width:120px;height:120px;border-radius:50%;object-fit:cover;object-position:50% 25%}
 .who{margin:0 0 8px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}.who b{font-family:var(--h);font-size:19px;color:var(--ink)}.who span{font-size:14.5px;color:var(--muted)}
@@ -153,6 +148,23 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 .sech1{margin-bottom:32px;max-width:640px}
 #team{padding:56px 0}
 footer a[href^="tel"]{white-space:nowrap}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.bar{background:#fff;border-radius:10px;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.bar .field{border:0;height:56px;box-shadow:none}
+.bar:focus-within{box-shadow:0 0 0 3px rgba(45,212,191,.55)}
+.bar .field:focus-within{box-shadow:none}
+.bar #sugg{top:72px}
+.hform{max-width:600px}
+.hform .reassure{color:#D5E2EE;margin-top:16px}.hform .reassure svg{color:var(--glow)}
+.hform .privnote{border:0;padding:0;margin-top:8px;color:#93A7BB;font-size:13.5px}
+.hform .err{color:#FFB4A9}
+/* networks banner */
+.nets{background:#fff;border-bottom:1px solid var(--line)}
+.netrow{display:block;padding:26px 0;text-align:center}
+.netrow .stripl{display:block;margin:0 0 14px;font-size:13px;font-weight:600;color:var(--muted)}
+.netrow .strip{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 36px;margin:0 auto;padding:0;list-style:none;max-width:1000px}
+.netrow .strip li{font-family:var(--h);font-weight:600;font-size:16px;color:#3A4B5E;white-space:nowrap;line-height:1.2}
 [hidden]{display:none !important}
 :focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 @media (min-width:901px){.sticky{display:none !important}}
@@ -170,7 +182,7 @@ footer a[href^="tel"]{white-space:nowrap}
  .addr{flex-direction:column}.field{flex:none;width:100%;height:54px}.cta{width:100%;height:54px}
  #sugg{top:60px}
  .reassure{gap:6px 14px;font-size:13.5px}
- .mapfig{margin-top:28px}.mapfig figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:13px;color:#8FA3B8}
+ .mapfig{margin-top:28px}.mapfig figcaption{display:flex;justify-content:flex-end;text-align:right;gap:16px;margin-top:12px;font-size:13px;color:#8FA3B8}
  .card{padding:18px 16px}
  .lf{grid-template-columns:1fr;gap:0}
  .sec{padding:60px 0}.sec h2{font-size:30px}.sub{font-size:16px}
@@ -185,15 +197,20 @@ footer a[href^="tel"]{white-space:nowrap}
 }
 
 @media (max-width:900px){
- .netrow{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 0}
- .netrow .strip{display:flex;flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 36px);margin:0 -18px;padding:0 18px 4px;gap:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
- .netrow .strip::-webkit-scrollbar{display:none}
- .netrow .strip li{font-size:15.5px}
  .team{grid-template-columns:72px 1fr;gap:16px;align-items:start}.team img{width:72px;height:72px}
  .intro{font-size:16px}
  .faqwrap{grid-template-columns:1fr;gap:20px}
  .sech1{margin-bottom:28px}
  #team{padding:40px 0}
+}
+
+@media (max-width:900px){
+ .bar{padding:6px}.bar .field{height:52px}
+ .bar #sugg{top:64px}.bar.addr{gap:6px}
+ .netrow{padding:20px 0}
+ .netrow .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 8px}
+ .netrow .strip li{padding:0;border:0;font-size:14.5px;white-space:normal}
+ .mapfig figcaption{justify-content:flex-start;text-align:left}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
 </style>
@@ -211,16 +228,16 @@ footer a[href^="tel"]{white-space:nowrap}
 <div>
 <h1>{{H1}}</h1>
 <p class="lede">{{LEDE}}</p>
-<form id="checkForm" class="checker" novalidate>
-<label class="lbl" for="addr">Enter your home address</label>
-<div class="addr" style="position:relative">
-<span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="123 Main St, City, State" required></span>
+<form id="checkForm" class="hform" novalidate>
+<label class="sr" for="addr">Enter your home address</label>
+<div class="addr bar" style="position:relative">
+<span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr" name="address" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" placeholder="Enter your home address" required></span>
 <button type="submit" class="cta" id="checkBtn">Check availability <span aria-hidden="true" class="arr">→</span></button>
 <ul id="sugg" role="listbox" hidden></ul>
 </div>
 <p class="err" id="checkErr" role="alert" hidden></p>
 <ul class="reassure"><li><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Free to check</li><li><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No credit check</li><li><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No obligation</li></ul>
-<p class="privnote">No account needed. We only ask for a number if you want confirmed options.</p>
+<p class="privnote">No account needed. We only ask for your number if you want confirmed options.</p>
 </form>
 
 <div class="card" id="panel" aria-live="polite" hidden>
@@ -257,7 +274,7 @@ footer a[href^="tel"]{white-space:nowrap}
 
 <figure class="mapfig">
 <img src="/brand/coverage-map.svg" width="1100" height="610" alt="Dot map of fiber coverage reported to the FCC across the continental United States by the networks we check">
-<figcaption><span><i></i>Fiber reported by the <span class="netcount">13</span> networks we check</span><span>Source: FCC National Broadband Map, <span class="asof"></span></span></figcaption>
+<figcaption><span>Source: FCC National Broadband Map, <span class="asof"></span></span></figcaption>
 </figure>
 </div></section>
 
@@ -301,9 +318,9 @@ footer a[href^="tel"]{white-space:nowrap}
 <section class="end" id="contact"><div class="wrap">
 <div><h2>See what reaches your home.</h2><p>Free to check. No credit check. No obligation.</p>
 <div class="contact"><a href="tel:+19177206053">Call (917) 720-6053</a><a href="sms:+19177206053">Text us</a><a href="mailto:hello@myfibercheck.com">hello@myfibercheck.com</a></div></div>
-<form id="endForm" class="checker" novalidate>
-<label class="lbl" for="addr2">Enter your home address</label>
-<div class="addr"><span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr2" autocomplete="street-address" placeholder="123 Main St, City, State"></span><button type="submit" class="cta">Check <span aria-hidden="true" class="arr">→</span></button></div>
+<form id="endForm" class="hform" novalidate>
+<label class="sr" for="addr2">Enter your home address</label>
+<div class="addr bar"><span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr2" autocomplete="street-address" placeholder="Enter your home address"></span><button type="submit" class="cta">Check <span aria-hidden="true" class="arr">→</span></button></div>
 </form>
 </div></section>
 </main>
