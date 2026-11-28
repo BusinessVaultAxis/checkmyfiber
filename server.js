@@ -56,6 +56,9 @@ const pageKey = p => String(p || '/').split('?')[0].slice(0, 120);
 
 const app = express();
 app.disable('x-powered-by');
+// PREVIEW=1: isolated redesign preview. Never indexed, never delivers leads.
+const PREVIEW = process.env.PREVIEW === '1';
+if (PREVIEW) app.use((req, res, next) => { res.set('X-Robots-Tag', 'noindex, nofollow'); next(); });
 // www → apex
 app.use((req, res, next) => req.hostname?.startsWith('www.') ? res.redirect(301, `https://${req.hostname.slice(4)}${req.originalUrl}`) : next());
 app.use(express.json({ limit: '20kb' }));
@@ -126,6 +129,7 @@ app.post('/api/lead', async (req, res) => {
   if (!lead.name || lead.phone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: 'Please add your name and a 10-digit phone number.' });
   if (lead.consent !== 'yes') return res.status(400).json({ error: 'Please check the box so we can text you.' });
   if (b.website) return res.json({ ok: true }); // honeypot
+  if (PREVIEW) { console.log('PREVIEW lead (not delivered):', lead.name); return res.json({ ok: true, preview: true }); }
   try {
     if (!SHEET_WEBHOOK) throw new Error('SHEET_WEBHOOK not set');
     const r = await fetch(SHEET_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), redirect: 'manual', signal: AbortSignal.timeout(15000) });
@@ -154,6 +158,7 @@ app.post('/api/referral', async (req, res) => {
   const b = req.body || {}, f = b.friend || {}, me = b.referrer || {};
   const clean = (v, n = 120) => String(v ?? '').replace(/[\r\n\t]+/g, ' ').trim().slice(0, n);
   if (b.website) return res.json({ ok: true }); // honeypot
+  if (PREVIEW) return res.json({ ok: true, preview: true });
   const friendName = clean(f.name, 60), friendPhone = clean(f.phone, 30);
   const refName = clean(me.name, 60), refPhone = clean(me.phone, 30);
   if (!friendName || friendPhone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: "Please add your friend's name and a 10-digit phone number." });
@@ -251,13 +256,16 @@ const num = n => n.toLocaleString('en-US');
 const spd = d => d >= 1000 ? (Math.round(d / 100) / 10) + ' Gig' : d + ' Mbps';
 const pname = k => cov.isps[k];
 const stateLinks = [...byState.keys()].sort().map(st => `<a href="/fiber-internet/${st.toLowerCase()}">${STATES[st] || st}</a>`).join(' ');
-const STATES_HTML = `<p style="color:#0B1B2B;font-weight:700;margin-top:14px">Fiber internet by state</p><p class="states">${stateLinks}</p>`;
+const STATES_HTML = `<p style="color:#fff;font-weight:700;margin-top:14px">Fiber internet by state</p><p class="states">${stateLinks}</p>`;
 const origin = req => (process.env.SITE_URL || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
 app.set('trust proxy', true);
 
 const ALL_KEYS = ['kn','bs','vz','att','fr','qf','fi','bp','tg','rp','w3','pb'];
 const SHORT = { kn: ['Kinetic'], bs: ['Brightspeed'], vz: ['Verizon Fios'], att: ['AT&T Fiber'], fr: ['Frontier'], qf: ['Quantum Fiber'], fi: ['Fidium'], bp: ['Bluepeak'], tg: ['Ting'], rp: ['Ripple'], w3: ['Wire3'], pb: ['Point Broadband', 'Clearwave'] };
-const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+// Provider logos (official files from each provider's own site). Display-only; names stay as alt text.
+const LOGOS = { 'Kinetic': ['kinetic.svg', 26], 'Brightspeed': ['brightspeed.png', 22, 'sil'], 'Verizon Fios': ['verizon.svg', 21], 'AT&T Fiber': ['att.png', 34], 'Frontier': ['frontier.svg', 24, '', 'Frontier'], 'Quantum Fiber': ['quantum.svg', 30, 'sil'], 'Fidium': ['fidium.svg', 30], 'Bluepeak': ['bluepeak.svg', 20], 'Ting': ['ting.svg', 26], 'Ripple': ['ripple.svg', 38], 'Wire3': ['wire3.png', 26], 'Point Broadband': ['pointbroadband.png', 32] };
+const stripItem = n => { const L = LOGOS[n]; if (!L) return `<li class="txt">${esc(n)}</li>`; return `<li><img src="/logos/${L[0]}" alt="${esc(n)}" height="${L[1]}" style="height:${L[1]}px" class="${L[2] || ''}" loading="lazy">${L[3] ? `<span>${esc(L[3])}</span>` : ''}</li>`; };
+const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(stripItem).join('')}</ul>`;
 function botName(ua) {
   if (/googlebot|google-inspectiontool|adsbot-google/i.test(ua)) return 'Google';
   if (/bingbot|msnbot/i.test(ua)) return 'Bing';
@@ -279,18 +287,18 @@ function render(req, o) {
   const v = {
     TITLE: o.title, DESC: o.desc, H1: o.h1, LEDE: o.lede,
     CANON: origin(req) + (o.path || req.path), ROBOTS: o.noindex ? '<meta name="robots" content="noindex,follow">' : '',
-    CITY: o.city || '', STRIP: stripHtml(o.strip || ALL_KEYS, o.stripLabel || 'Providers we check'), SCHEMA: o.schema ? `<script type="application/ld+json">${JSON.stringify(o.schema).replace(/</g, '\\u003c')}</script>` : '',
+    CITY: o.city || '', STRIP: stripHtml(o.strip || ALL_KEYS, o.stripLabel || 'Networks we check'), SCHEMA: o.schema ? `<script type="application/ld+json">${JSON.stringify(o.schema).replace(/</g, '\\u003c')}</script>` : '',
     STATES: STATES_HTML, REPNAME: esc(process.env.REP_NAME || 'Aidan'), REPTITLE: esc(process.env.REP_TITLE || 'Founder, MyFiberCheck'),
   };
-  return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP|REPNAME|REPTITLE)\}\}/g, (_, k) => (k === 'TITLE' || k === 'DESC' || k === 'H1' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
+  return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP|REPNAME|REPTITLE)\}\}/g, (_, k) => k === 'H1' ? esc(v.H1).replace(/(your (?:[^.?]* )?address[.?]?)/i, '<span class="hl">$1</span>') : (k === 'TITLE' || k === 'DESC' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
 }
 
 app.get('/', (req, res) => res.send(render(req, {
   path: '/',
   title: 'Is Fiber Available at My Address? Free Check | MyFiberCheck',
   desc: 'Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your options by text.',
-  h1: 'Is fiber available at your address?',
-  lede: "Check every fiber provider we sell in about 5 seconds. Free, and we'll text you your exact options.",
+  h1: 'Find fiber internet at your address.',
+  lede: 'Check participating fiber networks at your address for free. See preliminary results instantly and get confirmed options from our team.',
 })));
 
 app.get('/fiber-internet/:st', (req, res, next) => {
@@ -310,7 +318,7 @@ app.get('/fiber-internet/:st', (req, res, next) => {
   res.send(render(req, {
     title: `Fiber Internet in ${STATES[st]}: Providers by City (2026) | MyFiberCheck`,
     desc: `See which fiber internet providers serve ${STATES[st]} cities, top speeds by provider, and check fiber availability at your exact address for free.`,
-    h1: `Is fiber available at your ${STATES[st]} address?`,
+    h1: `Find fiber internet at your ${STATES[st]} address.`,
     lede: `We check ${provs.size} fiber providers across ${num(list.length)} ${STATES[st]} communities. Free, and we'll text you your exact options.`,
     city, strip: [...provs.entries()].sort((a, b) => b[1][0] - a[1][0]).map(e => e[0]), stripLabel: `Fiber providers in ${STATES[st]}`,
     schema: { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -344,7 +352,7 @@ ${nearby.length ? `<h3 style="font-size:20px;margin:28px 0 8px">Fiber near ${esc
   res.send(render(req, {
     title: `Fiber Internet in ${place}: Providers & Availability (2026) | MyFiberCheck`,
     desc: `${names.length} fiber provider${names.length > 1 ? 's' : ''} report service in ${place}, with plans up to ${spd(fastest[2])}. Check fiber availability at your exact ${c.name} address for free.`,
-    h1: `Is fiber available at your ${c.name} address?`,
+    h1: `Find fiber internet at your ${c.name} address.`,
     lede: `${names.length > 1 ? `${names.length} fiber providers report` : `${names[0]} reports`} service in ${c.name}. Check your exact address in about 5 seconds, and we'll text you your options.`,
     city, noindex: c.homes < INDEX_MIN, strip: c.providers.map(p => p[0]), stripLabel: `Fiber providers in ${c.name}`,
     schema: [
@@ -420,7 +428,7 @@ ${owner ? '<span class="ok">✓ This device is excluded from the stats</span>' :
 </main>`);
 });
 
-app.get('/robots.txt', (req, res) => res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));
+app.get('/robots.txt', (req, res) => PREVIEW ? res.type('text/plain').send('User-agent: *\nDisallow: /\n') : res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /stats\nSitemap: ${origin(req)}/sitemap.xml\n`));
 app.get('/sitemap.xml', (req, res) => {
   const o = origin(req), d = '2026-11-19';
   const urls = [`${o}/`, `${o}/about`, ...[...byState.keys()].filter(st => STATES[st]).map(st => `${o}/fiber-internet/${st.toLowerCase()}`),
