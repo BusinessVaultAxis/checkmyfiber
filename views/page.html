@@ -12,19 +12,19 @@
 <meta name="theme-color" content="#0B1B2B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 {{SCHEMA}}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"MyFiberCheck","description":"Independent fiber internet sales company operated by Quota. Free fiber availability checks.","telephone":"+1-917-720-6053","parentOrganization":{"@type":"Organization","name":"Quota"}}
 </script>
 <style>
-:root{--navy:#0B1B2B;--navy-2:#11263A;--ink:#0B1B2B;--body:#3A4B5E;--muted:#5E6E80;--line:#E2E7EE;--bg:#F5F7FA;--teal:#0FA39A;--teal-d:#0B7F78;--btn:#0E7C7B;--btn-h:#0A6362;--glow:#2DD4BF;--mint:#E5F6F3;--h:'Schibsted Grotesk',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+:root{--navy:#0B1B2B;--navy-2:#11263A;--ink:#0B1B2B;--body:#3A4B5E;--muted:#5E6E80;--line:#E2E7EE;--bg:#F5F7FA;--teal:#0FA39A;--teal-d:#0B7F78;--btn:#0E7C7B;--btn-h:#0A6362;--glow:#2DD4BF;--mint:#E5F6F3;--h:'Schibsted Grotesk',system-ui,sans-serif;--mono:inherit}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px}
 a{color:var(--teal-d)}a:hover{color:var(--btn-h)}
 h1,h2,h3{margin:0;line-height:1.12;font-family:var(--h);letter-spacing:-.02em;font-weight:700}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
-.label{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.label{font-size:13px;font-weight:600;color:var(--muted)}
 /* utility + nav */
 .util{background:var(--navy);color:#9DB0C3;font-size:13px;border-bottom:1px solid #1B3047}
 .util .wrap{display:flex;justify-content:space-between;align-items:center;height:36px;gap:16px}
@@ -38,7 +38,7 @@ h1,h2,h3{margin:0;line-height:1.12;font-family:var(--h);letter-spacing:-.02em;fo
 .links a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}.links a:hover{color:var(--teal-d)}
 .navr{display:flex;align-items:center;gap:20px}
 .call{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 18px;border-radius:8px;background:var(--btn);color:#fff;font:inherit;font-weight:600;font-size:15px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 18px;border-radius:6px;background:var(--btn);color:#fff;font:inherit;font-weight:600;font-size:15px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
 .btn:hover{background:var(--btn-h);color:#fff}
 .arr{display:inline-block;transition:transform .15s}.btn:hover .arr,.cta:hover .arr{transform:translateX(3px)}
 /* hero */
@@ -46,17 +46,17 @@ h1,h2,h3{margin:0;line-height:1.12;font-family:var(--h);letter-spacing:-.02em;fo
 .hero .wrap{display:grid;grid-template-columns:minmax(0,560px) 1fr;gap:56px;align-items:center;padding-top:64px;padding-bottom:72px}
 .eyebrow{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--glow);margin:0 0 18px}
 .eyebrow::before{content:"";width:22px;height:1.5px;background:var(--glow)}
-h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
-.hl{color:var(--glow)}
+h1{font-size:50px;line-height:1.08;letter-spacing:-.02em;font-weight:700}
+.hl{color:inherit}
 .lede{font-size:18.5px;line-height:1.55;color:#C3D1DF;margin:18px 0 28px;max-width:520px}
-.checker{background:#fff;color:var(--ink);border-radius:14px;padding:22px;box-shadow:0 1px 0 rgba(255,255,255,.06),0 30px 60px rgba(0,0,0,.35)}
+.checker{background:#fff;color:var(--ink);border-radius:10px;padding:22px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .lbl{display:block;font-family:var(--h);font-weight:600;font-size:16px;margin-bottom:10px}
 .addr{display:flex;gap:10px}
-.field{flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:56px;padding:0 14px;border:1.5px solid #C8D2DD;border-radius:10px;background:#fff;transition:border-color .15s,box-shadow .15s}
+.field{flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:56px;padding:0 14px;border:1px solid #AEBBC9;border-radius:6px;background:#fff;transition:border-color .15s,box-shadow .15s}
 .field:focus-within{border-color:var(--btn);box-shadow:0 0 0 4px rgba(14,124,123,.14)}
 .field .pin{color:var(--teal-d);flex:none}
 .field input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:17px;color:var(--ink);background:transparent;height:100%}
-.cta{height:56px;padding:0 22px;border:0;border-radius:10px;background:var(--btn);color:#fff;font:inherit;font-family:var(--h);font-size:16.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cta{height:56px;padding:0 24px;border:0;border-radius:6px;background:var(--btn);color:#fff;font:inherit;font-family:var(--h);font-size:16.5px;font-weight:600;cursor:pointer;white-space:nowrap}
 .cta:hover{background:var(--btn-h)}.cta[disabled]{opacity:.7;cursor:progress}
 .cta.full{width:100%}
 .reassure{display:flex;flex-wrap:wrap;gap:6px 20px;list-style:none;margin:14px 0 0;padding:0;font-size:14px;color:var(--body)}
@@ -67,10 +67,10 @@ h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
 #sugg li{padding:12px 14px;border-radius:8px;font-size:16px;cursor:pointer}#sugg li[aria-selected=true],#sugg li:hover{background:var(--mint)}#sugg li span{color:var(--muted);font-size:14px}
 .mapfig{margin:0;position:relative}
 .mapfig img{width:100%;height:auto;display:block}
-.mapfig figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid #1E3650;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8FA3B8;text-transform:uppercase}
+.mapfig figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:13px;color:#8FA3B8}
 .mapfig figcaption i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--glow);margin-right:6px;vertical-align:1px}
 /* result card */
-.card{background:#fff;color:var(--ink);border-radius:14px;padding:24px;margin-top:16px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.card{background:#fff;color:var(--ink);border-radius:10px;padding:24px;margin-top:16px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .kicker{margin:0 0 6px}
 .prelim{display:inline-block;margin:0 0 12px;font-size:12.5px;color:var(--teal-d);background:var(--mint);padding:4px 10px;border-radius:6px;font-weight:500}
 .good,.warn,.info{border-radius:10px;padding:14px 16px;margin-bottom:12px}
@@ -79,7 +79,7 @@ h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
 .info{background:#EAF1F8}.info p{margin:0;font-family:var(--h);font-size:18px;font-weight:700;color:#0A3A6C}
 .prov{display:flex;flex-direction:column;gap:8px;margin:0 0 14px;padding:0;list-style:none}
 .prov li{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-weight:600}
-.prov li span{font-family:var(--mono);font-weight:500;font-size:13px;color:var(--body)}
+.prov li span{font-weight:500;font-size:14px;color:var(--body)}
 .body{margin:0 0 14px;color:var(--body)}
 .before{display:flex;gap:10px;margin:0 0 14px;padding:12px 14px;border-radius:10px;background:var(--bg);font-size:14px;color:var(--body)}
 .before svg{flex:none;color:var(--teal-d);margin-top:2px}
@@ -95,19 +95,16 @@ h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
 /* sections */
 .sec{padding:84px 0}.sec.alt{background:var(--bg)}
 .sech{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:44px}
-.sec h2{font-size:40px;line-height:1.08;letter-spacing:-.03em}
+.sec h2{font-size:34px;line-height:1.15;letter-spacing:-.015em}
 .sub{margin:0;font-size:17px;color:var(--body)}
 .kick{display:flex;align-items:center;gap:10px;margin:0 0 14px}.kick::before{content:"";width:22px;height:1.5px;background:var(--teal)}
 /* providers */
 /* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:0;padding:0;list-style:none}
-.steps li{position:relative;padding:0 32px 0 0}
-.node{display:flex;align-items:center;margin-bottom:22px}
-.node b{width:12px;height:12px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px var(--mint);flex:none}
-.node::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,var(--teal),#CFE5E2);margin-left:10px}
-.steps li:last-child .node::after{background:transparent}
-.steps h3{font-size:20px;margin:0 0 6px}.steps p{margin:0;color:var(--body)}
-.callout{margin-top:44px;padding:20px 24px;border-left:3px solid var(--teal);background:var(--bg);color:var(--body);font-size:15.5px;border-radius:0 10px 10px 0}
+.num{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--h);font-weight:700;font-size:15px;margin-bottom:14px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0 32px;border-top:1px solid var(--line);padding-top:28px!important;margin:0;padding:0;list-style:none}
+.steps li{position:relative}
+.steps li:last-child .steps h3{font-size:20px;margin:0 0 6px}.steps p{margin:0;color:var(--body)}
+.callout{margin:28px 0 0;font-size:14px;color:var(--muted);max-width:760px}
 .who{margin:0;color:var(--body)}.who a{white-space:nowrap}.who b{color:var(--ink)}
 /* faq */
 .faq{border-top:1px solid var(--line)}
@@ -128,7 +125,7 @@ h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
 .city h2{font-size:30px;margin-bottom:12px}
 .city table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:15.5px}
 .city th,.city td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}
-.city th{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+.city th{font-size:13px;font-weight:600;color:var(--muted)}
 .city .q{border-top:1px solid var(--line);padding:16px 0}.city .q h3{font-size:17px;margin-bottom:6px}.city .q p{margin:0;color:var(--body)}
 .city .links{display:flex;flex-wrap:wrap;gap:8px 18px;padding:0;list-style:none}
 /* footer */
@@ -144,7 +141,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 
 .nets{border-bottom:1px solid var(--line);background:#fff}
 .netrow{display:flex;align-items:center;gap:32px;padding:22px 0}
-.netrow .stripl{flex:none;margin:0;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.netrow .stripl{flex:none;margin:0;font-size:14px;font-weight:600;color:var(--muted)}
 .netrow .strip{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:12px 34px;margin:0;padding:0;list-style:none}
 .netrow .strip li{font-family:var(--h);font-weight:600;font-size:16.5px;color:#33475B;letter-spacing:-.01em;white-space:nowrap}
 .team{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:center;max-width:860px}
@@ -153,7 +150,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 .intro{margin:0;font-size:17.5px;line-height:1.6;color:var(--body)}
 .faqwrap{display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start}
 .disclose{color:#D5E2EE}
-.sech1{margin-bottom:44px;max-width:640px}
+.sech1{margin-bottom:32px;max-width:640px}
 #team{padding:56px 0}
 footer a[href^="tel"]{white-space:nowrap}
 [hidden]{display:none !important}
@@ -173,17 +170,14 @@ footer a[href^="tel"]{white-space:nowrap}
  .addr{flex-direction:column}.field{flex:none;width:100%;height:54px}.cta{width:100%;height:54px}
  #sugg{top:60px}
  .reassure{gap:6px 14px;font-size:13.5px}
- .mapfig{margin-top:28px}.mapfig figcaption{font-size:10.5px;flex-direction:column;gap:4px}
+ .mapfig{margin-top:28px}.mapfig figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:13px;color:#8FA3B8}
  .card{padding:18px 16px}
  .lf{grid-template-columns:1fr;gap:0}
  .sec{padding:60px 0}.sec h2{font-size:30px}.sub{font-size:16px}
  .sech{grid-template-columns:1fr;gap:12px;margin-bottom:28px}
  .steps{grid-template-columns:1fr;gap:0}
- .steps li{display:grid;grid-template-columns:24px 1fr;gap:0 14px;padding:0 0 28px}
- .node{grid-row:span 4;flex-direction:column;margin:6px 0 0;align-items:center}.node::after{width:1.5px;height:auto;flex:1;margin:10px 0 0;background:#CFE5E2}
- .steps li:last-child{padding-bottom:0}
+ .steps li{display:grid;grid-template-columns:32px 1fr;gap:0 14px;padding:0 0 22px}.num{grid-row:span 2;margin:0}
  .steps h3{margin-top:0;font-size:19px}
- .callout{margin-top:28px;padding:16px 18px}
  .faq summary{font-size:16.5px;padding:18px 0}
  .end .wrap{grid-template-columns:1fr;gap:24px;padding-top:56px;padding-bottom:60px}.end h2{font-size:30px}
  .city{padding:48px 18px 4px}.city h2{font-size:25px}.city table{font-size:14px}.city th,.city td{padding:10px 8px}
@@ -200,7 +194,6 @@ footer a[href^="tel"]{white-space:nowrap}
  .faqwrap{grid-template-columns:1fr;gap:20px}
  .sech1{margin-bottom:28px}
  #team{padding:40px 0}
- .steps li{grid-template-columns:24px 1fr;padding-bottom:24px}.node{grid-row:span 2}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
 </style>
@@ -216,7 +209,6 @@ footer a[href^="tel"]{white-space:nowrap}
 <main>
 <section class="hero" id="top"><div class="wrap">
 <div>
-<p class="eyebrow">Fiber availability check</p>
 <h1>{{H1}}</h1>
 <p class="lede">{{LEDE}}</p>
 <form id="checkForm" class="checker" novalidate>
@@ -265,7 +257,7 @@ footer a[href^="tel"]{white-space:nowrap}
 
 <figure class="mapfig">
 <img src="/brand/coverage-map.svg" width="1100" height="610" alt="Dot map of fiber coverage reported to the FCC across the continental United States by the networks we check">
-<figcaption><span><i></i>Fiber reported by the <span class="netcount">13</span> networks we check</span><span>FCC National Broadband Map · <span class="asof"></span></span></figcaption>
+<figcaption><span><i></i>Fiber reported by the <span class="netcount">13</span> networks we check</span><span>Source: FCC National Broadband Map, <span class="asof"></span></span></figcaption>
 </figure>
 </div></section>
 
@@ -276,11 +268,11 @@ footer a[href^="tel"]{white-space:nowrap}
 {{CITY}}
 
 <section class="sec" id="how"><div class="wrap">
-<div class="sech1"><p class="kick label">How it works</p><h2>Three steps to confirmed options</h2><p class="sub" style="margin-top:12px">You see a result before sharing anything personal.</p></div>
+<div class="sech1"><h2>Three steps to confirmed options</h2><p class="sub" style="margin-top:12px">You see a result before sharing anything personal.</p></div>
 <ol class="steps">
-<li><div class="node"><b></b></div><h3>Check your address</h3><p>See which fiber networks report coverage in your area.</p></li>
-<li><div class="node"><b></b></div><h3>Review your options</h3><p>Get a preliminary availability result instantly.</p></li>
-<li><div class="node"><b></b></div><h3>Get confirmed plans</h3><p>Our team verifies availability and sends your options.</p></li>
+<li><span class="num">1</span><h3>Check your address</h3><p>See which fiber networks report coverage in your area.</p></li>
+<li><span class="num">2</span><h3>Review your options</h3><p>Get a preliminary availability result instantly.</p></li>
+<li><span class="num">3</span><h3>Get confirmed plans</h3><p>Our team verifies availability and sends your options.</p></li>
 </ol>
 <p class="callout">Instant results come from coverage providers report to the <a href="https://broadbandmap.fcc.gov" target="_blank" rel="noopener">FCC</a> (<span class="asof"></span>), which can lag new construction. Availability is confirmed only when our team checks your exact address.</p>
 </div></section>
@@ -296,7 +288,7 @@ footer a[href^="tel"]{white-space:nowrap}
 </div></section>
 
 <section class="sec" id="faq"><div class="wrap faqwrap">
-<div><p class="kick label">FAQ</p><h2>Common questions</h2><p class="sub" style="margin-top:14px">Still unsure? Call or text <a href="tel:+19177206053" style="white-space:nowrap">(917) 720-6053</a>.</p></div>
+<div><h2>Common questions</h2><p class="sub" style="margin-top:14px">Still unsure? Call or text <a href="tel:+19177206053" style="white-space:nowrap">(917) 720-6053</a>.</p></div>
 <div class="faq">
 <details open><summary>How does the availability check work?</summary><p>We locate your address with the U.S. Census Bureau's geocoder and compare it with fiber coverage providers report to the <a href="https://broadbandmap.fcc.gov" target="_blank" rel="noopener">FCC National Broadband Map</a> (<span class="asof"></span>). That's your preliminary result. Our team confirms your exact address with the providers.</p></details>
 <details><summary>Is MyFiberCheck an internet provider?</summary><p>No. MyFiberCheck is operated by Quota, an independent fiber sales company. Plans, prices and installation come from the provider you choose, and we may be paid when you sign up through us.</p></details>
