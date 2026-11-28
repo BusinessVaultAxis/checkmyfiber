@@ -284,7 +284,7 @@ function render(req, o) {
   const v = {
     TITLE: o.title, DESC: o.desc, H1: o.h1, LEDE: o.lede,
     CANON: origin(req) + (o.path || req.path), ROBOTS: o.noindex ? '<meta name="robots" content="noindex,follow">' : '',
-    CITY: o.city || '', STRIP: stripHtml(o.strip || ALL_KEYS, o.stripLabel || 'Participating providers include'), SCHEMA: o.schema ? `<script type="application/ld+json">${JSON.stringify(o.schema).replace(/</g, '\\u003c')}</script>` : '',
+    CITY: o.city || '', STRIP: stripHtml(o.strip || ALL_KEYS, o.stripLabel || 'Networks we check'), SCHEMA: o.schema ? `<script type="application/ld+json">${JSON.stringify(o.schema).replace(/</g, '\\u003c')}</script>` : '',
     STATES: STATES_HTML, REPNAME: esc(process.env.REP_NAME || 'Aidan'), REPTITLE: esc(process.env.REP_TITLE || 'Founder, MyFiberCheck'),
   };
   return TPL.replace(/\{\{(TITLE|DESC|H1|LEDE|CANON|ROBOTS|CITY|SCHEMA|STATES|STRIP|REPNAME|REPTITLE)\}\}/g, (_, k) => k === 'H1' ? esc(v.H1).replace(/(your (?:[^.?]* )?address[.?]?)/i, '<span class="hl">$1</span>') : (k === 'TITLE' || k === 'DESC' || k === 'LEDE' || k === 'CANON') ? esc(v[k]) : v[k]);
@@ -295,7 +295,7 @@ app.get('/', (req, res) => res.send(render(req, {
   title: 'Is Fiber Available at My Address? Free Check | MyFiberCheck',
   desc: 'Free fiber availability check. Enter your address to see which fiber internet providers report service on your block, then get your options by text.',
   h1: 'Find fiber internet at your address.',
-  lede: 'One free check across 13 fiber networks. See what providers report at your home in seconds, then get your options confirmed by a real person.',
+  lede: 'Check participating fiber networks at your address for free. See preliminary results instantly and get confirmed options from our team.',
 })));
 
 app.get('/fiber-internet/:st', (req, res, next) => {

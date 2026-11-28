@@ -92,24 +92,13 @@ h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
 .consent input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--btn)}
 .hp{position:absolute;left:-9999px}
 .src{margin:14px 0 0;font-size:12.5px;color:var(--muted)}
-/* proof bar */
-.proof{border-bottom:1px solid var(--line)}
-.proof .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
-.proof .wrap>div{padding:24px 28px 24px 0}
-.proof .wrap>div+div{padding-left:28px;border-left:1px solid var(--line)}
-.proof b{display:block;font-family:var(--h);font-size:17px;font-weight:600;margin-top:6px}
-.proof p{margin:4px 0 0;font-size:14.5px;color:var(--body)}
 /* sections */
-.sec{padding:96px 0}.sec.alt{background:var(--bg)}
+.sec{padding:84px 0}.sec.alt{background:var(--bg)}
 .sech{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:44px}
 .sec h2{font-size:40px;line-height:1.08;letter-spacing:-.03em}
 .sub{margin:0;font-size:17px;color:var(--body)}
 .kick{display:flex;align-items:center;gap:10px;margin:0 0 14px}.kick::before{content:"";width:22px;height:1.5px;background:var(--teal)}
 /* providers */
-.netgrid .stripl{display:none}
-.netgrid .strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:0;margin:0;padding:0;list-style:none;border-top:1px solid var(--line);border-left:1px solid var(--line)}
-.netgrid .strip li{display:flex;align-items:center;height:76px;padding:0 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--h);font-weight:600;font-size:17px;background:#fff}
-.fine{margin:16px 0 0;font-size:13.5px;color:var(--muted);max-width:760px}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:0;padding:0;list-style:none}
 .steps li{position:relative;padding:0 32px 0 0}
@@ -117,26 +106,8 @@ h1{font-size:54px;line-height:1.04;letter-spacing:-.03em;font-weight:800}
 .node b{width:12px;height:12px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px var(--mint);flex:none}
 .node::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,var(--teal),#CFE5E2);margin-left:10px}
 .steps li:last-child .node::after{background:transparent}
-.steps h3{font-size:21px;margin:6px 0 8px}.steps p{margin:0;color:var(--body)}
-.share{display:inline-flex;gap:8px;margin-top:16px;padding:6px 10px;border-radius:6px;background:var(--bg);font-size:13.5px;color:var(--body)}
-.share em{font-style:normal;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:1px}
+.steps h3{font-size:20px;margin:0 0 6px}.steps p{margin:0;color:var(--body)}
 .callout{margin-top:44px;padding:20px 24px;border-left:3px solid var(--teal);background:var(--bg);color:var(--body);font-size:15.5px;border-radius:0 10px 10px 0}
-/* transparency */
-.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.tcol{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px}
-.tcol h3{font-size:19px;margin-bottom:14px}
-.tcol ul{margin:0;padding:0;list-style:none}
-.tcol li{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);color:var(--body);font-size:15.5px}
-.tcol li:first-child{border-top:0;padding-top:0}
-.tcol li svg{flex:none;margin-top:3px}
-.yes svg{color:var(--teal)}.no svg{color:#9AA7B5}
-.paid{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:var(--navy);color:#C3D1DF;border-radius:14px;padding:28px}
-.paid h3{color:#fff;font-size:19px;margin-bottom:6px}.paid p{margin:0}
-.paid .label{color:var(--glow)}
-/* team */
-.team{display:grid;grid-template-columns:220px 1fr;gap:44px;align-items:center}
-.team img{width:220px;height:220px;border-radius:16px;object-fit:cover;object-position:50% 25%}
-.team blockquote{margin:16px 0 18px;font-family:var(--h);font-size:24px;line-height:1.35;font-weight:500;letter-spacing:-.015em;color:var(--ink)}
 .who{margin:0;color:var(--body)}.who a{white-space:nowrap}.who b{color:var(--ink)}
 /* faq */
 .faq{border-top:1px solid var(--line)}
@@ -170,6 +141,18 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 .states{display:flex;flex-wrap:wrap;gap:3px 12px;font-size:12.5px;margin:14px 0 10px}.states a{color:#7E92A7}
 .sticky{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;justify-content:center;gap:6px;height:54px;border-radius:12px;background:var(--btn);color:#fff;font-family:var(--h);font-weight:600;font-size:16.5px;text-decoration:none;box-shadow:0 10px 30px rgba(11,27,43,.3)}
 .sticky:hover{color:#fff}
+
+.nets{border-bottom:1px solid var(--line);background:#fff}
+.netrow{display:flex;align-items:center;gap:32px;padding:22px 0}
+.netrow .stripl{flex:none;margin:0;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.netrow .strip{display:flex;flex-wrap:wrap;align-items:center;gap:10px 30px;margin:0;padding:0;list-style:none}
+.netrow .strip li{font-family:var(--h);font-weight:600;font-size:16.5px;color:#33475B;letter-spacing:-.01em;white-space:nowrap}
+.team{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:center;max-width:860px}
+.team img{width:120px;height:120px;border-radius:50%;object-fit:cover;object-position:50% 25%}
+.who{margin:0 0 8px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}.who b{font-family:var(--h);font-size:19px;color:var(--ink)}.who span{font-size:14.5px;color:var(--muted)}
+.intro{margin:0;font-size:17.5px;line-height:1.6;color:var(--body)}
+.faqwrap{display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start}
+.disclose{color:#D5E2EE}
 [hidden]{display:none !important}
 :focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 @media (min-width:901px){.sticky{display:none !important}}
@@ -190,33 +173,38 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
  .mapfig{margin-top:28px}.mapfig figcaption{font-size:10.5px;flex-direction:column;gap:4px}
  .card{padding:18px 16px}
  .lf{grid-template-columns:1fr;gap:0}
- .proof .wrap{grid-template-columns:1fr}.proof .wrap>div,.proof .wrap>div+div{padding:16px 0;border-left:0;border-top:1px solid var(--line)}.proof .wrap>div:first-child{border-top:0}
  .sec{padding:60px 0}.sec h2{font-size:30px}.sub{font-size:16px}
  .sech{grid-template-columns:1fr;gap:12px;margin-bottom:28px}
- .netgrid .strip{grid-template-columns:1fr 1fr}.netgrid .strip li{height:50px;padding:0 14px;font-size:15px}
  .steps{grid-template-columns:1fr;gap:0}
  .steps li{display:grid;grid-template-columns:24px 1fr;gap:0 14px;padding:0 0 28px}
  .node{grid-row:span 4;flex-direction:column;margin:6px 0 0;align-items:center}.node::after{width:1.5px;height:auto;flex:1;margin:10px 0 0;background:#CFE5E2}
  .steps li:last-child{padding-bottom:0}
  .steps h3{margin-top:0;font-size:19px}
  .callout{margin-top:28px;padding:16px 18px}
- .tgrid{grid-template-columns:1fr}.tcol{padding:20px}
- .paid{grid-template-columns:1fr;gap:8px;padding:22px}
- .team{grid-template-columns:1fr;gap:18px}.team img{width:96px;height:96px;border-radius:50%}
- .team blockquote{font-size:20px}
  .faq summary{font-size:16.5px;padding:18px 0}
  .end .wrap{grid-template-columns:1fr;gap:24px;padding-top:56px;padding-bottom:60px}.end h2{font-size:30px}
  .city{padding:48px 18px 4px}.city h2{font-size:25px}.city table{font-size:14px}.city th,.city td{padding:10px 8px}
  footer .wrap{padding:36px 18px 96px}
 }
+
+@media (max-width:900px){
+ .netrow{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 0}
+ .netrow .strip{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 36px);margin:0 -18px;padding:0 18px 4px;gap:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .netrow .strip::-webkit-scrollbar{display:none}
+ .netrow .strip li{font-size:15.5px}
+ .team{grid-template-columns:72px 1fr;gap:16px;align-items:start}.team img{width:72px;height:72px}
+ .intro{font-size:16px}
+ .faqwrap{grid-template-columns:1fr;gap:20px}
+ .steps li{grid-template-columns:24px 1fr;padding-bottom:24px}.node{grid-row:span 2}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
 </style>
 </head>
 <body>
-<div class="util"><div class="wrap"><span>Independent sales company<span class="hide-m"> · not an internet provider · we may be paid when you sign up</span><span class="show-m"> · not an ISP</span></span><a href="#transparency">How we work →</a></div></div>
+<div class="util"><div class="wrap"><span>Independent fiber sales company<span class="hide-m"> · not an internet provider</span></span><a href="tel:+19177206053">(917) 720-6053</a></div></div>
 <header class="nav"><div class="wrap">
 <a class="brand" href="/" aria-label="MyFiberCheck home"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#0B1B2B"/><path d="M9 29V18.5L20 10l11 8.5V29" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.5 21.5l3.6 3.6 6.4-7" fill="none" stroke="#2DD4BF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>MyFiber<b>Check</b></span></a>
-<ul class="links"><li><a href="#how">How it works</a></li><li><a href="#providers">Networks</a></li><li><a href="#transparency">Transparency</a></li><li><a href="#faq">FAQ</a></li></ul>
+<ul class="links"><li><a href="#how">How it works</a></li><li><a href="#providers">Networks</a></li><li><a href="#faq">FAQ</a></li></ul>
 <div class="navr"><a class="call" id="callLink" href="tel:+19177206053" hidden><span id="callNum"></span></a><a class="btn" href="#addr" id="navCta">Check my address <span aria-hidden="true" class="arr">→</span></a></div>
 </div></header>
 
@@ -235,7 +223,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 </div>
 <p class="err" id="checkErr" role="alert" hidden></p>
 <ul class="reassure"><li><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Free to check</li><li><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No credit check</li><li><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>No obligation</li></ul>
-<p class="privnote">Only your address is needed to see a result. We ask for a number only if you want your options confirmed.</p>
+<p class="privnote">No account needed. We only ask for a number if you want confirmed options.</p>
 </form>
 
 <div class="card" id="panel" aria-live="polite" hidden>
@@ -257,7 +245,7 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 <button type="submit" class="cta full" id="leadBtn">Text me my options</button>
 <p class="err" id="leadErr" role="alert" hidden></p>
 </form>
-<p class="src">Source: FCC National Broadband Map, <span class="asof"></span>. Results show where providers report fiber; your exact address is confirmed by a person on our team.</p>
+<p class="src">Source: <a href="https://broadbandmap.fcc.gov" target="_blank" rel="noopener">FCC National Broadband Map</a>, <span class="asof"></span>. Preliminary until our team confirms your exact address.</p>
 </div>
 <div id="done" hidden style="text-align:center">
 <svg width="60" height="60" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#E5F6F3"/><path d="M20 33l8 8 16-18" stroke="#0E7C7B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -276,73 +264,46 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 </figure>
 </div></section>
 
-<section class="proof" aria-label="How results are produced"><div class="wrap">
-<div><span class="label">Data source</span><b>FCC National Broadband Map</b><p>Coverage providers report to the FCC, <span class="asof"></span>.</p></div>
-<div><span class="label">Verification</span><b>Confirmed by a person</b><p>Your exact address is checked with the providers before you sign up.</p></div>
-<div><span class="label">Who we are</span><b>Independent, not an ISP</b><p>Operated by Quota. <a href="#transparency">How we're paid</a>.</p></div>
-</div></section>
-
-<section class="sec" id="providers"><div class="wrap">
-<div class="sech"><div><p class="kick label">Networks</p><h2>Fiber networks we check and sell</h2></div><p class="sub">One address check covers every network below. You'll only hear about the ones that actually serve your home.</p></div>
-<div class="netgrid">{{STRIP}}</div>
-<p class="fine">Provider names are trademarks of their respective owners and are used only to identify the networks we check. No endorsement is implied. Plans, prices and installation are set by each provider.</p>
+<section class="nets" id="providers"><div class="wrap">
+<div class="netrow">{{STRIP}}</div>
 </div></section>
 
 {{CITY}}
 
-<section class="sec alt" id="how"><div class="wrap">
-<div class="sech"><div><p class="kick label">How it works</p><h2>From address to confirmed options</h2></div><p class="sub">You see a result before you share anything personal. Here's what happens at each step, and what you share.</p></div>
+<section class="sec" id="how"><div class="wrap">
+<div class="sech"><div><p class="kick label">How it works</p><h2>Three steps to confirmed options</h2></div><p class="sub">You see a result before sharing anything personal.</p></div>
 <ol class="steps">
-<li><div class="node"><b></b></div><span class="label">Instant</span><h3>Check your address</h3><p>We compare it with the fiber coverage each network reports to the FCC and show you a preliminary result.</p><span class="share"><em>You share</em>Your address</span></li>
-<li><div class="node"><b></b></div><span class="label">Next</span><h3>A person confirms it</h3><p>If you want confirmed options, someone on our team checks your exact address with the providers.</p><span class="share"><em>You share</em>First name and mobile</span></li>
-<li><div class="node"><b></b></div><span class="label">Your call</span><h3>Choose, or don't</h3><p>We text what's actually available. Pick one and we help set up the install. No obligation either way.</p><span class="share"><em>You share</em>Nothing more unless you sign up</span></li>
+<li><div class="node"><b></b></div><h3>Check your address</h3><p>See which fiber networks report coverage in your area.</p></li>
+<li><div class="node"><b></b></div><h3>Review your options</h3><p>Get a preliminary availability result instantly.</p></li>
+<li><div class="node"><b></b></div><h3>Get confirmed plans</h3><p>Our team verifies availability and sends your options.</p></li>
 </ol>
-<p class="callout"><b>Preliminary vs. confirmed.</b> The instant result reflects coverage providers report to the FCC, which can lag new construction by a few months. Availability is only confirmed when our team checks your exact address.</p>
-</div></section>
-
-<section class="sec" id="transparency"><div class="wrap">
-<div class="sech"><div><p class="kick label">Transparency</p><h2>Who we are, plainly</h2></div><p class="sub">You're trusting us with your address. Here's exactly what MyFiberCheck is and isn't.</p></div>
-<div class="tgrid">
-<div class="tcol yes"><h3>We are</h3><ul>
-<li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>An independent sales company, Quota, that sells fiber service for the networks listed above.</span></li>
-<li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A real team that sells fiber door to door. The text you get back comes from one of us.</span></li>
-<li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Upfront that results start from FCC data and are confirmed by a person.</span></li>
-</ul></div>
-<div class="tcol no"><h3>We are not</h3><ul>
-<li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>An internet provider. Plans, prices and installation come from the provider you choose.</span></li>
-<li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>A data broker. We don't sell your information.</span></li>
-<li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Going to keep contacting you if you don't want us to. Reply STOP anytime.</span></li>
-</ul></div>
-<div class="paid"><span class="label">How we're paid</span><div><h3>Providers may pay us when you sign up.</h3><p>Checking is free for you. We only bring you options from networks that actually serve your address, and you're never obligated to choose one.</p></div></div>
-</div>
+<p class="callout">Instant results come from coverage providers report to the <a href="https://broadbandmap.fcc.gov" target="_blank" rel="noopener">FCC</a> (<span class="asof"></span>), which can lag new construction. Availability is confirmed only when our team checks your exact address.</p>
 </div></section>
 
 <section class="sec alt" id="team"><div class="wrap">
 <div class="team">
-<img src="/rep.jpg" alt="{{REPNAME}}, {{REPTITLE}}" width="220" height="220" loading="lazy">
+<img src="/rep.jpg" alt="{{REPNAME}}, {{REPTITLE}}" width="120" height="120" loading="lazy">
 <div>
-<p class="kick label">The team behind it</p>
-<blockquote>"My team sells fiber door to door. We built MyFiberCheck so you can find out what's available without waiting for someone to knock."</blockquote>
-<p class="who"><b>{{REPNAME}}</b> · {{REPTITLE}} · <a href="sms:+19177206053">Text (917) 720-6053</a></p>
+<p class="who"><b>{{REPNAME}}</b><span>{{REPTITLE}}</span></p>
+<p class="intro">My team sells fiber door to door. We built MyFiberCheck so you can see what's available without waiting for a knock. When you ask for confirmed options, one of us follows up.</p>
 </div>
 </div>
 </div></section>
 
-<section class="sec" id="faq"><div class="wrap">
-<div class="sech"><div><p class="kick label">FAQ</p><h2>Common questions</h2></div><p class="sub">Still unsure? Call or text <a href="tel:+19177206053">(917) 720-6053</a> and a person will answer.</p></div>
+<section class="sec" id="faq"><div class="wrap faqwrap">
+<div><p class="kick label">FAQ</p><h2>Common questions</h2><p class="sub" style="margin-top:14px">Still unsure? Call or text <a href="tel:+19177206053" style="white-space:nowrap">(917) 720-6053</a>.</p></div>
 <div class="faq">
-<details open><summary>How does the availability check work?</summary><p>We find your address's location with the U.S. Census Bureau's address lookup, then compare it with the fiber coverage each provider reports to the FCC (National Broadband Map, <span class="asof"></span>). That gives a preliminary answer in seconds. A person on our team then confirms your exact address with the providers.</p></details>
-<details><summary>Is it free?</summary><p>Yes. Checking your address costs nothing, there's no credit check to see your options, and there's no obligation to sign up.</p></details>
-<details><summary>Is MyFiberCheck an internet provider?</summary><p>No. MyFiberCheck is run by Quota, an independent sales company that sells fiber internet for several providers. Plans, prices and installation are provided by the internet provider you choose. We may be paid by the provider when you sign up.</p></details>
-<details><summary>What happens after I submit my address and number?</summary><p>A person on our team checks your exact address with the participating providers and texts you what's actually available. If you want one of the options, we help you set up the order. If you don't, that's it.</p></details>
-<details><summary>How is my information handled?</summary><p>We use your address and number only to check availability and contact you about internet service. We don't sell your information. We share it with a provider only if you ask us to set up service. Reply STOP to any text to opt out. Details are in our <a href="/privacy">Privacy Policy</a>.</p></details>
-<details><summary>What if nothing shows up at my address?</summary><p>New fiber often isn't on the FCC map yet. Leave your number and we'll check by hand, and we can text you if fiber reaches your street later.</p></details>
+<details open><summary>How does the availability check work?</summary><p>We locate your address with the U.S. Census Bureau's geocoder and compare it with fiber coverage providers report to the <a href="https://broadbandmap.fcc.gov" target="_blank" rel="noopener">FCC National Broadband Map</a> (<span class="asof"></span>). That's your preliminary result. Our team confirms your exact address with the providers.</p></details>
+<details><summary>Is MyFiberCheck an internet provider?</summary><p>No. MyFiberCheck is operated by Quota, an independent fiber sales company. Plans, prices and installation come from the provider you choose, and we may be paid when you sign up through us.</p></details>
+<details><summary>Is the service free?</summary><p>Yes. Checking is free, there's no credit check to see your options, and there's no obligation to sign up.</p></details>
+<details><summary>What happens after I submit my address?</summary><p>You see a preliminary result right away. If you leave your name and number, our team confirms availability with the providers and texts you your options. You decide from there.</p></details>
+<details><summary>How is my information used?</summary><p>Only to check availability and contact you about internet service. We don't sell it, and we share it with a provider only if you choose to sign up. Reply STOP to any text to opt out. See our <a href="/privacy">Privacy Policy</a>.</p></details>
 </div>
 </div></section>
 
 <section class="end" id="contact"><div class="wrap">
 <div><h2>See what reaches your home.</h2><p>Free to check. No credit check. No obligation.</p>
-<div class="contact"><a href="tel:+19177206053">Call (917) 720-6053</a><a href="sms:+19177206053">Text us</a><a href="mailto:quotasaleshq@gmail.com">quotasaleshq@gmail.com</a></div></div>
+<div class="contact"><a href="tel:+19177206053">Call (917) 720-6053</a><a href="sms:+19177206053">Text us</a><a href="mailto:hello@myfibercheck.com">hello@myfibercheck.com</a></div></div>
 <form id="endForm" class="checker" novalidate>
 <label class="lbl" for="addr2">Enter your home address</label>
 <div class="addr"><span class="field"><svg class="pin" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg><input type="text" id="addr2" autocomplete="street-address" placeholder="123 Main St, City, State"></span><button type="submit" class="cta">Check <span aria-hidden="true" class="arr">→</span></button></div>
@@ -354,10 +315,9 @@ footer p{margin:0 0 12px;max-width:860px}footer a{color:#CFE0EE}
 
 <footer><div class="wrap">
 <div class="ftop"><a class="brand" href="/"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#13293F"/><path d="M9 29V18.5L20 10l11 8.5V29" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.5 21.5l3.6 3.6 6.4-7" fill="none" stroke="#2DD4BF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>MyFiber<b>Check</b></span></a>
-<ul class="flinks"><li><a href="/about">About</a></li><li><a href="#how">How it works</a></li><li><a href="#providers">Networks</a></li><li><a href="#transparency">Transparency</a></li><li><a href="#faq">FAQ</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li></ul></div>
-<p><b style="color:#fff">Independent sales company.</b> MyFiberCheck is operated by Quota, an independent sales company, not an internet service provider. We may be compensated by providers when you sign up.</p>
-<p><b style="color:#fff">Provider disclosure.</b> Provider names are trademarks of their respective owners and are used only to identify the networks we check. Availability, pricing and plans are set by each provider.</p>
-<p><b style="color:#fff">Data.</b> Preliminary coverage is based on the FCC National Broadband Map (<span class="asof"></span>) and is confirmed by our team before any order.</p>
+<ul class="flinks"><li><a href="/about">About</a></li><li><a href="#how">How it works</a></li><li><a href="#providers">Networks</a></li><li><a href="#faq">FAQ</a></li><li><a href="/refer">Refer a friend</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li></ul></div>
+<p class="disclose">MyFiberCheck is operated by Quota, an independent fiber sales company. We may receive compensation when you sign up through us. We are not an internet service provider.</p>
+<p>Provider names are trademarks of their respective owners, used only to identify the networks we check; no endorsement is implied. Plans, pricing and availability are set by each provider. Preliminary results use the <a href="https://broadbandmap.fcc.gov" target="_blank" rel="noopener">FCC National Broadband Map</a> (<span class="asof"></span>) and are confirmed by our team before any order. Contact: <a href="tel:+19177206053">(917) 720-6053</a> · <a href="mailto:hello@myfibercheck.com">hello@myfibercheck.com</a></p>
 {{STATES}}
 </div></footer>
 <script src="/t.js"></script>
