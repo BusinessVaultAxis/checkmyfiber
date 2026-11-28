@@ -165,6 +165,11 @@ footer a[href^="tel"]{white-space:nowrap}
 .netrow .stripl{display:block;margin:0 0 14px;font-size:13px;font-weight:600;color:var(--muted)}
 .netrow .strip{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 36px;margin:0 auto;padding:0;list-style:none;max-width:1000px}
 .netrow .strip li{font-family:var(--h);font-weight:600;font-size:16px;color:#3A4B5E;white-space:nowrap;line-height:1.2}
+
+.netrow .strip li{display:flex;align-items:center;gap:7px;height:44px}
+.netrow .strip img{width:auto;display:block;filter:grayscale(1) brightness(.45);opacity:.85}
+.netrow .strip img.sil{filter:brightness(0);opacity:.62}
+.netrow .strip li span,.netrow .strip li.txt{font-family:var(--h);font-weight:700;font-size:19px;letter-spacing:-.02em;color:#4A4A4A}
 [hidden]{display:none !important}
 :focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 @media (min-width:901px){.sticky{display:none !important}}
@@ -209,7 +214,7 @@ footer a[href^="tel"]{white-space:nowrap}
  .bar #sugg{top:64px}.bar.addr{gap:6px}
  .netrow{padding:20px 0}
  .netrow .strip{gap:12px 22px}
- .netrow .strip li{font-size:15px}
+ .netrow .strip{gap:6px 26px}.netrow .strip li{height:40px}.netrow .strip img{transform:scale(.85);transform-origin:center}
  .mapfig figcaption{justify-content:flex-start;text-align:left}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}

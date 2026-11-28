@@ -262,7 +262,10 @@ app.set('trust proxy', true);
 
 const ALL_KEYS = ['kn','bs','vz','att','fr','qf','fi','bp','tg','rp','w3','pb'];
 const SHORT = { kn: ['Kinetic'], bs: ['Brightspeed'], vz: ['Verizon Fios'], att: ['AT&T Fiber'], fr: ['Frontier'], qf: ['Quantum Fiber'], fi: ['Fidium'], bp: ['Bluepeak'], tg: ['Ting'], rp: ['Ripple'], w3: ['Wire3'], pb: ['Point Broadband', 'Clearwave'] };
-const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+// Provider logos (official files from each provider's own site). Display-only; names stay as alt text.
+const LOGOS = { 'Kinetic': ['kinetic.svg', 26], 'Brightspeed': ['brightspeed.png', 22, 'sil'], 'Verizon Fios': ['verizon.svg', 21], 'AT&T Fiber': ['att.png', 34], 'Frontier': ['frontier.svg', 24, '', 'Frontier'], 'Quantum Fiber': ['quantum.svg', 30, 'sil'], 'Fidium': ['fidium.svg', 30], 'Bluepeak': ['bluepeak.svg', 20], 'Ting': ['ting.svg', 26], 'Ripple': ['ripple.svg', 38], 'Wire3': ['wire3.png', 26], 'Point Broadband': ['pointbroadband.png', 32] };
+const stripItem = n => { const L = LOGOS[n]; if (!L) return `<li class="txt">${esc(n)}</li>`; return `<li><img src="/logos/${L[0]}" alt="${esc(n)}" height="${L[1]}" style="height:${L[1]}px" class="${L[2] || ''}" loading="lazy">${L[3] ? `<span>${esc(L[3])}</span>` : ''}</li>`; };
+const stripHtml = (keys, label) => `<p class="stripl">${esc(label)}</p>\n<ul class="strip">${keys.flatMap(k => SHORT[k] || [pname(k)]).map(stripItem).join('')}</ul>`;
 function botName(ua) {
   if (/googlebot|google-inspectiontool|adsbot-google/i.test(ua)) return 'Google';
   if (/bingbot|msnbot/i.test(ua)) return 'Bing';
